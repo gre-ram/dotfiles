@@ -2,3 +2,4 @@
 !.gitignore
 !.vimr
 !.zshrc
+!.tmux.conf
