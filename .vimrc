@@ -14,6 +14,7 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'preservim/nerdtree'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-rmarkdown'
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
@@ -21,6 +22,7 @@ colorscheme dracula
 
 syntax on
 
+set spelllang=de,en 
 " Use vim, not vi api
 set nocompatible
 
@@ -77,7 +79,8 @@ set shiftwidth=4
 
 " Turn on line numbers
 set number
-
+set relativenumber
+set rnu
 " Get rid of the delay when pressing O (for example)
 " http://stackoverflow.com/questions/2158516/vim-delay-before-o-opens-a-new-line
 set timeout timeoutlen=1000 ttimeoutlen=100
