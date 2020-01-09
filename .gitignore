@@ -1,5 +1,6 @@
 *
-!*.csl/*
+!*/.csl/*
+!.csl
 !.gitignore
 !.vimr
 !.zshrc
