@@ -1,9 +1,9 @@
 *
 .* 
 .*/*
-!.scripts/*
+!*/.scripts/*
 !.zsh
-!.csl/*
+!*/.csl/*
 !.csl
 !.gitignore
 !.vimr
