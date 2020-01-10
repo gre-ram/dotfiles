@@ -18,6 +18,9 @@ Plug 'preservim/nerdtree'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-rmarkdown'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'garbas/vim-snipmate'
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
