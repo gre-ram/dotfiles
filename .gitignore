@@ -1,10 +1,7 @@
 *
-.* 
-.*/*
-!*/.scripts/*
-!.zsh
-!*/.csl/*
-!.csl
+
+!.scripts/*
+!.csl/*
 !.gitignore
 !.vimr
 !.zshrc
