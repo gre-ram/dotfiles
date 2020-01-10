@@ -93,7 +93,5 @@ source $ZSH/oh-my-zsh.sh
 alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
 doi2bib()
 {
-    echo >> bib.bib;
-    curl -LH "Accept: text/bibliography; style=bibtex" http://dx.doi.org/$! >> bib.bib;
-    echo bib.bib
+   curl  https://api.crossref.org/works/$1/transform/application/x-bibtex
 }
