@@ -2,7 +2,7 @@
 .* 
 .*/*
 !.scripts/*
-.*/*
+!.sh
 !.csl/*
 !.csl
 !.gitignore
