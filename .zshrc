@@ -1,4 +1,4 @@
-# If you come from bash you might have to change your $PATH.
+ If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
@@ -48,7 +48,7 @@ COMPLETION_WAITING_DOTS="true"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-HIST_STAMPS="dd.mm.yyyy"
+HIST_STAMPS="yyyy-mm-dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -91,3 +91,9 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
+doi2bib()
+{
+    echo >> bib.bib;
+    curl -LH "Accept: text/bibliography; style=bibtex" http://dx.doi.org/$! >> bib.bib;
+    echo bib.bib
+}
