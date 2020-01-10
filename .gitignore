@@ -1,9 +1,11 @@
 *
+!.gitignore
 
 !.scripts/*
 !.csl/*
-!.gitignore
-!.vimr
+
+
+
 !.zshrc
 !.tmux.conf
 !homebrewpackages.txt
