@@ -91,7 +91,4 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
-doi2bib()
-{
-   curl  https://api.crossref.org/works/$1/transform/application/x-bibtex
-}
+alias getbib="~/.scripts/getbib"

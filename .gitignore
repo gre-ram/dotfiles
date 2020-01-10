@@ -1,6 +1,8 @@
 *
 .* 
 .*/*
+!.scripts/*
+.*/*
 !.csl/*
 !.csl
 !.gitignore
