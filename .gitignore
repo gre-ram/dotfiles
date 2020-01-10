@@ -1,11 +1,16 @@
 *
+.*/
+.*
+.*/*
+*/*
+
 !.gitignore
 
 !.scripts/*
 !.csl/*
 
 
-
+!.vimrc
 !.zshrc
 !.tmux.conf
 !homebrewpackages.txt
