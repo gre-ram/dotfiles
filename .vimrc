@@ -1,3 +1,6 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugins
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Installation von Vim-Plug fals notwendig
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -17,6 +20,10 @@ Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-rmarkdown'
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Basic Customization
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 colorscheme dracula
 
@@ -43,7 +50,7 @@ set history=100
 set ruler
 
 " Show incomplete commands
-set showcmd
+" set showcmd
 
 " Incremental searching (search as you type)
 set incsearch
@@ -90,3 +97,13 @@ set laststatus=2
 
 " UTF encoding
 set encoding=utf-8
+
+set shell=/bin/zsh
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => MAPPINGS
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+command -nargs=*  GetBib  r ! ~/.scripts/getbib.zsh <args>
