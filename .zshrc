@@ -62,7 +62,6 @@ source $ZSH/oh-my-zsh.sh
 
 alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
 alias getbib="~/.scripts/getbib.zsh"
-
-# Expand aliases in non-interactive shells
-setopt aliases
-
+#alias vim=usr/local/bin/vim
+rm -R $HOME/.vim/snippets
+cp -R  $HOME/snippets  $HOME/.vim/snippets 

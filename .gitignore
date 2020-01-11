@@ -7,9 +7,9 @@
 !.scripts/*
 !.scripts/*.zsh
 
-!.snippets/
-!.snippets/*
-!.snippets/*.snippets
+!snippets/
+!snippets/*
+!snippets/*.snippets
 
 !.csl/
 !.csl/*

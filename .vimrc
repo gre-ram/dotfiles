@@ -1,3 +1,6 @@
+set nocompatible
+set encoding=utf-8
+set shell=/bin/zsh
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -21,6 +24,7 @@ Plug 'vim-pandoc/vim-rmarkdown'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'garbas/vim-snipmate'
+"Plug 'honza/vim-snippets'
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
@@ -34,15 +38,14 @@ syntax on
 
 set spelllang=de,en 
 " Use vim, not vi api
-set nocompatible
 
+" Turn off vim-pandoc section folding
+let g:pandoc_no_folding = 0
 
 " No backup files
 set nobackup
 
 " No write backup
-set nowritebackup
-
 " No swap file
 set noswapfile
 
@@ -70,7 +73,7 @@ set ignorecase
 " A buffer is marked as ‘hidden’ if it has unsaved changes, and it is not currently loaded in a window
 " if you try and quit Vim while there are hidden buffers, you will raise an error:
 " E162: No write since last change for buffer “a.txt”
-set hidden
+" set hidden
 
 " Turn word wrap off
 set nowrap
@@ -79,13 +82,13 @@ set nowrap
 set backspace=indent,eol,start
 
 " Convert tabs to spaces
-set expandtab
+"set expandtab
 
 " Set tab size in spaces (this is for manual indenting)
-set tabstop=4
+"set tabstop=4
 
 " The number of spaces inserted for a tab (used for auto indenting)
-set shiftwidth=4
+"set shiftwidth=4
 
 " Turn on line numbers
 set number
@@ -95,13 +98,6 @@ set rnu
 " http://stackoverflow.com/questions/2158516/vim-delay-before-o-opens-a-new-line
 set timeout timeoutlen=1000 ttimeoutlen=100
 
-" Always show status bar
-set laststatus=2
-
-" UTF encoding
-set encoding=utf-8
-
-set shell=/bin/zsh
 
 
 
