@@ -64,4 +64,8 @@ alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
 alias getbib="~/.scripts/getbib.zsh"
 #alias vim=usr/local/bin/vim
 rm -R $HOME/.vim/snippets
-cp -R  $HOME/snippets  $HOME/.vim/snippets 
+cp -R  $HOME/snippets  $HOME/.vim/snippets
+
+clear
+cd ~/documents && ls -l
+
