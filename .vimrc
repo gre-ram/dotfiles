@@ -39,13 +39,9 @@ syntax on
 set spelllang=de,en 
 " Use vim, not vi api
 
-" Turn off vim-pandoc section folding
-let g:pandoc_no_folding = 0
-
 " No backup files
 set nobackup
 
-" No write backup
 " No swap file
 set noswapfile
 
@@ -56,7 +52,7 @@ set history=100
 set ruler
 
 " Show incomplete commands
-" set showcmd
+set showcmd
 
 " Incremental searching (search as you type)
 set incsearch
@@ -82,13 +78,13 @@ set nowrap
 set backspace=indent,eol,start
 
 " Convert tabs to spaces
-"set expandtab
+set expandtab
 
 " Set tab size in spaces (this is for manual indenting)
-"set tabstop=4
+set tabstop=4
 
 " The number of spaces inserted for a tab (used for auto indenting)
-"set shiftwidth=4
+set shiftwidth=4
 
 " Turn on line numbers
 set number
