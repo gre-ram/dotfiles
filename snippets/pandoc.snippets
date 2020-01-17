@@ -68,3 +68,16 @@ snippet phd
 	}
 	~~~~~
 	{$4}
+
+snippet online
+	~~~~~{.bib}
+	@online{ `Filename('', 'id')`,
+		author={${1:author}},
+		title={${2:title}},
+		date={${3:date}},
+		url={${4:url}},
+		organization={${5:organization}},
+		urldate = {`strftime("%Y-%m-%d")`}
+	}
+	~~~~~
+	{$6}
