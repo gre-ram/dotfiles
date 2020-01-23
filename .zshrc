@@ -48,10 +48,14 @@ HIST_STAMPS="yyyy-mm-dd"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(
 git
+tmux
 github
 )
 
 source $ZSH/oh-my-zsh.sh
+
+ZSH_TMUX_AUTOSTART="true"
+
 
 alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
 alias getbib="~/.scripts/getbib.zsh"
@@ -59,6 +63,5 @@ alias getbib="~/.scripts/getbib.zsh"
 rm -R $HOME/.vim/snippets
 cp -R  $HOME/snippets  $HOME/.vim/snippets
 
-clear
-cd ~/documents && ls -l
+
 

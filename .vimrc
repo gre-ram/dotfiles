@@ -16,11 +16,14 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " Declare the list of plugins.
+Plug 'Yggdroot/indentLine'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'preservim/nerdtree'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-airline/vim-airline'
+Plug 'edkolev/tmuxline.vim'
 Plug 'vim-pandoc/vim-rmarkdown'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
@@ -39,7 +42,6 @@ syntax on
 
 set spelllang=de,en 
 " Use vim, not vi api
-
 " No backup files
 set nobackup
 
@@ -105,6 +107,8 @@ noremap   <Up>     <NOP>
 noremap   <Down>   <NOP>
 noremap   <Left>   <NOP>
 noremap   <Right>  <NOP>
+
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MAPPINGS
