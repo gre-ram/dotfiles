@@ -48,5 +48,7 @@ alias addbib="~/.scripts/addbib.sh"
 rm -R $HOME/.vim/snippets
 cp -R  $HOME/snippets  $HOME/.vim/snippets
 
+ln -s $HOME/.dracula-zsh/dracula.zsh-theme $HOME/.oh_my_zsh/themes/dracula.zsh-theme
+
 
 
