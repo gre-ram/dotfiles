@@ -4,6 +4,12 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 #Python $PATH
 export PATH=/usr/local/opt/python/libexec/bin:$PATH
 
+
+# Start-Up Procedure
+ln -s $HOME/.snippets/* $HOME/.vim/snippets/
+ln -s $HOME/.dracula/zsh/dracula.zsh-theme $HOME/.oh-my-zsh/themes/dracula.zsh-theme
+clear
+
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/gregor/.oh-my-zsh"
 
@@ -43,12 +49,3 @@ source $ZSH/oh-my-zsh.sh
 alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
 alias getbib="~/.scripts/getbib.zsh"
 alias addbib="~/.scripts/addbib.sh"
-
-# Start-Up Procedure
-rm -R $HOME/.vim/snippets
-cp -R  $HOME/snippets  $HOME/.vim/snippets
-
-ln -s $HOME/.dracula/zsh/dracula.zsh-theme $HOME/.oh_my_zsh/themes/dracula.zsh-theme
-
-
-
