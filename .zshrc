@@ -1,6 +1,8 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+#Python $PATH
+export PATH=/usr/local/opt/python/libexec/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/gregor/.oh-my-zsh"
@@ -49,6 +51,7 @@ HIST_STAMPS="yyyy-mm-dd"
 plugins=(
 git
 tmux
+vi-mode
 github
 )
 
@@ -59,6 +62,7 @@ ZSH_TMUX_AUTOSTART="true"
 
 alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
 alias getbib="~/.scripts/getbib.zsh"
+alias addbib="~/.scripts/getbibs.sh"
 # Start-Up Procedure
 rm -R $HOME/.vim/snippets
 cp -R  $HOME/snippets  $HOME/.vim/snippets
