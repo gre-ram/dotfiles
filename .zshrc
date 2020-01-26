@@ -55,9 +55,9 @@ vi-mode
 github
 )
 
-source $ZSH/oh-my-zsh.sh
+ZSH_TMUX_AUTOSTART=true
 
-ZSH_TMUX_AUTOSTART="true"
+source $ZSH/oh-my-zsh.sh
 
 
 alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
