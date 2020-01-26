@@ -16,6 +16,9 @@
 !.csl/*
 !.csl/*.csl
 
+!.dracula-zsh/
+!.dracula-zsh/*
+
 !.vimrc
 !.zshrc
 !.tmux.conf
