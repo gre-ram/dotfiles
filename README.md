@@ -12,6 +12,7 @@ DISCLAIMER: I consider myself as a beginner with vim, pandoc, tmux, zsh and shel
     - `brew install cask`
     - `brew install tmux`
     - `brew install vim`
+    - In vim `:PlugInstall`
     - `brew install pandoc-citeproc`
     - `brew install python`
     - `pip install pandocfilters`
