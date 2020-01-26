@@ -17,4 +17,4 @@ DISCLAIMER: I consider myself as a beginner with vim, pandoc, tmux, zsh and shel
     - `pip install pandocfilters`
     - `brew cask install mactex`
     - `brew install xpdf`
-    - more: wget, x11vnc, cask r, cask rstudio,
+    - more: wget, x11vnc, cask r, cask rstudio, ...
