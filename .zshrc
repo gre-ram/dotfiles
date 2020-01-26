@@ -6,7 +6,7 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 export ZSH="/Users/gregor/.oh-my-zsh"
 
 #Theme
-ZSH_THEME="agnoster"
+ZSH_THEME="dracula"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
