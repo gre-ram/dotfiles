@@ -1,6 +1,0 @@
-macdown
-mactex
-postman
-r
-rstudio
-visual-studio-code
