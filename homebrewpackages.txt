@@ -82,6 +82,7 @@ openssl
 openssl@1.1
 p11-kit
 pandoc
+pandoc-citeproc
 pcre
 pcre2
 perl
