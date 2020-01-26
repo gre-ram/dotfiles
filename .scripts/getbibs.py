@@ -11,7 +11,6 @@ def bibtex(key, value, format, meta):
 		return []
 	else:
 		format, s = value
-		s = s.encode('utf-8')
 		with open('/tmp/chunk.bib', 'w') as bibfile:
 			bibfile.write(s)
 		
