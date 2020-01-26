@@ -16,8 +16,8 @@
 !.csl/*
 !.csl/*.csl
 
-!.dracula-zsh/
-!.dracula-zsh/*
+!.dracula/
+!.dracula/*
 
 !.vimrc
 !.zshrc
