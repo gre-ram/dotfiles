@@ -19,6 +19,9 @@
 !.themes/
 !.themes/*
 
+!.oh-my-zsh/
+!.oh-my-zsh/*
+
 !.vimrc
 !.zshrc
 !.tmux.conf
