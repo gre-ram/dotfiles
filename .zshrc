@@ -8,6 +8,7 @@ export PATH=/usr/local/opt/python/libexec/bin:$PATH
 # Start-Up Procedure
 ln -s $HOME/.snippets/* $HOME/.vim/snippets/
 ln -s $HOME/.themes/zsh/dracula.zsh-theme $HOME/.oh-my-zsh/themes/dracula.zsh-theme
+ln -s $HOME/.themes/zsh-syntax-highlighting $HOME/.oh-my-zsh/custom/plugins/
 clear
 
 # Path to your oh-my-zsh installation.
@@ -39,6 +40,7 @@ git
 tmux
 vi-mode
 github
+zsh-syntax-highlighting
 )
 
 ZSH_TMUX_AUTOSTART=true
@@ -49,3 +51,6 @@ source $ZSH/oh-my-zsh.sh
 alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
 alias getbib="~/.scripts/getbib.zsh"
 alias addbib="~/.scripts/addbib.sh"
+
+
+
