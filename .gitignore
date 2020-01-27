@@ -16,8 +16,8 @@
 !.csl/*
 !.csl/*.csl
 
-!.dracula/
-!.dracula/*
+!.themes/
+!.themes/*
 
 !.vimrc
 !.zshrc
