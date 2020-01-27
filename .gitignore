@@ -16,8 +16,11 @@
 !.csl/*
 !.csl/*.csl
 
-!.themes/
-!.themes/*
+!.custom/
+!.custom/*
+
+!.oh-my-zsh/
+!.oh-my-zsh/*
 
 !.vimrc
 !.zshrc
