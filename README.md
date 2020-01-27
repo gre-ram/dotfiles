@@ -5,7 +5,6 @@ DISCLAIMER: I consider myself as a beginner with vim, pandoc, tmux, zsh and shel
 ## Installation
 
 1. Install zsh `brew install zsh`
-2. Install oh-my-zsh `sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)`
 3. Clone this repo into your `$HOME`-Folder
 4. Other:
     - `brew install pandoc`
