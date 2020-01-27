@@ -7,13 +7,14 @@ export PATH=/usr/local/opt/python/libexec/bin:$PATH
 
 # Start-Up Procedure
 ln -s $HOME/.snippets/* $HOME/.vim/snippets/
-ln -s $HOME/.themes/zsh/dracula.zsh-theme $HOME/.oh-my-zsh/themes/dracula.zsh-theme
-ln -s $HOME/.themes/zsh-syntax-highlighting $HOME/.oh-my-zsh/custom/plugins/
+ln -s $HOME/.custom/modules/zsh/dracula.zsh-theme $HOME/.custom/zsh/themes/dracula.zsh-theme
+ln -s $HOME/.custom/modules/zsh-syntax-highlighting $HOME/.custom/zsh/plugins/
 clear
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/gregor/.oh-my-zsh"
 
+ZSH_CUSTOM=$HOME/.custom/zsh
 #Theme
 ZSH_THEME="dracula"
 
