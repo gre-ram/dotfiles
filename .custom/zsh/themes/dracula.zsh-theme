@@ -1,0 +1,1 @@
+/Users/gregor/.custom/modules/zsh/dracula.zsh-theme

@@ -18,6 +18,10 @@
 
 !.custom/
 !.custom/*
+!.custom/*/
+!.custom/*/*
+!.custom/*/*/
+!.custom/*/*/*
 
 !.oh-my-zsh/
 !.oh-my-zsh/*
