@@ -5,7 +5,7 @@ DISCLAIMER: I consider myself as a beginner with vim, pandoc, tmux, zsh and shel
 ## Installation
 
 1. Install zsh `brew install zsh`
-3. Clone this repo into your `$HOME`-Folder
+3. Clone this repo into your `$HOME`-Folder with `git clone --recurse-submodules --remote-submodules`
 4. Other:
     - `brew install pandoc`
     - `brew install cask`
@@ -17,4 +17,3 @@ DISCLAIMER: I consider myself as a beginner with vim, pandoc, tmux, zsh and shel
     - `pip install pandocfilters`
     - `brew cask install mactex`
     - `brew install xpdf`
-    - more: wget, x11vnc, cask r, cask rstudio, ...
