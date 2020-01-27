@@ -7,7 +7,7 @@ export PATH=/usr/local/opt/python/libexec/bin:$PATH
 
 # Start-Up Procedure
 ln -s $HOME/.snippets/* $HOME/.vim/snippets/
-ln -s $HOME/themes/zsh/dracula.zsh-theme $HOME/.oh-my-zsh/themes/dracula.zsh-theme
+ln -s $HOME/.themes/zsh/dracula.zsh-theme $HOME/.oh-my-zsh/themes/dracula.zsh-theme
 clear
 
 # Path to your oh-my-zsh installation.
