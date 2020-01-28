@@ -7,3 +7,6 @@
 [submodule ".custom/modules/zsh-syntax-highlighting"]
 	path = .custom/modules/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule ".custom/modules/fonts"]
+	path = .custom/modules/fonts
+	url = https://github.com/powerline/fonts.git
