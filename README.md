@@ -17,3 +17,5 @@ DISCLAIMER: I consider myself as a beginner with vim, pandoc, tmux, zsh and shel
     - `pip install pandocfilters`
     - `brew cask install mactex`
     - `brew install xpdf`
+
+Update Submodules with `git submodule foreach git pull origin master`
