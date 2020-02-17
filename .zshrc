@@ -52,6 +52,6 @@ source $ZSH/oh-my-zsh.sh
 alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
 alias getbib="~/.scripts/getbib.zsh"
 alias addbib="~/.scripts/addbib.sh"
-
+alias sepbib="~/.scripts/sepbib.sh"
 
 
