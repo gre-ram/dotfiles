@@ -16,7 +16,7 @@ export ZSH="/Users/gregor/.oh-my-zsh"
 
 ZSH_CUSTOM=$HOME/.custom/zsh
 #Theme
-ZSH_THEME="dracula"
+ZSH_THEME="agnoster"
 
 #auto-update.
 export UPDATE_ZSH_DAYS=1
