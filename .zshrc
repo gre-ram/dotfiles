@@ -4,7 +4,8 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 #Python $PATH
 export PATH=/usr/local/opt/python/libexec/bin:$PATH
 
-
+#using gnu sed instead of mac default
+PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 # Start-Up Procedure
 ln -s $HOME/.snippets/* $HOME/.vim/snippets/
 ln -s $HOME/.custom/modules/zsh/dracula.zsh-theme $HOME/.custom/zsh/themes/dracula.zsh-theme
