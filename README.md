@@ -1,7 +1,4 @@
 # dotfiles von gre-ram
-
-DISCLAIMER: I consider myself as a beginner with vim, pandoc, tmux, zsh and shell-scripts. Therefore I can neither guarantee that this  works nor that it is not harmful. Be careful with random shell scripts from the internet.🧐 
-
 ## Installation
 
 1. Install zsh `brew install zsh`
