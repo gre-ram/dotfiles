@@ -8,9 +8,12 @@ if [ -f "$1" ]; then
 else
         doi="$1"
 fi
-echo ""
-echo "~~~{.bib}"
-curl -s "https://api.crossref.org/works/$doi/transform/application/x-bibtex" -w "\\n"
+
+bibo=$(curl -s "https://api.crossref.org/works/$doi/transform/application/x-bibtex" -w "\\n" | sed '$d')
 
 echo ""
+echo "~~~{.bib}"
+echo $bibo,   
+echo "    tags = {}"
+echo "}"
 echo "~~~"
