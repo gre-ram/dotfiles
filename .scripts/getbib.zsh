@@ -8,12 +8,9 @@ if [ -f "$1" ]; then
 else
         doi="$1"
 fi
-echo "---"
-echo "key: [,]"
-echo "---"
 echo ""
-echo "~~~~~{.bib}"
+echo "~~~{.bib}"
 curl -s "https://api.crossref.org/works/$doi/transform/application/x-bibtex" -w "\\n"
 
 echo ""
-echo "~~~~~~"
+echo "~~~"
