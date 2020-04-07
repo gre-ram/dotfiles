@@ -109,3 +109,5 @@ set mouse=a
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 command -nargs=*  GetBib  r ! ~/.scripts/getbib.zsh <args>
+
+let g:pandoc#biblio#bibs='~/main.bib'
