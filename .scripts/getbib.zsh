@@ -3,7 +3,7 @@
 
 if [ -f "$1" ]; then
         doi=$(pdfinfo "$1" | grep -io "doi:.*") ||
-        doi=$(pdftotext "$1" 2>/dev/null - | grep -io "doi:.*" -m 1) ||
+        doi=$(pdftotext "$1" - | grep -oP "\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?![\"&\'<>])\S)+)\b" | head -n 1) ||
         exit 1
 else
         doi="$1"
