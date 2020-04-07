@@ -1,7 +1,6 @@
-# Based on http://pts.szit.bme.hu/bibtex-cheat-sheet.txt
-# Most optional fields are not included.
+
 snippet article
-	~~~~~{.bib}
+	~~~{.bib}
 	@Article{ `Filename('', 'id')`,
 		author = {${1:authors separated by "and"}},
 		title = {${2:title}},
@@ -11,22 +10,27 @@ snippet article
 		month = {${6:month}},
 		pages = {${7:pages}},
 		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
+		tags = {${8: tags}}
 	}
-	~~~~~
-	${8}
+	~~~
+	${9}
+
+	
 snippet book
-	~~~~~{.bib}
+	~~~{.bib}
 	@Book{ `Filename('', 'id')`,
 		${1:author/editor} = {${2:$1s separated by "and"}},
 		title = {${3:title}},
 		address = {${4:city}},
 		publisher = {${5:publisher}},
 		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
+		tags = {${6: tags}}
 	}
-	~~~~~
-	${6}
+	~~~
+	${7}
+
 snippet inbook
-	~~~~~{.bib}
+	~~~{.bib}
 	@InBook{ `Filename('', 'id')`,
 		${1:author/editor} = {${2:$1s separated by "and"}},
 		title = {${3:title}},
@@ -35,11 +39,13 @@ snippet inbook
 		publisher = {${7:publisher}},
 		pages = {${8:pages}},
 		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
+		tags = {${9: tags}}
 	}
-	~~~~~
-	${9}
+	~~~
+	${10}
+
 snippet incollection
-	~~~~~{.bib}
+	~~~{.bib}
 	@InCollection{ `Filename('', 'id')`,
 		author = {${1:authors separated by "and"}},
 		title = {${2:title}},
@@ -49,35 +55,43 @@ snippet incollection
 		address = {${6:city}},
 		publisher = {${7:publisher}},
 		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
+		tags = {${8: tags}}
 	}
-	~~~~~
-	${8}
+	~~~
+	${9}
+
 snippet misc
-	~~~~~{.bib}
+	~~~{.bib}
 	@Misc{ `Filename('', 'id')`,
 		author = {${1:authors separated by "and"}},
 		title = {${2:title}},
+		tags = {${3: tags}}
 	}
+	~~~
+	${4}
+	
 snippet phd
-	~~~~~{.bib}
+	~~~{.bib}
 	@PhDThesis{ `Filename('', 'id')`,
 		author = {${1:authors separated by "and"}},
 		title = {${2:title}},
 		school = {${3:school}},
 		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
+		tags = {${4: tags}}
 	}
-	~~~~~
-	{$4}
+	~~~
+	{$5}
 
 snippet online
-	~~~~~{.bib}
+	~~~{.bib}
 	@online{ `Filename('', 'id')`,
 		author={${1:author}},
 		title={${2:title}},
 		date={${3:date}},
 		url={${4:url}},
 		organization={${5:organization}},
-		urldate = {`strftime("%Y-%m-%d")`}
+		urldate = {`strftime("%Y-%m-%d")`},
+		tags = {${6: tags}}
 	}
-	~~~~~
-	{$6}
+	~~~
+	{$7}
