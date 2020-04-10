@@ -4,6 +4,7 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 #Python $PATH
 export PATH=/usr/local/opt/python/libexec/bin:$PATH
 
+
 #using gnu sed instead of mac default
 PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 # Start-Up Procedure
@@ -54,5 +55,5 @@ alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
 alias getbib="~/.scripts/getbib.zsh"
 alias addbib="~/.scripts/addbib.sh"
 alias sepbib="~/.scripts/sepbib.sh"
-alias notate="~/.scripts/notate.sh" 
+alias notate="~/.scripts/notate.zsh" 
 
