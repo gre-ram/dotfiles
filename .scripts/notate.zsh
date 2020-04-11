@@ -12,7 +12,7 @@ get_bib() {
 
 get_old_info() {
     infos=$(pcregrep -M -v "^~.*|^@.*|(^\t\w+\s=\s.*)|^\s\s\s\s\w+\s=\s.*|^}" "$old_info_md.md")
-    tags=$(pcregrep -M "(?<=\stitle = {).*?(?=(}))" "$old_info_md.md")
+    tags=$(pcregrep -M -o "(?<=\stags = {).*?(?=(}))" "$old_info_md.md")
 }
 
 make_file() {
@@ -23,7 +23,6 @@ make_file() {
     echo $ins"," >> "$key.md"
     echo "    tags = {"$tags"}" >> "$key.md"
     echo "}" >> "$key.md"
-    echo "" >> "$key.md"
     echo "~~~" >> "$key.md"
     echo $infos >> "$key.md"
 }
