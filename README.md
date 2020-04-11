@@ -9,11 +9,12 @@
     - `brew install tmux`
     - `brew install vim`
     - `brew install fzf`
-    - In vim `:PlugInstall`
+    - `brew install pcregrep`
     - `brew install pandoc-citeproc`
     - `brew install python`
     - `pip install pandocfilters`
     - `brew cask install mactex`
     - `brew install xpdf`
+    - In vim `:PlugInstall`
 
 Update Submodules with `git submodule foreach git pull origin master`
