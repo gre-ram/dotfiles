@@ -8,6 +8,7 @@ get_bib() {
     year=$(echo $bib | pcregrep -M -o "((?<=year\s=\s)\d\d\d\d)|((?<=date\s=\s)\d\d\d\d)")
     key=$(echo $author"_"$title"_"$year)
     art=$(echo $bib | pcregrep -M -o "(?<=@).*?(?={)")
+    if [ $key = "__" ]; then exit 1 ; else : ; fi 
 }
 
 get_old_info() {
