@@ -29,10 +29,10 @@ make_file() {
 }
 
 check_file() {
-    find ~/Desktop/. | grep -i -q ${1}
+    find ~/Documents/Sci-Bib/. | grep -i -q ${1}
     if [ $? -eq 0 ]
     then
-            old_file=$(find ~/Desktop/. | grep -i ${1})
+            old_file=$(find ~/Documents/Sci-Bib/. | grep -i ${1})
             get_old_info $old_file
             mv $old_file "old""$key"".txt"
             make_file
