@@ -12,6 +12,10 @@
 !.snippets/*
 !.snippets/*.snippets
 
+!.tmux/plugins/tpm
+!.tmux/plugins/tpm/*
+
+
 !.csl/
 !.csl/*
 !.csl/*.csl
