@@ -10,6 +10,6 @@ PAGES=$(find $HOME/Documents/Sci-Bib/ -print| grep -i .md)
 
 echo "$PAGES" | while read -r page
 do
-	pandoc --filter=$HOME/.scripts/addbib.py -t markdown $page  >> $HOME/main.bib 
+	pandoc --filter=$HOME/.scripts/addbib.py -t markdown $page | sed '/^`/d' | sed '/^[[:space:]]*$/d' >> $HOME/main.bib 
 done
 

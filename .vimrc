@@ -104,10 +104,18 @@ set laststatus=2
 
 set mouse=a
 
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MAPPINGS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 command -nargs=*  GetBib  r ! ~/.scripts/getbib.zsh <args>
 
-let g:pandoc#biblio#bibs='~/main.bib'
+let g:pandoc#completion#bib#mode = 'citeproc'
+"let g:pandoc#biblio#sources = "g"
+let g:pandoc#filetypes#handled = ["pandoc", "markdown", "textile"]
+let g:pandoc#biblio#bibs = ["$HOME/main.bib"]
+let g:pandoc#folding#fdc = 0
+let g:pandoc#folding#level = 999
+
