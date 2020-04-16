@@ -23,12 +23,12 @@
 !.custom/*/*/
 !.custom/*/*/*
 
-!.tmux/
-!.tmux/*
-!.tmux/*/
-!.tmux/*/*
-!.tmux/*/*/
-!.tmux/*/*/*
+!.tmux/plugins/tpm/
+!.tmux/plugins/tpm/*
+!.tmux/plugins/tpm/*/
+!.tmux/plugins/tpm/*/*
+!.tmux/plugins/tpm/*/*/
+!.tmux/plugins/tpm/*/*/*
 
 !.oh-my-zsh/
 !.oh-my-zsh/*
