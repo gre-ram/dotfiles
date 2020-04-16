@@ -10,3 +10,6 @@
 [submodule ".custom/modules/fonts"]
 	path = .custom/modules/fonts
 	url = https://github.com/powerline/fonts.git
+[submodule ".tmux/plugins/tpm"]
+	path = .tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm
