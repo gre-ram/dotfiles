@@ -111,10 +111,11 @@ set mouse=a
 
 command -nargs=*  GetBib  r ! ~/.scripts/getbib.zsh <args>
 
-let g:pandoc#completion#bib#mode = 'citeproc'
-"let g:pandoc#biblio#sources = "g"
+let g:pandoc#completion#bib#mode = "citeproc"
+let g:pandoc#biblio#sources = "g"
 let g:pandoc#filetypes#handled = ["pandoc", "markdown", "textile"]
-let g:pandoc#biblio#bibs = ["$HOME/main.bib"]
+let g:pandoc#biblio#bibs = ["/Users/gregor/main.bib"]
+let g:pandoc#completion#bib#use_preview = 1
 let g:pandoc#folding#fdc = 0
 let g:pandoc#folding#level = 999
 
