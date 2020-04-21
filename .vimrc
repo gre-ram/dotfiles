@@ -120,6 +120,7 @@ let g:coc_global_extensions = [
   \ 'coc-r-lsp'
   \ ]
 
+
 call coc#config('list.source.bibtex', {
   \  'files': [
   \    '~/main.bib'
