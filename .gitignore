@@ -23,6 +23,13 @@
 !.custom/*/*/
 !.custom/*/*/*
 
+!.config/
+!.config/*
+!.config/*/
+!.config/*/*
+!.config/*/*/
+!.config/*/*/*
+
 !.tmux/plugins/tpm/
 !.tmux/plugins/tpm/*
 !.tmux/plugins/tpm/*/
