@@ -56,4 +56,6 @@ alias getbib="~/.scripts/getbib.zsh"
 alias addbib="~/.scripts/addbib.sh"
 alias sepbib="~/.scripts/sepbib.sh"
 alias notate="~/.scripts/notate.zsh" 
+alias getnotes="~/.scripts/getnotes.zsh"
+
 
