@@ -42,8 +42,9 @@ call plug#end()
 
 colorscheme dracula
 
-hi! Normal ctermbg=NONE guibg=NONE
-hi! NonText ctermbg=NONE guibg=NONE guifg=NONE ctermfg=NONE
+set termguicolors
+
+hi LineNr ctermbg=NONE guibg=NONE
 
 syntax on
 
