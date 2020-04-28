@@ -1,15 +1,12 @@
 [submodule ".oh-my-zsh"]
 	path = .oh-my-zsh
 	url = https://github.com/ohmyzsh/ohmyzsh.git
-[submodule ".custom/modules/zsh"]
-	path = .custom/modules/zsh
-	url = https://github.com/dracula/zsh.git
 [submodule ".custom/modules/zsh-syntax-highlighting"]
 	path = .custom/modules/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule ".custom/modules/fonts"]
-	path = .custom/modules/fonts
-	url = https://github.com/powerline/fonts.git
 [submodule ".tmux/plugins/tpm"]
 	path = .tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
+[submodule ".custom/modules/powerlevel10k"]
+	path = .custom/modules/powerlevel10k
+	url = https://github.com/romkatv/powerlevel10k.git

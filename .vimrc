@@ -30,6 +30,7 @@ Plug '~/.fzf'
 Plug 'vim-pandoc/vim-rmarkdown'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
+Plug 'ryanoasis/vim-devicons'
 "Plug 'garbas/vim-snipmate'
 "Plug 'honza/vim-snippets'
 " List ends here. Plugins become visible to Vim after this call.
@@ -40,6 +41,9 @@ call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 colorscheme dracula
+
+hi! Normal ctermbg=NONE guibg=NONE
+hi! NonText ctermbg=NONE guibg=NONE guifg=NONE ctermfg=NONE
 
 syntax on
 

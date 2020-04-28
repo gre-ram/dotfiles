@@ -6,7 +6,7 @@ window:
   padding:
     x: 15
     y: 15
-  decorations: none
+#  decorations: none
 scrolling:
   history: 10000
   multiplier: 3
@@ -88,7 +88,7 @@ colors:
 # Font Customization
 font:
   normal:
-    family: Droid Sans Mono Slashed for Powerline
+    family: Anonymice Nerd Font Mono
     #    style: Regular
   size: 14
 
