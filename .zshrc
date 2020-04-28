@@ -9,7 +9,7 @@ export PATH=/usr/local/opt/python/libexec/bin:$PATH
 PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 # Start-Up Procedure
 ln -s $HOME/.snippets/* $HOME/.vim/snippets/
-ln -s $HOME/.custom/modules/zsh/dracula.zsh-theme $HOME/.custom/zsh/themes/dracula.zsh-theme
+ln -s $HOME/.custom/modules/powerlevel10k $HOME/.custom/zsh/themes/powerlevel10k
 ln -s $HOME/.custom/modules/zsh-syntax-highlighting $HOME/.custom/zsh/plugins/
 clear
 
@@ -18,7 +18,7 @@ export ZSH="/Users/gregor/.oh-my-zsh"
 
 ZSH_CUSTOM=$HOME/.custom/zsh
 #Theme
-ZSH_THEME="agnoster"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 #auto-update.
 export UPDATE_ZSH_DAYS=1
