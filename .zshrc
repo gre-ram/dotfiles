@@ -1,3 +1,4 @@
+if [ "$TMUX" = "" ]; then tmux; fi
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -8,12 +9,16 @@ export PATH=/usr/local/opt/python/libexec/bin:$PATH
 PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 
 
+export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
+
+
 source ~/.zplug/init.zsh
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3 
 zplug "romkatv/powerlevel10k", as:theme, depth:1
 zplug "lib/directories", from:oh-my-zsh
 zplug "lib/completion", from:oh-my-zsh
+zplug "lib/termsupport", from:oh-my-zsh
 zplug "lib/clipboard", from:oh-my-zsh, if:"[[ $OSTYPE == *darwin* ]]"
 zplug "lib/theme-and-appearance", from:oh-my-zsh, if:"[[ $OSTYPE == *darwin* ]]"
 
@@ -25,7 +30,7 @@ if ! zplug check --verbose; then
     fi
 fi
 # Then, source plugins and add commands to $PATH
-zplug load --verbose
+zplug load 
 
 
 alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
@@ -47,3 +52,4 @@ alias gst='git status'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
