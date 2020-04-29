@@ -6,11 +6,8 @@ export PATH=/usr/local/opt/python/libexec/bin:$PATH
 
 #using gnu sed instead of mac default
 PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-
-
-export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
-
-
+path=('$HOME/.snippets' $path)
+export PATH
 source ~/.zplug/init.zsh
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3 
