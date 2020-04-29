@@ -18,3 +18,9 @@ _darcs
 \#.*\#       # emacs autosave files
 
 \.DS_Store
+
+\Brewfile
+
+\README.md
+
+\iterm2.json
