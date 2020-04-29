@@ -1,0 +1,6 @@
+[user]
+	name = Gregor
+	email = crap@wbrck.de
+
+[core]
+	editor = nvim
