@@ -1,106 +1,65 @@
+priority -50
 
-snippet article
-	~~~{.bib}
-	@Article{ `Filename('', 'id')`,
-		author = {${1:authors separated by "and"}},
-		title = {${2:title}},
-		journal = {${3:journal}},
-		volume = ${4:volume},
-		number = ${5:number},
-		month = {${6:month}},
-		pages = {${7:pages}},
-		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
-		tags = {${8: tags}}
-	}
-	~~~
-	${9}
-endsnippet
-	
-snippet book
-	~~~{.bib}
-	@Book{ `Filename('', 'id')`,
-		${1:author/editor} = {${2:$1s separated by "and"}},
-		title = {${3:title}},
-		address = {${4:city}},
-		publisher = {${5:publisher}},
-		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
-		tags = {${6: tags}}
-	}
-	~~~
-	${7}
+snippet online "Online resource" b
+~~~{.bib}
+@online{${1:name},
+	author={${2:author}},
+	title={${3:title}},
+	date={${4:date}},
+	url={${5:url}},
+	urldate={`!v strftime("%Y-%m-%d")`},
+	tags = {${6:tag}}
+}
+~~~
+$0
 endsnippet
 
-snippet inbook
-	~~~{.bib}
-	@InBook{ `Filename('', 'id')`,
-		${1:author/editor} = {${2:$1s separated by "and"}},
-		title = {${3:title}},
-		${4:chapter/pages} = {${5:$4}},
-		address = {${6:city}},
-		publisher = {${7:publisher}},
-		pages = {${8:pages}},
-		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
-		tags = {${9: tags}}
-	}
-	~~~
-	${10}
+snippet article "Article reference" b
+~~~{.bib}
+@article{${1:name},
+	author={${2:author}},
+	title={${3:title}},
+	journaltitle={${4:journal}},
+	volume={${5:NN}},
+	number={${6:NN}},
+	year={${7:YYYY}},
+	pages={${8:NN}--${9:NN}},
+	tags = {${10:tag}}
+}
+~~~
+$0
 endsnippet
 
-snippet incollection
-	~~~{.bib}
-	@InCollection{ `Filename('', 'id')`,
-		author = {${1:authors separated by "and"}},
-		title = {${2:title}},
-		pages = {${3:pages}},
-		editor = {${4:editors separated by "and"}},
-		booktitle = {${5:book title}},
-		address = {${6:city}},
-		publisher = {${7:publisher}},
-		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
-		tags = {${8: tags}}
-	}
-	~~~
-	${9}
+snippet book "Book reference" b
+~~~{.bib}
+@book{${1:name},
+	author={${2:author}},
+	title={${3:title}},
+	subtitle={${4:subtitle}},
+	year={${5:YYYY}},
+	location={${6:somewhere}},
+	publisher={${7:publisher}},
+	pages={${8:NN}--${9:NN}},
+	tags = {${10:tag}}
+}
+~~~
+$0
 endsnippet
 
-snippet misc
-	~~~{.bib}
-	@Misc{ `Filename('', 'id')`,
-		author = {${1:authors separated by "and"}},
-		title = {${2:title}},
-		tags = {${3: tags}}
-	}
-	~~~
-	${4}
+snippet inb "In Book reference" b
+~~~{.bib}
+@inbook{${1:name},
+	author={${2:author}},
+	title={${3:title}},
+	subtitle={${4:subtitle}},
+	booktitle={${5:book}},
+	editor={${6:editor}},
+	year={${7:YYYY}},
+	location={${8:somewhere}},
+	publisher={${9:publisher}},
+	pages={${10:NN}--${11:NN}},
+	tags = {${12:tag}}
+}
+~~~
+$0
 endsnippet
-
-
-snippet phd
-	~~~{.bib}
-	@PhDThesis{ `Filename('', 'id')`,
-		author = {${1:authors separated by "and"}},
-		title = {${2:title}},
-		school = {${3:school}},
-		year = `fnamemodify(expand('%'), ':t:gs?\(\w\+\)\(\d\{4\}\)\(\S\+\)?\2?')`,
-		tags = {${4: tags}}
-	}
-	~~~
-	{$5}
-endsnippet
-
-
-snippet online
-	~~~{.bib}
-	@online{ `Filename('', 'id')`,
-		author={${1:author}},
-		title={${2:title}},
-		date={${3:date}},
-		url={${4:url}},
-		organization={${5:organization}},
-		urldate = {`strftime("%Y-%m-%d")`},
-		tags = {${6: tags}}
-	}
-	~~~
-	{$7}
-endsnippet
-
