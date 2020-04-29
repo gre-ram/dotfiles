@@ -1,11 +1,32 @@
-global !p
 
-snippet chi
-	$\chi^2$
-endsnippet
-	
+# This file contains snippets that are always defined. I personally
+# have snippets for signatures and often needed texts
 
+# sligthly lower priority than everything else since specialized versions
+# should overwrite. The user needs to adjust her priority in her snippets to
+# ~-55 so that other filetypes will still overwrite.
+priority -60
+
+#########
+# DATES #
+#########
 snippet date "DD.MM.YYYY" w
 `!v strftime("%d.%m.%Y")`
 endsnippet
- 
+
+snippet ddate "Month DD, YYYY" w
+`!v strftime("%b %d, %Y")`
+endsnippet
+
+snippet diso "ISO format datetime" w
+`!v strftime("%Y-%m-%d %H:%M:%S%z")`
+endsnippet
+
+snippet datetime "YYYY-MM-DD hh:mm" w
+`!v strftime("%Y-%m-%d %H:%M")`
+endsnippet
+
+
+snippet chi "chi^2" w
+$\chi^2$
+endsnippet
