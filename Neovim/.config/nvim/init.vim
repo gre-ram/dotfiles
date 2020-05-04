@@ -2,7 +2,9 @@ set nocompatible
 set encoding=utf-8
 set shell=/bin/zsh
 
-" Vim-Plug
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => VimPlug
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'airblade/vim-gitgutter'
@@ -24,80 +26,45 @@ call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Basic Customization
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 colorscheme dracula
-
 set termguicolors
-
 hi LineNr ctermbg=NONE guibg=NONE
-
 syntax on
-
 set spelllang=de,en 
-
 set nobackup
-
-" No swap file
 set noswapfile
-
 set clipboard=unnamed
-
-" Command history
 set history=100
-
-" Always show cursor
 set ruler
-
-" Show incomplete commands
 set showcmd
-
-" Incremental searching (search as you type)
 set incsearch
-
-" Highlight search matches
 set hlsearch
-
-" Ignore case in search
 set smartcase
-
-" Make sure any searches /searchPhrase doesn't need the \c escape character
 set ignorecase
-
-" A buffer is marked as ‘hidden’ if it has unsaved changes, and it is not currently loaded in a window if you try and quit Vim while there are hidden buffers, you will raise an error:
 set hidden
-
-" Turn word wrap off
 set nowrap
-
-" Allow backspace to delete end of line, indent and start of line characters
 set backspace=indent,eol,start
-
-" Convert tabs to spaces
 set expandtab
-
-" Set tab size in spaces (this is for manual indenting)
 set tabstop=4
-
-" The number of spaces inserted for a tab (used for auto indenting)
 set shiftwidth=4
-
-" Turn on line numbers
 set number
 set relativenumber
 set rnu
-" Get rid of the delay when pressing O (for example)
-" http://stackoverflow.com/questions/2158516/vim-delay-before-o-opens-a-new-line
 set timeout timeoutlen=1000 ttimeoutlen=100
-
 set laststatus=2
-
 set mouse=a
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Custom Mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap , <Plug>RDSendLine
+" remapping selection :: send multiple lines
+vmap , <Plug>RDSendSelection
+" remapping selection :: send multiple lines + echo lines
+vmap ,e <Plug>RESendSelection
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => COC Config 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" TextEdit might fail if hidden is not set.
-" set hidden
 " coc config
 let g:coc_global_extensions = [
   \ 'coc-snippets',
@@ -116,7 +83,6 @@ call coc#config('list.source.bibtex', {
   \  ]
   \})
 
-"""""""" Readme
 " Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
@@ -255,7 +221,7 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => MAPPINGS
+" => Plugin Variables
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 command -nargs=*  GetBib  r ! ~/.scripts/getbib.zsh <args>
@@ -269,4 +235,4 @@ let g:pandoc#folding#fdc = 0
 let g:pandoc#folding#level = 999
 
 
-let mapleader = ","
+
