@@ -1,7 +1,8 @@
 set nocompatible
 set encoding=utf-8
 set shell=/bin/zsh
-
+let maplocalleader = ','
+let mapleader =','
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VimPlug
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -54,14 +55,6 @@ set timeout timeoutlen=1000 ttimeoutlen=100
 set laststatus=2
 set mouse=a
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Custom Mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap , <Plug>RDSendLine
-" remapping selection :: send multiple lines
-vmap , <Plug>RDSendSelection
-" remapping selection :: send multiple lines + echo lines
-vmap ,e <Plug>RESendSelection
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => COC Config 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
