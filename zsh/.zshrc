@@ -29,6 +29,15 @@ fi
 # Then, source plugins and add commands to $PATH
 zplug load 
 
+alias g2cp="cd ~/Documents/Sci-Bib/Projekte/Politische_Frauen && open . && l"
+alias g2methoden="cd ~/Documents/Sci-Bib/Methoden && l"
+alias g2sci-bib="cd ~/Documents/Sci-Bib && l"
+alias g2code="cd ~/Code && l"
+alias g2drafts="cd ~/Documents/Drafts && l"
+alias g2vimrc="vim ~/dotfiles/Neovim/.config/nvim/init.vim"
+alias g2tmuxconf="vim ~/dotfiles/tmux/.tmux.conf"
+alias g2zshrc="vim ~/dotfiles/zsh/.zshrc"
+
 alias internet="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I"
 
 alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
