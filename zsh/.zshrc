@@ -28,6 +28,7 @@ fi
 # Then, source plugins and add commands to $PATH
 zplug load 
 
+alias internet="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I"
 
 alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
 alias getbib="~/.scripts/getbib.zsh"
