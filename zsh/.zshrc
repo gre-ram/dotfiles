@@ -58,7 +58,7 @@ alias gst='git status'
 
 alias vi='nvim'
 alias vim='nvim'
-alias tmux-start='tmux new-session -A -s main'
+alias tmux-start='session=$(tmux ls | fzf | pcregrep -o "^\w+") && tmux attach -t $session || tmux new-session -A -s main'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
