@@ -13,6 +13,7 @@ zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3 
 zplug "romkatv/powerlevel10k", as:theme, depth:1
 zplug "lib/directories", from:oh-my-zsh
+zplug "plugins/vi-mode", from:oh-my-zsh
 zplug "lib/completion", from:oh-my-zsh
 zplug "lib/termsupport", from:oh-my-zsh
 zplug "lib/clipboard", from:oh-my-zsh, if:"[[ $OSTYPE == *darwin* ]]"
