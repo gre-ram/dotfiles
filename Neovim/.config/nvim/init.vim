@@ -226,6 +226,6 @@ let g:pandoc#biblio#bibs = ["/Users/gregor/main.bib"]
 let g:pandoc#completion#bib#use_preview = 1
 let g:pandoc#folding#fdc = 0
 let g:pandoc#folding#level = 999
-
-
-""""
+"let R_hl_term = 1 "R Output is colored by
+let R_args = ['--quiet']
+let R_csv_app = 'tmux new-window vd'
