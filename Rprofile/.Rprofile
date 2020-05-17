@@ -1,7 +1,8 @@
 library(colorout)
 library(tidyverse)
 library(knitr)
-options(editor="nvim")
+library(languageserver)
+options(editor = "nvim")
 setOutputColors(normal   = "\x1b[38;2;248;248;242m",
                 negnum   = "\x1b[38;2;80;250;123m",
                 zero     = "\x1b[38;2;80;250;123m",
@@ -18,3 +19,11 @@ setOutputColors(normal   = "\x1b[38;2;248;248;242m",
                 error    = "\x1b[48;2;255;85;85;38;2;248;248;242m",
                 zero.limit = 0.01,
                 verbose = FALSE)
+
+ if(interactive()){
+             if(Sys.getenv("NVIMR_TMPDIR") != ""){
+                 options(nvimcom.verbose = 1)
+                 library(nvimcom)
+             }
+         }
+
