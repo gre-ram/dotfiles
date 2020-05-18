@@ -8,10 +8,20 @@ let mapleader =','
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 Plug 'jalvesaq/Nvim-R'
+Plug 'gaalcaras/ncm-R'
+Plug 'ncm2/ncm2-ultisnips'
+Plug 'ncm2/ncm2'
+Plug 'ncm2/ncm2-jedi'
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
 Plug 'airblade/vim-gitgutter'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-fugitive'
-Plug 'dense-analysis/ale'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'vim-pandoc/vim-pandoc-syntax'
@@ -24,7 +34,6 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'ryanoasis/vim-devicons'
 call plug#end()
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Basic Customization
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -38,7 +47,7 @@ let g:dracula_colorterm = 1
 set termguicolors
 hi LineNr ctermbg=NONE guibg=NONE
 syntax on
-set spelllang=de,en 
+set spelllang=de,en
 set nobackup
 set noswapfile
 set clipboard=unnamed
@@ -61,22 +70,11 @@ set rnu
 set timeout timeoutlen=1000 ttimeoutlen=100
 set laststatus=2
 set mouse=a
-
 set nobackup
 set nowritebackup
-
-" Give more space for displaying messages.
 set cmdheight=2
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
 set updatetime=300
-
-" Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
-
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
 set signcolumn=yes
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -92,11 +90,10 @@ let g:pandoc#biblio#bibs = [$HOME.'/main.bib']
 let g:pandoc#completion#bib#use_preview = 1
 let g:pandoc#folding#fdc = 0
 let g:pandoc#folding#level = 999
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => R IDE  
+" => R IDE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "let R_hl_term = 1 "R Output is colored by
@@ -106,16 +103,52 @@ let R_term_cmd = 'tmux new-window R' "not on mac
 autocmd TermOpen * setlocal nonumber
 autocmd TermOpen * setlocal norelativenumber
 
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" =>  Airline and Movingarround  
+" =>  Airline and Movingarround
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <leader>b :buffers<cr>:b<space> 
-nnoremap <leader>gt :bn<cr> 
+nnoremap <leader>b :buffers<cr>:b<space>
+nnoremap <leader>gt :bn<cr>
 nnoremap <leader>gT :bp<cr>
 nnoremap <leader>q :bd<cr>
 
 let g:airline_theme='dracula'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
+  let g:airline#extensions#ale#enabled = 1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" =>  Linting and Completion
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set completeopt=noinsert,menuone,noselect,preview
+autocmd BufEnter * call ncm2#enable_for_buffer()
+inoremap <c-c> <ESC>
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+au User Ncm2Plugin call ncm2#register_source({
+        \ 'name' : 'css',
+        \ 'priority': 9,
+        \ 'subscope_enable': 1,
+        \ 'scope': ['css','scss'],
+        \ 'mark': 'css',
+        \ 'word_pattern': '[\w\-]+',
+        \ 'complete_pattern': ':\s*',
+        \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+        \ })
+inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
+let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+let g:UltiSnipsRemoveSelectModeMappings = 0
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
+
+let g:LanguageClient_serverCommands = {
+    \ 'r': ['R', '--slave', '-e', 'languageserver::run()'],
+    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+    \ 'vim': ['/usr/local/bin/vim-language-server', '--stdio'],
+    \ 'python': ['/usr/local/bin/pyls'],
+    \ }
+
+call ncm2#override_source('LanguageClient_python', {'enable': 0})
+nnoremap <space> :call LanguageClient_contextMenu()<CR>
+

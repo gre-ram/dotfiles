@@ -1,7 +1,7 @@
 library(colorout)
-library(tidyverse)
-library(knitr)
-library(languageserver)
+#library(styler)
+#library(lintr)
+#library(languageserver)
 options(editor = "nvim")
 setOutputColors(normal   = "\x1b[38;2;248;248;242m",
                 negnum   = "\x1b[38;2;80;250;123m",
@@ -26,4 +26,3 @@ setOutputColors(normal   = "\x1b[38;2;248;248;242m",
                  library(nvimcom)
              }
          }
-
