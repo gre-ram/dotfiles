@@ -3,6 +3,7 @@ set encoding=utf-8
 set shell=/bin/zsh
 let maplocalleader = ','
 let mapleader =','
+let g:python3_host_prog = '/usr/local/bin/python3'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VimPlug
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
