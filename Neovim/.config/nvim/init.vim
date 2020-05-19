@@ -3,7 +3,8 @@ set encoding=utf-8
 set shell=/bin/zsh
 let maplocalleader = ','
 let mapleader =','
-let g:python3_host_prog = '/usr/local/bin/python3'
+let g:python3_host_prog = '/Users/gregor/.pyenv/versions/3.8.2/envs/Neovim3/bin/python'
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VimPlug
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -147,7 +148,7 @@ let g:LanguageClient_serverCommands = {
     \ 'r': ['R', '--slave', '-e', 'languageserver::run()'],
     \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
     \ 'vim': ['/usr/local/bin/vim-language-server', '--stdio'],
-    \ 'python': ['/usr/local/bin/pyls'],
+    \ 'python': ['/Users/gregor/.pyenv/versions/3.8.2/envs/Neovim3/bin/pyls'],
     \ }
 
 call ncm2#override_source('LanguageClient_python', {'enable': 0})

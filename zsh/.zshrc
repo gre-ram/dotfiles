@@ -1,13 +1,8 @@
 # If you come from bash you might have to change your $PATH.
 #export PATH=$HOME/bin:/usr/local/bin:$PATH
 export EDITOR="nvim"
-#Python $PATH
-export PATH=/usr/local/opt/python/libexec/bin:$PATH
-
-#using gnu sed instead of mac default
 PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH
-
 source ~/.zplug/init.zsh
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3 
@@ -62,4 +57,7 @@ alias tmux-start='session=$(tmux ls | fzf | pcregrep -o "^\w+") && tmux attach -
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
