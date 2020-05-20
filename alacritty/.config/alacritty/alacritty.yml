@@ -58,7 +58,7 @@ font:
   glyph_offset:
     x: 0
     y: 2
-  scale_with_dpi: true
+    #scale_with_dpi: true
   use_thin_strokes: true
 
 shell:
