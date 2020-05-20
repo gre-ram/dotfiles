@@ -61,3 +61,7 @@ font:
   scale_with_dpi: true
   use_thin_strokes: true
 
+shell:
+  program: /usr/local/bin/zsh
+  args:
+    - --login
