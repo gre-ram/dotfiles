@@ -116,12 +116,12 @@ nnoremap <leader>q :bd<cr>
 let g:airline_theme='dracula'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-  let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#ale#enabled = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting and Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set completeopt=noinsert,menuone,noselect,preview
+set completeopt=noinsert,menuone,noselect
 autocmd BufEnter * call ncm2#enable_for_buffer()
 inoremap <c-c> <ESC>
 inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
