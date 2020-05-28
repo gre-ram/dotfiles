@@ -113,11 +113,45 @@ nnoremap <leader>gt :bn<cr>
 nnoremap <leader>gT :bp<cr>
 nnoremap <leader>q :bd<cr>
 
-let g:airline_theme='dracula'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#ale#enabled = 1
+function! GitStatus()
+    let [a,m,r] = GitGutterGetHunkSummary()
+    let fugiline = FugitiveHead()
+    if (fugiline != '')
+        return printf(' %s:  %d ~ %d  %d',fugiline, a, m, r)
+    else
+        return printf('')
+    endif
+endfunction
 
+let g:currentmode={
+       \ 'n'  : 'NORMAL ',
+       \ 'v'  : 'VISUAL ',
+       \ 'V'  : 'V·Line ',
+       \ '' : 'V·Block ',
+       \ 'i'  : 'INSERT ',
+       \ 'R'  : 'R ',
+       \ 'Rv' : 'V·Replace ',
+       \ 'c'  : 'Command ',
+       \ 't'  : 'Terminal',
+       \}
+
+set statusline=
+set statusline+=%#Pmenu#
+set statusline+=\ %{toupper(g:currentmode[mode()])}
+set statusline+=%#LineNr#
+set statusline+=\  
+set statusline+=\ %f
+set statusline+=\ %{GitStatus()}
+set statusline+=%m
+set statusline+=%=
+set statusline+=%#CursorColumn#
+set statusline+=\ %Y
+set statusline+=\ %{WebDevIconsGetFileTypeSymbol()}
+set statusline+=\ %p%%
+set statusline+=\ %l:%c
+
+
+set showtabline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting and Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
