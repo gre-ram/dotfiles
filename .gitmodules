@@ -1,0 +1,6 @@
+[submodule "vim-fugitive"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "deoplete"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/deoplete.nvim
+	url = https://github.com/Shougo/deoplete.nvim.git

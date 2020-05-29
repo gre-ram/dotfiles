@@ -6,31 +6,23 @@ let mapleader =','
 let g:python3_host_prog = '/Users/gregor/.pyenv/versions/3.8.2/envs/Neovim3/bin/python'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VimPlug
+" => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+packadd! vim-fugitive
+
+set rtp+=/usr/local/opt/fzf
+
+packadd! deoplete.nvim
+let g:deoplete#enable_at_startup = 1
+
 call plug#begin('~/.vim/plugged')
 Plug 'jalvesaq/Nvim-R'
-Plug 'gaalcaras/ncm-R'
-Plug 'ncm2/ncm2-ultisnips'
-Plug 'ncm2/ncm2'
-Plug 'ncm2/ncm2-jedi'
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
 Plug 'airblade/vim-gitgutter'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
 Plug 'SirVer/ultisnips'
-Plug 'tpope/vim-fugitive'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-airline/vim-airline'
-Plug '/usr/local/opt/fzf'
-Plug '~/.fzf'
 Plug 'vim-pandoc/vim-rmarkdown'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
@@ -56,6 +48,7 @@ set clipboard=unnamed
 set history=100
 set ruler
 set showcmd
+set noshowmode
 set incsearch
 set hlsearch
 set smartcase
@@ -78,6 +71,7 @@ set cmdheight=2
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Pandoc und Citation
@@ -124,67 +118,74 @@ function! GitStatus()
 endfunction
 
 let g:currentmode={
-       \ 'n'  : 'NORMAL ',
-       \ 'v'  : 'VISUAL ',
-       \ 'V'  : 'V·Line ',
-       \ '' : 'V·Block ',
-       \ 'i'  : 'INSERT ',
-       \ 'R'  : 'R ',
-       \ 'Rv' : 'V·Replace ',
-       \ 'c'  : 'Command ',
-       \ 't'  : 'Terminal',
-       \}
+    \ 'n'  : 'Normal ',
+    \ 'no' : 'N·Operator Pending ',
+    \ 'v'  : 'Visual ',
+    \ 'V'  : 'V·Line ',
+    \ '' : 'V·Block ',
+    \ 's'  : 'Select ',
+    \ 'S'  : 'S·Line ',
+    \ '' : 'S·Block ',
+    \ 'i'  : 'Insert ',
+    \ 'R'  : 'Replace ',
+    \ 'Rv' : 'V·Replace ',
+    \ 'c'  : 'Command ',
+    \ 'cv' : 'Vim Ex ',
+    \ 'ce' : 'Ex ',
+    \ 'r'  : 'Prompt ',
+    \ 'rm' : 'More ',
+    \ 'r?' : 'Confirm ',
+    \ '!'  : 'Shell ',
+    \ 't'  : 'Terminal '
+    \}
+
+
+function! ChangeStatuslineColor()
+     if (mode() =~# '\v(n|no)')
+       exe 'hi! link currentStatusLine StatusLine'
+     elseif (mode() =~# '\v(v|V)' || g:currentmode[mode()] ==# 'V·Block' || get(g:currentmode, mode(), '') ==# 't')
+       exe 'hi! link currentStatusLine DiffChange'
+     elseif (mode() ==# 'i')
+       exe 'hi! link currentStatusLine DiffAdd'
+     else
+       exe 'hi! link currentStatusLine StatusLine'
+     endif
+     return ''
+ endfunction
 
 set statusline=
-set statusline+=%#Pmenu#
+set statusline+=%{ChangeStatuslineColor()}
+set statusline+=%#currentStatusLine#
 set statusline+=\ %{toupper(g:currentmode[mode()])}
-set statusline+=%#LineNr#
+set statusline+=%#tabline#
 set statusline+=\  
 set statusline+=\ %f
-set statusline+=\ %{GitStatus()}
 set statusline+=%m
+set statusline+=\ %{GitStatus()}
 set statusline+=%=
-set statusline+=%#CursorColumn#
+set statusline+=%#currentStatusLine#
 set statusline+=\ %Y
 set statusline+=\ %{WebDevIconsGetFileTypeSymbol()}
 set statusline+=\ %p%%
 set statusline+=\ %l:%c
 
 
-set showtabline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting and Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set completeopt=noinsert,menuone,noselect
-autocmd BufEnter * call ncm2#enable_for_buffer()
-inoremap <c-c> <ESC>
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-au User Ncm2Plugin call ncm2#register_source({
-        \ 'name' : 'css',
-        \ 'priority': 9,
-        \ 'subscope_enable': 1,
-        \ 'scope': ['css','scss'],
-        \ 'mark': 'css',
-        \ 'word_pattern': '[\w\-]+',
-        \ 'complete_pattern': ':\s*',
-        \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-        \ })
-inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
-let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
+call deoplete#custom#var('omni', 'input_patterns', {
+    \ 'pandoc': '@'
+    \})
+
+
+let g:UltiSnipsExpandTrigger='<Plug>(ultisnips_expand)'
+set completeopt=noinsert,menuone,noselect,preview
 let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
 
-let g:LanguageClient_serverCommands = {
-    \ 'r': ['R', '--slave', '-e', 'languageserver::run()'],
-    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
-    \ 'vim': ['/usr/local/bin/vim-language-server', '--stdio'],
-    \ 'python': ['/Users/gregor/.pyenv/versions/3.8.2/envs/Neovim3/bin/pyls'],
-    \ }
 
-call ncm2#override_source('LanguageClient_python', {'enable': 0})
-nnoremap <space> :call LanguageClient_contextMenu()<CR>
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
