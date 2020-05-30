@@ -37,3 +37,15 @@
 [submodule "vim-devicons"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-devicons
 	url = https://github.com/ryanoasis/vim-devicons.git
+[submodule "zsh-autosuggestions"]
+	path = zsh/.zsh/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions.git
+[submodule "powerlevel10k"]
+	path = zsh/.zsh/powerlevel10k
+	url = https://github.com/romkatv/powerlevel10k.git
+[submodule "zsh-history-substring"]
+	path = zsh/.zsh/zsh-history-substring-search
+	url = https://github.com/zsh-users/zsh-history-substring-search
+[submodule "zsh-syntax-highlighting"]
+	path = zsh/.zsh/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
