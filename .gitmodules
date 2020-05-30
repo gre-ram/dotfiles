@@ -4,3 +4,36 @@
 [submodule "deoplete"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/deoplete.nvim
 	url = https://github.com/Shougo/deoplete.nvim.git
+[submodule "Nvim-R"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/Nvim-R
+	url = https://github.com/jalvesaq/Nvim-R.git
+[submodule "vim-gitgutter"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter.git
+[submodule "UltiSnips"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/UltiSnips
+	url = https://github.com/sirver/UltiSnips.git
+[submodule "vim-table-mode"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/table-mode
+	url = git@github.com:dhruvasagar/vim-table-mode.git
+[submodule "dracula"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/dracula
+	url = https://github.com/dracula/vim.git
+[submodule "pandoc-syntax"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-pandoc-syntax
+	url = https://github.com/vim-pandoc/vim-pandoc-syntax.git
+[submodule "vim-pandoc"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-pandoc
+	url = https://github.com/vim-pandoc/vim-pandoc.git
+[submodule "vim-rmarkdown"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-rmarkdown
+	url = https://github.com/vim-pandoc/vim-rmarkdown.git
+[submodule "vim-addon-mw-utils"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-addon-mw-utils
+	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
+[submodule "tlib_vim"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/tlib_vim
+	url = https://github.com/tomtom/tlib_vim.git
+[submodule "vim-devicons"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-devicons
+	url = https://github.com/ryanoasis/vim-devicons.git

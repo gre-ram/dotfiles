@@ -6,28 +6,24 @@ let mapleader =','
 let g:python3_host_prog = '/Users/gregor/.pyenv/versions/3.8.2/envs/Neovim3/bin/python'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Plugins
+" => Plugins (to get all helpfiles exec :helptags ALL
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 packadd! vim-fugitive
-
+packadd! vim-gitgutter
 set rtp+=/usr/local/opt/fzf
-
 packadd! deoplete.nvim
 let g:deoplete#enable_at_startup = 1
+packadd! Nvim-R
+packadd! UltiSnips
+packadd! table-mode
+packadd! dracula
+packadd! vim-pandoc-syntax
+packadd! vim-pandoc
+packadd! vom-rmarkdown
+packadd! vim-addon-mw-utils'
+packadd! tlib_vim
+packadd! vim-devicons
 
-call plug#begin('~/.vim/plugged')
-Plug 'jalvesaq/Nvim-R'
-Plug 'airblade/vim-gitgutter'
-Plug 'SirVer/ultisnips'
-Plug 'dhruvasagar/vim-table-mode'
-Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-rmarkdown'
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tomtom/tlib_vim'
-Plug 'ryanoasis/vim-devicons'
-call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Basic Customization
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -176,7 +172,7 @@ set statusline+=\ %l:%c
 call deoplete#custom#var('omni', 'input_patterns', {
     \ 'pandoc': '@'
     \})
-
+:
 
 let g:UltiSnipsExpandTrigger='<Plug>(ultisnips_expand)'
 set completeopt=noinsert,menuone,noselect,preview
