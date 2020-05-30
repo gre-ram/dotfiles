@@ -1,6 +1,6 @@
 set nocompatible
 set encoding=utf-8
-set shell=/bin/zsh
+set shell=/usr/local/bin/zsh
 let maplocalleader = ','
 let mapleader =','
 let g:python3_host_prog = '/Users/gregor/.pyenv/versions/3.8.2/envs/Neovim3/bin/python'
@@ -19,8 +19,8 @@ packadd! table-mode
 packadd! dracula
 packadd! vim-pandoc-syntax
 packadd! vim-pandoc
-packadd! vom-rmarkdown
-packadd! vim-addon-mw-utils'
+packadd! vim-rmarkdown
+packadd! vim-addon-mw-utils
 packadd! tlib_vim
 packadd! vim-devicons
 
@@ -90,7 +90,7 @@ let g:pandoc#folding#level = 999
 
 "let R_hl_term = 1 "R Output is colored by
 let R_args = ['--quiet']
-let R_csv_app = 'tmux new-window vd'
+let R_csv_app = 'tmux new-window /Users/gregor/.pyenv/versions/3.8.2/bin/vd'
 let R_term_cmd = 'tmux new-window R' "not on mac
 autocmd TermOpen * setlocal nonumber
 autocmd TermOpen * setlocal norelativenumber
