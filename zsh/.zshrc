@@ -1,29 +1,21 @@
+#macosx variable for ohmyzsh scripts
+OSTYPE="$*darwin*"
 # If you come from bash you might have to change your $PATH.
 #export PATH=$HOME/bin:/usr/local/bin:$PATH
 export LANG="en_US.UTF-8"
 export EDITOR="nvim"
 PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH
-source ~/.zplug/init.zsh
-zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3 
-zplug "romkatv/powerlevel10k", as:theme, depth:1
-zplug "lib/directories", from:oh-my-zsh
-zplug "plugins/vi-mode", from:oh-my-zsh
-zplug "lib/completion", from:oh-my-zsh
-zplug "lib/termsupport", from:oh-my-zsh
-zplug "lib/clipboard", from:oh-my-zsh, if:"[[ $OSTYPE == *darwin* ]]"
-zplug "lib/theme-and-appearance", from:oh-my-zsh, if:"[[ $OSTYPE == *darwin* ]]"
 
-# Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
-# Then, source plugins and add commands to $PATH
-zplug load 
+source ~/.zsh/ohmyzsh/clipboard.zsh
+source ~/.zsh/ohmyzsh/completion.zsh
+source ~/.zsh/ohmyzsh/directories.zsh
+source ~/.zsh/ohmyzsh/termsupport.zsh
+source ~/.zsh/ohmyzsh/theme-and-appearance.zsh
+source ~/.zsh/ohmyzsh/vi-mode.plugin.zsh
+source ~/.zsh/powerlevel10k/powerlevel10k.zsh-theme
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 alias g2cp="cd ~/Documents/Sci-Bib/Projekte/Politische_Frauen && open . && l"
 alias g2methoden="cd ~/Documents/Sci-Bib/Methoden && l"
