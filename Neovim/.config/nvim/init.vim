@@ -11,8 +11,6 @@ let g:python3_host_prog = '/Users/gregor/.pyenv/versions/3.8.2/envs/Neovim3/bin/
 packadd! vim-fugitive
 packadd! vim-gitgutter
 set rtp+=/usr/local/opt/fzf
-packadd! deoplete.nvim
-let g:deoplete#enable_at_startup = 1
 packadd! Nvim-R
 packadd! UltiSnips
 packadd! table-mode
@@ -20,6 +18,13 @@ packadd! dracula
 packadd! vim-pandoc-syntax
 packadd! vim-pandoc
 packadd! vim-rmarkdown
+packadd! nvim-yarp
+packadd! ncm2
+packadd! float-preview.nvim
+packadd! ncm-R
+packadd! ncm2-jedi
+packadd! ncm2-path
+packadd! ncm2-ultisnips
 packadd! vim-addon-mw-utils
 packadd! tlib_vim
 packadd! vim-devicons
@@ -167,43 +172,46 @@ set statusline+=\ %l:%c
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" =>  Linting and Completion
+" =>  Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call deoplete#custom#var('omni', 'input_patterns', {
-    \ 'pandoc': '@'
-    \})
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
-
-let g:ulti_expand_or_jump_res = 0
-let g:UltiSnipsRemoveSelectModeMappings = 0
-let g:UltiSnipsExpandTrigger = "<leader>u"
+set completeopt=noinsert,menuone,noselect
+autocmd BufEnter * call ncm2#enable_for_buffer()
+inoremap <c-c> <ESC>
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+au User Ncm2Plugin call ncm2#register_source({
+        \ 'name' : 'css',
+        \ 'priority': 9,
+        \ 'subscope_enable': 1,
+        \ 'scope': ['css','scss'],
+        \ 'mark': 'css',
+        \ 'word_pattern': '[\w\-]+',
+        \ 'complete_pattern': ':\s*',
+        \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+        \ })
+inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
 let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+let g:UltiSnipsRemoveSelectModeMappings = 0
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
 
+augroup my_cm_setup
+    autocmd!
+    autocmd BufEnter * call ncm2#enable_for_buffer()
+    autocmd Filetype pandoc call ncm2#register_source({
+      \ 'name': 'pandoc',
+      \ 'priority': 8,
+      \ 'scope': ['pandoc'],
+      \ 'mark': 'md',
+      \ 'word_pattern': '\w+',
+      \ 'complete_pattern': ['@'],
+      \ 'on_complete': ['ncm2#on_complete#omni', 'pandoc#completion#Complete'],
+      \ })
+  augroup END
 
-function! HandleTab() abort
-  " First, try to expand or jump on UltiSnips.
-  call UltiSnips#ExpandSnippetOrJump()
-  if g:ulti_expand_or_jump_res > 0
-    return ""
-  endif
-  " Then, check if we're in a completion menu
-  if pumvisible()
-    return "\<C-n>"
-  endif
-  " Then check if we're indenting.
-  let col = col('.') - 1
-  if !col || getline('.')[col - 1] =~ '\s'
-    return "\<Tab>"
-  endif
-  " Finally, trigger deoplete completion.
-  return deoplete#manual_complete()
-endfunction
-
-inoremap <silent> <Tab> <C-R>=HandleTab()<CR>
-
-
-
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" =>  Linting
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"call ncm2#override_source('LanguageClient_python', {'enable': 0})
