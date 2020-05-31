@@ -4,9 +4,12 @@ export LANG="en_US.UTF-8"
 export EDITOR="nvim"
 PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH
+
 autoload -U colors && colors
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+
 
 alias g2cp="cd ~/Documents/Sci-Bib/Projekte/Politische_Frauen && open . && l"
 alias g2methoden="cd ~/Documents/Sci-Bib/Methoden && l"

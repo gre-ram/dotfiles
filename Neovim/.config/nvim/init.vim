@@ -172,16 +172,38 @@ set statusline+=\ %l:%c
 call deoplete#custom#var('omni', 'input_patterns', {
     \ 'pandoc': '@'
     \})
-:
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
-let g:UltiSnipsExpandTrigger='<Plug>(ultisnips_expand)'
-set completeopt=noinsert,menuone,noselect,preview
-let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
-let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
 
+let g:ulti_expand_or_jump_res = 0
+let g:UltiSnipsRemoveSelectModeMappings = 0
+let g:UltiSnipsExpandTrigger = "<leader>u"
+let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
 
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+
+function! HandleTab() abort
+  " First, try to expand or jump on UltiSnips.
+  call UltiSnips#ExpandSnippetOrJump()
+  if g:ulti_expand_or_jump_res > 0
+    return ""
+  endif
+  " Then, check if we're in a completion menu
+  if pumvisible()
+    return "\<C-n>"
+  endif
+  " Then check if we're indenting.
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] =~ '\s'
+    return "\<Tab>"
+  endif
+  " Finally, trigger deoplete completion.
+  return deoplete#manual_complete()
+endfunction
+
+inoremap <silent> <Tab> <C-R>=HandleTab()<CR>
+
+
+
 
