@@ -6,7 +6,7 @@ PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH
 
 autoload -U colors && colors
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+#source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 
