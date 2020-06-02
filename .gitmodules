@@ -34,9 +34,6 @@
 [submodule "vim-devicons"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-devicons
 	url = https://github.com/ryanoasis/vim-devicons.git
-[submodule "powerlevel10k"]
-	path = zsh/.zsh/powerlevel10k
-	url = https://github.com/romkatv/powerlevel10k.git
 [submodule "zsh-syntax-highlighting"]
 	path = zsh/.zsh/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
@@ -61,3 +58,6 @@
 [submodule "ncm2-ultisnips"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/ncm2-ultisnips
 	url = https://github.com/ncm2/ncm2-ultisnips.git
+[submodule "powerlevel10k"]
+	path = zsh/.zsh/powerlevel10k
+	url = https://github.com/romkatv/powerlevel10k.git
