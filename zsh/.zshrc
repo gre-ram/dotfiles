@@ -4,11 +4,8 @@ export LANG="en_US.UTF-8"
 export EDITOR="nvim"
 PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH
-
-autoload -U colors && colors
-#source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
+autoload -U colors && colors
 
 
 alias g2cp="cd ~/Documents/Sci-Bib/Projekte/Politische_Frauen && open . && l"
@@ -73,6 +70,7 @@ setopt PRINT_EXIT_VALUE        # [default] for non-zero exit status
 setopt PUSHD_IGNORE_DUPS       # don't push multiple copies of same dir onto stack
 setopt PUSHD_SILENT            # [default] don't print dir stack after pushing/popping
 setopt SHARE_HISTORY           # share history across shells
+
 bindkey -v
 autoload -Uz edit-command-line
 zle -N edit-command-line
@@ -85,7 +83,7 @@ compinit -u
 # - Then fall back to case-insensitive.
 # - Accept abbreviations after . or _ or - (ie. f.b -> foo.bar).
 # - Substring complete (ie. bar -> foobar).
-zstyle ':completion:*' matcher-list '' '+m:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}' '+m:{_-}={-_}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+#zstyle ':completion:*' matcher-list '' '+m:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}' '+m:{_-}={-_}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 # Colorize completions using default `ls` colors.
 zstyle ':completion:*' list-colors ''
 # Allow completion of ..<Tab> to ../ and beyond.
