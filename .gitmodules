@@ -61,3 +61,6 @@
 [submodule "gitstatus"]
 	path = zsh/.zsh/gitstatus
 	url = https://github.com/romkatv/gitstatus.git
+[submodule "spaceship-prompt"]
+	path = zsh/.zsh/spaceship-prompt
+	url = https://github.com/denysdovhan/spaceship-prompt.git
