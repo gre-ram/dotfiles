@@ -58,6 +58,6 @@
 [submodule "ncm2-ultisnips"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/ncm2-ultisnips
 	url = https://github.com/ncm2/ncm2-ultisnips.git
-[submodule "powerlevel10k"]
-	path = zsh/.zsh/powerlevel10k
-	url = https://github.com/romkatv/powerlevel10k.git
+[submodule "gitstatus"]
+	path = zsh/.zsh/gitstatus
+	url = https://github.com/romkatv/gitstatus.git
