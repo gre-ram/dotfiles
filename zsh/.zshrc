@@ -116,6 +116,7 @@ bindkey '^Z' fg-bg
 autoload -Uz compinit && compinit
 autoload bashcompinit && bashcompinit
 zstyle ':completion:*' list-suffixes
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' expand prefix suffix
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' menu select
