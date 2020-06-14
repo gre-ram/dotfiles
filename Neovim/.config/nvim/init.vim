@@ -95,7 +95,7 @@ let g:pandoc#folding#level = 999
 
 "let R_hl_term = 1 "R Output is colored by
 let R_args = ['--quiet']
-let R_csv_app = 'tmux new-window /Users/gregor/.pyenv/versions/3.8.2/bin/vd'
+"let R_csv_app = 'tmux new-window /Users/gregor/.pyenv/versions/3.8.2/bin/vd'
 let R_term_cmd = 'tmux new-window R' "not on mac
 autocmd TermOpen * setlocal nonumber
 autocmd TermOpen * setlocal norelativenumber
