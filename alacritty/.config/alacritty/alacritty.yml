@@ -8,10 +8,6 @@ window:
   dynamic_padding: true
   decorations: buttonless
 
-dpi:
-  x: 220.0
-  y: 220.0
-
 colors:
   primary:
     background: "0x282a36"
@@ -55,21 +51,19 @@ font:
     family: MesloLGS NF
   italic:
     family: MesloLGS NF
-  size: 14.0
+  size: 11.7
   offset:
     x: 0
     y: 2
   glyph_offset:
     x: 0
     y: 2
-    #scale_with_dpi: true
-  use_thin_strokes: true
+    #use_thin_strokes: true
 
 shell:
   #program: /usr/local/bin/zsh
   #args:
   #- --login
-
   program: /usr/local/bin/tmux
   args:
     - -u
