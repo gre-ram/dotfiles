@@ -64,3 +64,9 @@
 [submodule "pyenv/.pyenv"]
 	path = pyenv/.pyenv
 	url = https://github.com/pyenv/pyenv.git
+[submodule "pyenv-virtualenv"]
+	path = pyenv-plugins/.pyenv/plugins/pyenv-virtualenv
+	url = https://github.com/pyenv/pyenv-virtualenv.git
+[submodule "pyenv-pip-migrate"]
+	path = pyenv-plugins/.pyenv/plugins/pyenv-pip-migrate
+	url = git://github.com/pyenv/pyenv-pip-migrate.git
