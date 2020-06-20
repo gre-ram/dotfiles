@@ -166,9 +166,13 @@ set statusline+=\ %{GitStatus()}
 set statusline+=%=
 set statusline+=%#currentStatusLine#
 set statusline+=\ %Y
-set statusline+=\ %{WebDevIconsGetFileTypeSymbol()}
-set statusline+=\ %p%%
-set statusline+=\ %l:%c
+set statusline+=\ %{WebDevIconsGetFileTypeSymbol()} 
+set statusline+=\ [\ %p%%
+set statusline+=\ ﮆ
+set statusline+=\ %l
+set statusline+=\ ﮇ
+set statusline+=\ %c\ ]
+set statusline+=\ 
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
