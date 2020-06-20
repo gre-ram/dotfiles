@@ -61,3 +61,6 @@
 [submodule "gitstatus"]
 	path = zsh/.zsh/gitstatus
 	url = https://github.com/romkatv/gitstatus.git
+[submodule "pyenv/.pyenv"]
+	path = pyenv/.pyenv
+	url = https://github.com/pyenv/pyenv.git
