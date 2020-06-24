@@ -57,7 +57,7 @@ alias g2vimrc="vim ~/dotfiles/Neovim/.config/nvim/init.vim"
 alias g2tmuxconf="vim ~/dotfiles/tmux/.tmux.conf"
 alias g2zshrc="vim ~/dotfiles/zsh/.zshrc"
 
-alias internet="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I"
+alias internet="~/.scripts/internet.sh"
 
 alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
 alias getbib="~/.scripts/getbib.zsh"
