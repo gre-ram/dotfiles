@@ -51,8 +51,8 @@ font:
     family: MesloLGS NF
   italic:
     family: MesloLGS NF
-  size: 11.7
-
+    size: 12.3
+  
 shell:
   #program: /usr/local/bin/zsh
   #args:
