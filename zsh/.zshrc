@@ -74,6 +74,7 @@ alias gcl='git clone --recurse-submodules'
 alias gd='git diff'
 alias gss='git status -s'
 alias gst='git status'
+alias gsurr='git submodule update --recursive --remote'
 
 alias vi='nvim'
 alias vim='nvim'
@@ -252,7 +253,7 @@ function -report-start-time() {
       SECS="$((~~$SECS))s"
     fi
     ELAPSED="${ELAPSED}${SECS}"
-    export RPROMPT="%F{cyan}${ELAPSED}%f $RPROMPT_BASE"
+    export RPROMPT="%F{cyan} ${ELAPSED}%f $RPROMPT_BASE"
     unset ZSH_START_TIME
   else
     export RPROMPT="$RPROMPT_BASE"
