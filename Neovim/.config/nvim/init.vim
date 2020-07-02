@@ -11,7 +11,7 @@ let g:python3_host_prog = expand('$PYENV_ROOT/shims/python')
 packadd! vim-fugitive
 packadd! vim-gitgutter
 set rtp+=/usr/local/opt/fzf
-"packadd! Nvim-R
+packadd! Nvim-R
 packadd! deoplete.nvim
 packadd! UltiSnips
 packadd! table-mode
@@ -22,7 +22,9 @@ packadd! vim-rmarkdown
 packadd! vim-addon-mw-utils
 packadd! tlib_vim
 packadd! vim-surround
-packadd! vim-slime
+"packadd! vim-slime
+"packadd! deoplete-lsp
+"packadd! nvim-lsp
 packadd! vim-devicons
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -175,6 +177,7 @@ set statusline+=\
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set completeopt=menuone,noinsert,noselect
 let g:deoplete#enable_at_startup = 1
 let g:UltiSnipsExpandTrigger		= "<c-o>"
 inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -184,9 +187,10 @@ let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
 
-call deoplete#custom#option('omni_patterns', {
-    \ 'r'   : ['[^. *\t]\.\w*']
-\})
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+call deoplete#custom#var('omni', 'input_patterns', {
+    \ 'pandoc': '@'
+    \})
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

@@ -59,3 +59,9 @@
 [submodule "vim-surround"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-surround
 	url = https://github.com/tpope/vim-surround
+[submodule "deoplete-LSP"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/deoplete-lsp
+	url = https://github.com/Shougo/deoplete-lsp.git
+[submodule "nvim-lsp"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/nvim-lsp
+	url = https://github.com/neovim/nvim-lsp.git
