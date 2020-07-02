@@ -11,7 +11,7 @@ let g:python3_host_prog = expand('$PYENV_ROOT/shims/python')
 packadd! vim-fugitive
 packadd! vim-gitgutter
 set rtp+=/usr/local/opt/fzf
-packadd! Nvim-R
+"packadd! Nvim-R
 packadd! deoplete.nvim
 packadd! UltiSnips
 packadd! table-mode
@@ -21,6 +21,8 @@ packadd! vim-pandoc
 packadd! vim-rmarkdown
 packadd! vim-addon-mw-utils
 packadd! tlib_vim
+packadd! vim-surround
+packadd! vim-slime
 packadd! vim-devicons
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -66,7 +68,8 @@ set cmdheight=2
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
-
+autocmd TermOpen * setlocal nonumber
+autocmd TermOpen * setlocal norelativenumber
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Pandoc und Citation
@@ -88,12 +91,10 @@ let g:pandoc#folding#level = 999
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "let R_hl_term = 1 "R Output is colored by
-let R_args = ['']
-let R_hi_fun_globenv = 2
+"let R_args = ['']
+"let R_hi_fun_globenv = 2
 "let R_csv_app = 'tmux new-window /Users/gregor/.pyenv/versions/3.8.2/bin/vd'
-let R_term_cmd = 'tmux new-window R' "not on mac
-autocmd TermOpen * setlocal nonumber
-autocmd TermOpen * setlocal norelativenumber
+"let R_term_cmd = 'tmux new-window R' "not on mac
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Airline and Movingarround

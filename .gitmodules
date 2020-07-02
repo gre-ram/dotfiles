@@ -53,3 +53,9 @@
 [submodule "deoplete.nvim"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/deoplete.nvim
 	url = https://github.com/Shougo/deoplete.nvim.git
+[submodule "vim-slime"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-slime
+	url = https://github.com/jpalardy/vim-slime.git
+[submodule "vim-surround"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-surround
+	url = https://github.com/tpope/vim-surround
