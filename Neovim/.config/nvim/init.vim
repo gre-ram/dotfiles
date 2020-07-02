@@ -3,7 +3,7 @@ set encoding=utf-8
 set shell=/usr/local/bin/zsh
 let maplocalleader = ','
 let mapleader =','
-let g:python3_host_prog = "$PYENV_ROOT/versions/3.8.3/bin/python"
+let g:python3_host_prog = expand('$PYENV_ROOT/shims/python')
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins (to get all helpfiles exec :helptags ALL
@@ -88,7 +88,8 @@ let g:pandoc#folding#level = 999
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "let R_hl_term = 1 "R Output is colored by
-let R_args = ['--quiet']
+let R_args = ['']
+let R_hi_fun_globenv = 2
 "let R_csv_app = 'tmux new-window /Users/gregor/.pyenv/versions/3.8.2/bin/vd'
 let R_term_cmd = 'tmux new-window R' "not on mac
 autocmd TermOpen * setlocal nonumber
@@ -113,15 +114,15 @@ function! GitStatus()
 endfunction
 
 let g:currentmode={
-    \ 'n'  : 'Normal ',
+    \ 'n'  : 'N ',
     \ 'no' : 'N·Operator Pending ',
-    \ 'v'  : 'Visual ',
+    \ 'v'  : 'V ',
     \ 'V'  : 'V·Line ',
     \ '' : 'V·Block ',
     \ 's'  : 'Select ',
     \ 'S'  : 'S·Line ',
     \ '' : 'S·Block ',
-    \ 'i'  : 'Insert ',
+    \ 'i'  : 'I ',
     \ 'R'  : 'Replace ',
     \ 'Rv' : 'V·Replace ',
     \ 'c'  : 'Command ',
@@ -169,16 +170,22 @@ set statusline+=\ %c\ ]
 set statusline+=\ 
 
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:deoplete#enable_at_startup = 1
-let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
+let g:UltiSnipsExpandTrigger		= "<c-o>"
+inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<TAB>"
 let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
 
+call deoplete#custom#option('omni_patterns', {
+    \ 'r'   : ['[^. *\t]\.\w*', '\h\w*::\w*', '\h\w*\$\w*', '\h\w*\w*', '\h\w*(w*']
+\})
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
