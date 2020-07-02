@@ -92,11 +92,9 @@ let g:pandoc#folding#level = 999
 " => R IDE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"let R_hl_term = 1 "R Output is colored by
-"let R_args = ['']
-"let R_hi_fun_globenv = 2
-"let R_csv_app = 'tmux new-window /Users/gregor/.pyenv/versions/3.8.2/bin/vd'
-"let R_term_cmd = 'tmux new-window R' "not on mac
+let R_hl_term = 1 "R Output is colored by
+let R_hi_fun_globenv = 2
+let R_csv_app = 'tmux new-window $PYENV_ROOT/shims/vd'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Airline and Movingarround
