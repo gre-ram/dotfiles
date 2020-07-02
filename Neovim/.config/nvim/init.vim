@@ -12,19 +12,13 @@ packadd! vim-fugitive
 packadd! vim-gitgutter
 set rtp+=/usr/local/opt/fzf
 packadd! Nvim-R
+packadd! deoplete.nvim
 packadd! UltiSnips
 packadd! table-mode
 packadd! dracula
 packadd! vim-pandoc-syntax
 packadd! vim-pandoc
 packadd! vim-rmarkdown
-packadd! nvim-yarp
-packadd! ncm2
-packadd! float-preview.nvim
-packadd! ncm-R
-packadd! ncm2-jedi
-packadd! ncm2-path
-packadd! ncm2-ultisnips
 packadd! vim-addon-mw-utils
 packadd! tlib_vim
 packadd! vim-devicons
@@ -178,44 +172,13 @@ set statusline+=\
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set completeopt=noinsert,menuone,noselect
-autocmd BufEnter * call ncm2#enable_for_buffer()
-inoremap <c-c> <ESC>
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-au User Ncm2Plugin call ncm2#register_source({
-        \ 'name' : 'css',
-        \ 'priority': 9,
-        \ 'subscope_enable': 1,
-        \ 'scope': ['css','scss'],
-        \ 'mark': 'css',
-        \ 'word_pattern': '[\w\-]+',
-        \ 'complete_pattern': ':\s*',
-        \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-        \ })
-inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+let g:deoplete#enable_at_startup = 1
 let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
 let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
 
-augroup my_cm_setup
-    autocmd!
-    autocmd BufEnter * call ncm2#enable_for_buffer()
-    autocmd Filetype pandoc call ncm2#register_source({
-      \ 'name': 'pandoc',
-      \ 'priority': 8,
-      \ 'scope': ['pandoc'],
-      \ 'mark': 'md',
-      \ 'word_pattern': '\w+',
-      \ 'complete_pattern': ['@'],
-      \ 'on_complete': ['ncm2#on_complete#omni', 'pandoc#completion#Complete'],
-      \ })
-  augroup END
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"call ncm2#override_source('LanguageClient_python', {'enable': 0})
