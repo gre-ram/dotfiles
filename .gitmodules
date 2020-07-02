@@ -4,6 +4,7 @@
 [submodule "Nvim-R"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/Nvim-R
 	url = https://github.com/jalvesaq/Nvim-R.git
+    branch = stable
 [submodule "vim-gitgutter"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-gitgutter
 	url = https://github.com/airblade/vim-gitgutter.git
