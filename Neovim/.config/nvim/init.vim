@@ -184,7 +184,7 @@ let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
 
 call deoplete#custom#option('omni_patterns', {
-    \ 'r'   : ['[^. *\t]\.\w*', '\h\w*::\w*', '\h\w*\$\w*', '\h\w*\w*', '\h\w*(w*']
+    \ 'r'   : ['[^. *\t]\.\w*']
 \})
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting
