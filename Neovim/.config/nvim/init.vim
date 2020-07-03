@@ -2,7 +2,7 @@ set nocompatible
 set encoding=utf-8
 set shell=/usr/local/bin/zsh
 let maplocalleader = ','
-let mapleader =','
+let mapleader =';'
 let g:python3_host_prog = expand('$PYENV_ROOT/shims/python')
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -23,8 +23,8 @@ packadd! vim-addon-mw-utils
 packadd! tlib_vim
 packadd! vim-surround
 "packadd! vim-slime
-"packadd! deoplete-lsp
-"packadd! nvim-lsp
+packadd! deoplete-lsp
+packadd! nvim-lsp
 packadd! vim-devicons
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -192,3 +192,17 @@ call deoplete#custom#var('omni', 'input_patterns', {
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua << EOF
+    local nvim_lsp = require'nvim_lsp'
+    nvim_lsp.r_language_server.setup{}
+    nvim_lsp.pyls.setup{}
+    nvim_lsp.vimls.setup{}
+EOF
+
+
+nnoremap <silent> ;dc :call lsp#text_document_declaration()<CR>
+nnoremap <silent> ;df :call lsp#text_document_definition()<CR>
+nnoremap <silent> ;h  :call lsp#text_document_hover()<CR>
+nnoremap <silent> ;i  :call lsp#text_document_implementation()<CR>
+nnoremap <silent> ;s  :call lsp#text_document_signature_help()<CR>
+nnoremap <silent> ;td :call lsp#text_document_type_definition()<CR>
