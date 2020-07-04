@@ -195,13 +195,18 @@ inoremap <silent><expr> <TAB>
   \ pumvisible() ? "\<C-n>" :
   \ <SID>check_back_space() ? "\<TAB>" :
   \ completion#trigger_completion()
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua << EOF
     local nvim_lsp = require'nvim_lsp'
 
-    -- nvim_lsp.r_language_server.setup{}
+    nvim_lsp.r_language_server.setup{
+        on_attach = require'diagnostic'.on_attach
+    }
+
     nvim_lsp.pyls.setup{
         on_attach = require'diagnostic'.on_attach 
     }
@@ -209,6 +214,18 @@ lua << EOF
         on_attach = require'diagnostic'.on_attach 
     }
 EOF
+
+let g:completion_chain_complete_list = {
+    \ 'r': [
+    \    {'complete_items': ['lsp', 'snippet']},
+    \    {'mode': '<c-p>'},
+    \],
+    \ 'default': [
+    \    {'complete_items': ['lsp', 'snippet']},
+    \    {'mode': '<c-p>'},
+    \    {'mode': '<c-n>'}
+    \]
+\}
 
 nnoremap <silent> <Leader><TAB> <cmd> NextDiagnosticCycle <CR>
 nnoremap <silent> gd            <cmd>lua vim.lsp.buf.declaration()<CR>
@@ -220,3 +237,5 @@ nnoremap <silent> 1gD           <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gr            <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> g0            <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gW            <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+
+
