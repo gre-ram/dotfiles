@@ -2,7 +2,7 @@ set nocompatible
 set encoding=utf-8
 set shell=/usr/local/bin/zsh
 let maplocalleader = ','
-let mapleader =';'
+let g:mapleader ="\<Space>"
 let g:python3_host_prog = expand('$PYENV_ROOT/shims/python')
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -12,7 +12,6 @@ packadd! vim-fugitive
 packadd! vim-gitgutter
 set rtp+=/usr/local/opt/fzf
 packadd! Nvim-R
-packadd! deoplete.nvim
 packadd! UltiSnips
 packadd! table-mode
 packadd! dracula
@@ -23,8 +22,9 @@ packadd! vim-addon-mw-utils
 packadd! tlib_vim
 packadd! vim-surround
 "packadd! vim-slime
-packadd! deoplete-lsp
 packadd! nvim-lsp
+packadd! completion-nvim
+packadd! diagnostic-nvim
 packadd! vim-devicons
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -68,7 +68,6 @@ set nobackup
 set nowritebackup
 set cmdheight=2
 set updatetime=300
-set shortmess+=c
 set signcolumn=yes
 autocmd TermOpen * setlocal nonumber
 autocmd TermOpen * setlocal norelativenumber
@@ -170,39 +169,54 @@ set statusline+=\ ﮇ
 set statusline+=\ %c\ ]
 set statusline+=\ 
 
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set completeopt=menuone,noinsert,noselect
-let g:deoplete#enable_at_startup = 1
+autocmd BufEnter * lua require'completion'.on_attach()
 let g:UltiSnipsExpandTrigger		= "<c-o>"
-inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<TAB>"
 let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
+let g:completion_enable_snippet = 'UltiSnips'
 
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
 
-call deoplete#custom#var('omni', 'input_patterns', {
-    \ 'pandoc': '@'
-    \})
+" Avoid showing message extra message when using completion
+set shortmess+=c
+
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+  \ pumvisible() ? "\<C-n>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ completion#trigger_completion()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua << EOF
     local nvim_lsp = require'nvim_lsp'
-    nvim_lsp.r_language_server.setup{}
-    nvim_lsp.pyls.setup{}
-    nvim_lsp.vimls.setup{}
+
+    -- nvim_lsp.r_language_server.setup{}
+    nvim_lsp.pyls.setup{
+        on_attach = require'diagnostic'.on_attach 
+    }
+    nvim_lsp.vimls.setup{
+        on_attach = require'diagnostic'.on_attach 
+    }
 EOF
 
-
-nnoremap <silent> ;dc :call lsp#text_document_declaration()<CR>
-nnoremap <silent> ;df :call lsp#text_document_definition()<CR>
-nnoremap <silent> ;h  :call lsp#text_document_hover()<CR>
-nnoremap <silent> ;i  :call lsp#text_document_implementation()<CR>
-nnoremap <silent> ;s  :call lsp#text_document_signature_help()<CR>
-nnoremap <silent> ;td :call lsp#text_document_type_definition()<CR>
+nnoremap <silent> <Leader><TAB> <cmd> NextDiagnosticCycle <CR>
+nnoremap <silent> gd            <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> <c-]>         <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K             <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD            <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k>         <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD           <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr            <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0            <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW            <cmd>lua vim.lsp.buf.workspace_symbol()<CR>

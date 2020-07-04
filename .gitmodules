@@ -50,18 +50,18 @@
 [submodule "pyenv-pip-migrate"]
 	path = pyenv-plugins/.pyenv/plugins/pyenv-pip-migrate
 	url = git://github.com/pyenv/pyenv-pip-migrate.git
-[submodule "deoplete.nvim"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/deoplete.nvim
-	url = https://github.com/Shougo/deoplete.nvim.git
 [submodule "vim-slime"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-slime
 	url = https://github.com/jpalardy/vim-slime.git
 [submodule "vim-surround"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-surround
 	url = https://github.com/tpope/vim-surround
-[submodule "deoplete-LSP"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/deoplete-lsp
-	url = https://github.com/Shougo/deoplete-lsp.git
 [submodule "nvim-lsp"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/nvim-lsp
 	url = https://github.com/neovim/nvim-lsp.git
+[submodule "completion-nvim"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/completion-nvim
+	url = https://github.com/nvim-lua/completion-nvim.git
+[submodule "diagnostic-nvim"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/diagnostic-nvim
+	url = https://github.com/nvim-lua/diagnostic-nvim.git
