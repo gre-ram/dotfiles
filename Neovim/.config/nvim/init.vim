@@ -24,7 +24,6 @@ packadd! vim-surround
 packadd! nvim-lsp
 packadd! completion-nvim
 packadd! diagnostic-nvim
-packadd! vim-lsp
 packadd! vim-devicons
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -135,7 +134,6 @@ let g:currentmode={
     \ 't'  : 'Terminal '
     \}
 
-
 function! ChangeStatuslineColor()
      if (mode() =~# '\v(n|no)')
        exe 'hi! link currentStatusLine StatusLine'
@@ -148,6 +146,7 @@ function! ChangeStatuslineColor()
      endif
      return ''
  endfunction
+
 
 set statusline=
 set statusline+=%{ChangeStatuslineColor()}
@@ -184,9 +183,6 @@ let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting & Completion not usable yet
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:completion_enable_snippet = 'UltiSnips'
-
-
 function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~ '\s'
@@ -196,6 +192,9 @@ inoremap <silent><expr> <TAB>
   \ pumvisible() ? "\<C-n>" :
   \ <SID>check_back_space() ? "\<TAB>" :
   \ completion#trigger_completion()
+
+let g:completion_enable_snippet = 'UltiSnips'
+
 
 lua << EOF
     local nvim_lsp = require'nvim_lsp'
@@ -217,11 +216,17 @@ lua << EOF
 EOF
 
 lua require'completion'.addCompletionSource('nvimr', require'nvimr'.complete_item)
+lua require'completion'.addCompletionSource('vim-pandoc', require'vim-pandoc'.complete_item)
 
 let g:completion_chain_complete_list = {
     \ 'r': [
     \    {'complete_items': ['nvimr', 'snippet', 'lsp']},
+    \    {'mode': '<c-p>'}
+    \],
+    \ 'pandoc': [
+    \    {'complete_items': ['vim-pandoc', 'snippet']},
     \    {'mode': '<c-p>'},
+    \    {'mode': '<c-n>'}
     \],
     \ 'default': [
     \    {'complete_items': ['lsp', 'snippet']},
@@ -240,8 +245,4 @@ nnoremap <silent> 1gD           <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gr            <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> g0            <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gW            <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-
-
-
-
 
