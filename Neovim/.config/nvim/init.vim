@@ -98,7 +98,7 @@ let g:pandoc#folding#level = 999
 " => R IDE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let R_hl_term = 1 "R Output is colored by
+let R_hl_term = 0 "R Output is colored by
 let R_hi_fun_globenv = 2
 let R_csv_app = 'tmux new-window $PYENV_ROOT/shims/vd'
 
