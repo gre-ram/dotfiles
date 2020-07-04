@@ -25,6 +25,13 @@ packadd! vim-surround
 "packadd! nvim-lsp
 "packadd! completion-nvim
 "packadd! diagnostic-nvim
+packadd! vim-lsp
+packadd! asyncomplete.vim
+packadd! asyncomplete-lsp.vim
+packadd! asyncomplete-buffer.vim
+packadd! asyncomplete-file.vim
+packadd! asyncomplete-omni.vim
+packadd! asyncomplete-ultisnips.vim
 packadd! vim-devicons
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -170,7 +177,7 @@ set statusline+=\ %c\ ]
 set statusline+=\ 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" =>  Completion
+" =>  Ultisnips
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
@@ -181,9 +188,72 @@ let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
 
+""""""""""""""""" temp 
+
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
+
+if has('python3')
+    call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
+        \ 'name': 'ultisnips',
+        \ 'whitelist': ['*'],
+        \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
+        \ }))
+endif
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+    \ 'name': 'file',
+    \ 'whitelist': ['*'],
+    \ 'priority': 10,
+    \ 'completor': function('asyncomplete#sources#file#completor')
+    \ }))
+call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+    \ 'name': 'buffer',
+    \ 'allowlist': ['*'],
+    \ 'blocklist': ['go'],
+    \ 'completor': function('asyncomplete#sources#buffer#completor'),
+    \ 'config': {
+    \    'max_buffer_size': 5000000,
+    \  },
+    \ }))
+call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
+\ 'name': 'omni',
+\ 'whitelist': ['*'],
+\ 'blacklist': ['c', 'cpp', 'html'],
+\ 'completor': function('asyncomplete#sources#omni#completor')
+\  }))
 
 
+if executable('pyls')
+    " pip install python-language-server
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls',
+        \ 'cmd': {server_info->['pyls']},
+        \ 'allowlist': ['python'],
+        \ })
+endif
 
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <Plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <Plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
+    
+    " refer to doc to add more commands
+endfunction
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting & Completion not usable yet
@@ -239,5 +309,8 @@ let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
 " nnoremap <silent> gr            <cmd>lua vim.lsp.buf.references()<CR>
 " nnoremap <silent> g0            <cmd>lua vim.lsp.buf.document_symbol()<CR>
 " nnoremap <silent> gW            <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+"
+
+
 
 

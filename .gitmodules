@@ -83,3 +83,6 @@
 [submodule "asyncomplete-ultisnips"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/asyncomplete-ultisnips.vim
 	url = https://github.com/prabirshrestha/asyncomplete-ultisnips.vim
+[submodule "asyncomplete-lsp"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/asyncomplete-lsp.vim
+	url = https://github.com/prabirshrestha/asyncomplete-lsp.vim
