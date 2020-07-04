@@ -65,3 +65,21 @@
 [submodule "diagnostic-nvim"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/diagnostic-nvim
 	url = https://github.com/nvim-lua/diagnostic-nvim.git
+[submodule "vim-lsp"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-lsp
+	url = https://github.com/prabirshrestha/vim-lsp
+[submodule "asyncomplete-omni"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/asyncomplete-omni.vim
+	url = https://github.com/yami-beta/asyncomplete-omni.vim
+[submodule "asyncomplete"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/asyncomplete.vim
+	url = https://github.com/prabirshrestha/asyncomplete.vim
+[submodule "asyncomplete-buffer"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/asyncomplete-buffer.vim
+	url = https://github.com/prabirshrestha/asyncomplete-buffer.vim
+[submodule "asyncomplete-file"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/asyncomplete-file.vim
+	url = https://github.com/prabirshrestha/asyncomplete-file.vim
+[submodule "asyncomplete-ultisnips"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/asyncomplete-ultisnips.vim
+	url = https://github.com/prabirshrestha/asyncomplete-ultisnips.vim
