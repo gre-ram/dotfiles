@@ -204,7 +204,7 @@ lua << EOF
     end
 
     nvim_lsp.r_language_server.setup{
-        on_attach = on_attach_vim 
+       on_attach = on_attach_vim 
     }
 
     nvim_lsp.pyls.setup{
@@ -215,25 +215,25 @@ lua << EOF
     }
 EOF
 
-lua require'completion'.addCompletionSource('nvimr', require'nvimr'.complete_item)
-lua require'completion'.addCompletionSource('vim-pandoc', require'vim-pandoc'.complete_item)
+" lua require'completion'.addCompletionSource('nvimr', require'nvimr'.complete_item)
+" lua require'completion'.addCompletionSource('vim-pandoc', require'vim-pandoc'.complete_item)
 
-let g:completion_chain_complete_list = {
-    \ 'r': [
-    \    {'complete_items': ['nvimr', 'snippet', 'lsp']},
-    \    {'mode': '<c-p>'}
-    \],
-    \ 'pandoc': [
-    \    {'complete_items': ['vim-pandoc', 'snippet']},
-    \    {'mode': '<c-p>'},
-    \    {'mode': '<c-n>'}
-    \],
-    \ 'default': [
-    \    {'complete_items': ['lsp', 'snippet']},
-    \    {'mode': '<c-p>'},
-    \    {'mode': '<c-n>'}
-    \]
-\}
+"let g:completion_chain_complete_list = {
+"    \ 'r': [
+"    \    {'complete_items': ['nvimr', 'snippet', 'lsp']},
+"    \    {'mode': '<c-p>'}
+"    \],
+"    \ 'pandoc': [
+"    \    {'complete_items': ['vim-pandoc', 'snippet']},
+"    \    {'mode': '<c-p>'},
+"    \    {'mode': '<c-n>'}
+"    \],
+"    \ 'default': [
+"    \    {'complete_items': ['lsp', 'snippet']},
+"    \    {'mode': '<c-p>'},
+"    \    {'mode': '<c-n>'}
+"    \]
+"\}
 
 nnoremap <silent> <Leader><TAB> <cmd> NextDiagnosticCycle <CR>
 nnoremap <silent> gd            <cmd>lua vim.lsp.buf.declaration()<CR>
