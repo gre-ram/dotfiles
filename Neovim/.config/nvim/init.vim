@@ -22,9 +22,9 @@ packadd! vim-addon-mw-utils
 packadd! tlib_vim
 packadd! vim-surround
 "packadd! vim-slime
-packadd! nvim-lsp
-packadd! completion-nvim
-packadd! diagnostic-nvim
+"packadd! nvim-lsp
+"packadd! completion-nvim
+"packadd! diagnostic-nvim
 packadd! vim-devicons
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -172,70 +172,72 @@ set statusline+=\
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd BufEnter * lua require'completion'.on_attach()
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c
+
 let g:UltiSnipsExpandTrigger		= "<c-o>"
 let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
-let g:completion_enable_snippet = 'UltiSnips'
 
-" Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
 
-" Avoid showing message extra message when using completion
-set shortmess+=c
 
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <TAB>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ completion#trigger_completion()
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" =>  Linting
+" =>  Linting & Completion not usable yet
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-lua << EOF
-    local nvim_lsp = require'nvim_lsp'
-
-    nvim_lsp.r_language_server.setup{
-        on_attach = require'diagnostic'.on_attach
-    }
-
-    nvim_lsp.pyls.setup{
-        on_attach = require'diagnostic'.on_attach 
-    }
-    nvim_lsp.vimls.setup{
-        on_attach = require'diagnostic'.on_attach 
-    }
-EOF
-
-let g:completion_chain_complete_list = {
-    \ 'r': [
-    \    {'complete_items': ['lsp', 'snippet']},
-    \    {'mode': '<c-p>'},
-    \],
-    \ 'default': [
-    \    {'complete_items': ['lsp', 'snippet']},
-    \    {'mode': '<c-p>'},
-    \    {'mode': '<c-n>'}
-    \]
-\}
-
-nnoremap <silent> <Leader><TAB> <cmd> NextDiagnosticCycle <CR>
-nnoremap <silent> gd            <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> <c-]>         <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K             <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD            <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k>         <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD           <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr            <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0            <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW            <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+" autocmd BufEnter * lua require'completion'.on_attach()
+" let g:completion_enable_snippet = 'UltiSnips'
+" 
+" 
+" function! s:check_back_space() abort
+"     let col = col('.') - 1
+"     return !col || getline('.')[col - 1]  =~ '\s'
+" endfunction
+" 
+" inoremap <silent><expr> <TAB>
+"   \ pumvisible() ? "\<C-n>" :
+"   \ <SID>check_back_space() ? "\<TAB>" :
+"   \ completion#trigger_completion()
+" 
+" lua << EOF
+"     local nvim_lsp = require'nvim_lsp'
+" 
+"     nvim_lsp.r_language_server.setup{
+"         on_attach = require'diagnostic'.on_attach
+"     }
+" 
+"     nvim_lsp.pyls.setup{
+"         on_attach = require'diagnostic'.on_attach 
+"     }
+"     nvim_lsp.vimls.setup{
+"         on_attach = require'diagnostic'.on_attach 
+"     }
+" EOF
+" 
+" let g:completion_chain_complete_list = {
+"     \ 'r': [
+"     \    {'complete_items': ['lsp', 'snippet']},
+"     \    {'mode': '<c-p>'},
+"     \],
+"     \ 'default': [
+"     \    {'complete_items': ['lsp', 'snippet']},
+"     \    {'mode': '<c-p>'},
+"     \    {'mode': '<c-n>'}
+"     \]
+" \}
+" 
+" nnoremap <silent> <Leader><TAB> <cmd> NextDiagnosticCycle <CR>
+" nnoremap <silent> gd            <cmd>lua vim.lsp.buf.declaration()<CR>
+" nnoremap <silent> <c-]>         <cmd>lua vim.lsp.buf.definition()<CR>
+" nnoremap <silent> K             <cmd>lua vim.lsp.buf.hover()<CR>
+" nnoremap <silent> gD            <cmd>lua vim.lsp.buf.implementation()<CR>
+" nnoremap <silent> <c-k>         <cmd>lua vim.lsp.buf.signature_help()<CR>
+" nnoremap <silent> 1gD           <cmd>lua vim.lsp.buf.type_definition()<CR>
+" nnoremap <silent> gr            <cmd>lua vim.lsp.buf.references()<CR>
+" nnoremap <silent> g0            <cmd>lua vim.lsp.buf.document_symbol()<CR>
+" nnoremap <silent> gW            <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 
 
