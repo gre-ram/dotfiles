@@ -4,7 +4,6 @@ set shell=/usr/local/bin/zsh
 let maplocalleader = ','
 let g:mapleader ="\<Space>"
 let g:python3_host_prog = expand('$PYENV_ROOT/shims/python')
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins (to get all helpfiles exec :helptags ALL
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -185,7 +184,6 @@ let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting & Completion not usable yet
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd BufEnter * lua require'completion'.on_attach()
 let g:completion_enable_snippet = 'UltiSnips'
 
 
@@ -201,16 +199,20 @@ inoremap <silent><expr> <TAB>
 
 lua << EOF
     local nvim_lsp = require'nvim_lsp'
+    local on_attach_vim = function()
+        require'completion'.on_attach()
+        require'diagnostic'.on_attach()
+    end
 
     nvim_lsp.r_language_server.setup{
-        on_attach = require'diagnostic'.on_attach
+        on_attach = on_attach_vim 
     }
 
     nvim_lsp.pyls.setup{
-        on_attach = require'diagnostic'.on_attach 
+        on_attach = on_attach_vim  
     }
     nvim_lsp.vimls.setup{
-        on_attach = require'diagnostic'.on_attach 
+        on_attach = on_attach_vim 
     }
 EOF
 
@@ -218,7 +220,7 @@ lua require'completion'.addCompletionSource('nvimr', require'nvimr'.complete_ite
 
 let g:completion_chain_complete_list = {
     \ 'r': [
-    \    {'complete_items': ['nvimr', 'lsp', 'snippet']},
+    \    {'complete_items': ['nvimr', 'snippet', 'lsp']},
     \    {'mode': '<c-p>'},
     \],
     \ 'default': [
