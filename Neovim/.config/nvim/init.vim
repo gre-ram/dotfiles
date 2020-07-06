@@ -220,6 +220,7 @@ lua << EOF
     }
 
     require'completion'.addCompletionSource('nvimr', require'nvimr'.complete_item)
+    require'completion'.addCompletionSource('vimpandoc', require'vimpandoc'.complete_item)
 EOF
 
 let g:completion_chain_complete_list = [
