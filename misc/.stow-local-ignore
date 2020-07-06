@@ -1,4 +1,5 @@
 ^\.DS\_Store
 Brewfile
+python_nvim_dependencies\.txt
 iterm2\.json
 Notate\.workflow\/*
