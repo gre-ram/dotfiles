@@ -15,8 +15,6 @@ packadd! UltiSnips
 packadd! table-mode
 packadd! dracula
 packadd! vim-pandoc-syntax
-packadd! vim-pandoc
-packadd! vim-rmarkdown
 packadd! vim-addon-mw-utils
 packadd! tlib_vim
 packadd! vim-surround
@@ -77,13 +75,9 @@ autocmd TermOpen * setlocal norelativenumber
 
 command -nargs=*  GetBib  r ! ~/.scripts/getbib.zsh <args>
 
-let g:pandoc#completion#bib#mode = "citeproc"
-let g:pandoc#biblio#sources = "g"
-let g:pandoc#filetypes#handled = ["pandoc", "markdown", "textile"]
-let g:pandoc#biblio#bibs = [$HOME.'/main.bib']
-let g:pandoc#completion#bib#use_preview = 1
-let g:pandoc#folding#fdc = 0
-let g:pandoc#folding#level = 999
+augroup pandoc_syntax
+    au! BufNewFile,BufFilePre,BufRead *.md set filetype=pandoc
+augroup END
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
