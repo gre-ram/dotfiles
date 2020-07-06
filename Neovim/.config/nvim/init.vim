@@ -10,10 +10,11 @@ let g:python3_host_prog = expand('$PYENV_ROOT/shims/python')
 packadd! vim-fugitive
 packadd! vim-gitgutter
 set rtp+=/usr/local/opt/fzf
-packadd! Nvim-R
-packadd! UltiSnips
+packadd! nvim-r
+packadd! ultisnips
 packadd! table-mode
 packadd! dracula
+packadd! vim-pandoc
 packadd! vim-pandoc-syntax
 packadd! vim-addon-mw-utils
 packadd! tlib_vim
@@ -22,6 +23,7 @@ packadd! vim-surround
 packadd! nvim-lsp
 packadd! completion-nvim
 packadd! diagnostic-nvim
+packadd! completion-buffers
 packadd! vim-devicons
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -74,6 +76,14 @@ autocmd TermOpen * setlocal norelativenumber
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 command -nargs=*  GetBib  r ! ~/.scripts/getbib.zsh <args>
+
+let g:pandoc#completion#bib#mode = "citeproc"
+let g:pandoc#biblio#sources = "g"
+let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
+let g:pandoc#biblio#bibs = [$HOME.'/main.bib']
+let g:pandoc#completion#bib#use_preview = 1
+let g:pandoc#folding#fdc = 0
+let g:pandoc#folding#level = 999
 
 augroup pandoc_syntax
     au! BufNewFile,BufFilePre,BufRead *.md set filetype=pandoc
@@ -171,8 +181,9 @@ set shortmess+=c
 let g:UltiSnipsExpandTrigger		= "<c-o>"
 let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
-let g:UltiSnipsRemoveSelectModeMappings = 0
+"let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting & Completion not usable yet
@@ -197,9 +208,9 @@ lua << EOF
         require'diagnostic'.on_attach()
     end
 
-    nvim_lsp.r_language_server.setup{
-       on_attach = on_attach_vim 
-    }
+    -- nvim_lsp.r_language_server.setup{
+    --     on_attach = on_attach_vim 
+    -- }
 
     nvim_lsp.pyls.setup{
         on_attach = on_attach_vim  
@@ -207,27 +218,20 @@ lua << EOF
     nvim_lsp.vimls.setup{
         on_attach = on_attach_vim 
     }
+
+    require'completion'.addCompletionSource('nvimr', require'nvimr'.complete_item)
 EOF
 
-" lua require'completion'.addCompletionSource('nvimr', require'nvimr'.complete_item)
-" lua require'completion'.addCompletionSource('vim-pandoc', require'vim-pandoc'.complete_item)
+let g:completion_chain_complete_list = [
+    \{'complete_items': ['lsp', 'snippet', 'buffers']},
+    \{'mode': '<c-p>'},
+    \{'mode': 'spel'},
+    \{'mode': 'file'},
+    \{'mode': 'dict'},
+    \{'mode': '<c-n>'}
+\]
 
-"let g:completion_chain_complete_list = {
-"    \ 'r': [
-"    \    {'complete_items': ['nvimr', 'snippet', 'lsp']},
-"    \    {'mode': '<c-p>'}
-"    \],
-"    \ 'pandoc': [
-"    \    {'complete_items': ['vim-pandoc', 'snippet']},
-"    \    {'mode': '<c-p>'},
-"    \    {'mode': '<c-n>'}
-"    \],
-"    \ 'default': [
-"    \    {'complete_items': ['lsp', 'snippet']},
-"    \    {'mode': '<c-p>'},
-"    \    {'mode': '<c-n>'}
-"    \]
-"\}
+autocmd BufEnter * lua require'completion'.on_attach()
 
 nnoremap <silent> <Leader><TAB> <cmd> NextDiagnosticCycle <CR>
 nnoremap <silent> gd            <cmd>lua vim.lsp.buf.declaration()<CR>

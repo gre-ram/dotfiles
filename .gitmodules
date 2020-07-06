@@ -19,7 +19,7 @@
 	url = https://github.com/dracula/vim.git
 [submodule "pandoc-syntax"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-pandoc-syntax
-	url = https://github.com/vim-pandoc/vim-pandoc-syntax.git
+    url = https://github.com/vim-pandoc/vim-pandoc-syntax.git
 [submodule "vim-addon-mw-utils"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-addon-mw-utils
 	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
@@ -59,3 +59,9 @@
 [submodule "diagnostic-nvim"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/diagnostic-nvim
 	url = https://github.com/nvim-lua/diagnostic-nvim.git
+[submodule "completion-buffers"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/completion-buffers
+	url = https://github.com/steelsojka/completion-buffers.git
+[submodule "vim-pandoc"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-pandoc
+	url = https://github.com/vim-pandoc/vim-pandoc.git
