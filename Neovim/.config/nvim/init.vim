@@ -3,7 +3,7 @@ set encoding=utf-8
 set shell=/usr/local/bin/zsh
 let maplocalleader = ','
 let g:mapleader ="\<Space>"
-let g:python3_host_prog = expand('$PYENV_ROOT/shims/python')
+let g:python3_host_prog = expand('$PYENV_ROOT/versions/py3nvim/bin/python')
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins (to get all helpfiles exec :helptags ALL
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -213,7 +213,8 @@ lua << EOF
     -- }
 
     nvim_lsp.pyls.setup{
-        on_attach = on_attach_vim  
+        on_attach = on_attach_vim,
+        cmd = { "/Users/gregor/.pyenv/versions/3.8.3/bin/pyls" }
     }
     nvim_lsp.vimls.setup{
         on_attach = on_attach_vim 
