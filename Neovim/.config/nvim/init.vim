@@ -181,7 +181,7 @@ set shortmess+=c
 let g:UltiSnipsExpandTrigger		= "<c-o>"
 let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
-"let g:UltiSnipsRemoveSelectModeMappings = 0
+let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
 
 
@@ -200,36 +200,11 @@ inoremap <silent><expr> <TAB>
 
 let g:completion_enable_snippet = 'UltiSnips'
 
-
-lua << EOF
-    local nvim_lsp = require'nvim_lsp'
-    local on_attach_vim = function()
-        require'completion'.on_attach()
-        require'diagnostic'.on_attach()
-    end
-
-    -- nvim_lsp.r_language_server.setup{
-    --     on_attach = on_attach_vim 
-    -- }
-
-    nvim_lsp.pyls.setup{
-        on_attach = on_attach_vim,
-        cmd = { "/Users/gregor/.pyenv/versions/3.8.3/bin/pyls" }
-    }
-    nvim_lsp.vimls.setup{
-        on_attach = on_attach_vim 
-    }
-
-    require'completion'.addCompletionSource('nvimr', require'nvimr'.complete_item)
-    require'completion'.addCompletionSource('vimpandoc', require'vimpandoc'.complete_item)
-EOF
+luafile ~/.config/nvim/init.lua
 
 let g:completion_chain_complete_list = [
     \{'complete_items': ['lsp', 'snippet', 'buffers']},
     \{'mode': '<c-p>'},
-    \{'mode': 'spel'},
-    \{'mode': 'file'},
-    \{'mode': 'dict'},
     \{'mode': '<c-n>'}
 \]
 
