@@ -172,22 +172,18 @@ set statusline+=\ ﮇ
 set statusline+=\ %c\ ]
 set statusline+=\ 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" =>  Ultisnips
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" =>  Linting & Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
-let g:UltiSnipsExpandTrigger		= "<c-o>"
+let g:UltiSnipsExpandTrigger		= "<Plug>"
 let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
 
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" =>  Linting & Completion not usable yet
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~ '\s'
