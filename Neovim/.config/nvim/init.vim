@@ -195,15 +195,20 @@ inoremap <silent><expr> <TAB>
   \ completion#trigger_completion()
 
 let g:completion_enable_snippet = 'UltiSnips'
-
+let g:completion_auto_change_source = 1
 luafile ~/.config/nvim/init.lua
 
-let g:completion_chain_complete_list = [
-    \{'complete_items': ['lsp', 'snippet', 'buffers']},
-    \{'mode': '<c-p>'},
-    \{'mode': '<c-n>'}
-\]
+let g:completion_chain_complete_list = {
+	    \ 'default' : {
+	    \   'default': [
+	    \       {'complete_items': ['vimpandoc'], 'triggered_only': ['@']},
+	    \       {'complete_items': ['lsp', 'snippet', 'buffers']},
+        \       {'complete_items': ['path'], 'triggered_only': ['/']},
+	    \       ]
+	    \   }
+	    \}
 
+lua require'completion'.addCompletionSource('vimpandoc', require'vimpandoc'.complete_item)
 autocmd BufEnter * lua require'completion'.on_attach()
 
 nnoremap <silent> <Leader><TAB> <cmd> NextDiagnosticCycle <CR>
