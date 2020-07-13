@@ -25,6 +25,7 @@ packadd! completion-nvim
 packadd! diagnostic-nvim
 packadd! completion-buffers
 packadd! vim-devicons
+packadd! auto-pairs
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Basic Customization
