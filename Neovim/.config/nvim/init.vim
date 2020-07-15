@@ -87,11 +87,6 @@ let g:pandoc#completion#bib#use_preview = 1
 let g:pandoc#folding#fdc = 0
 let g:pandoc#folding#level = 999
 
-augroup pandoc_syntax
-    au! BufNewFile,BufFilePre,BufRead *.md set filetype=pandoc
-augroup END
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => R IDE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -198,20 +193,10 @@ inoremap <silent><expr> <TAB>
 
 let g:completion_enable_snippet = 'UltiSnips'
 let g:completion_auto_change_source = 1
+
 luafile ~/.config/nvim/init.lua
 
-let g:completion_chain_complete_list = {
-	    \ 'default' : {
-	    \   'default': [
-	    \       {'complete_items': ['vimpandoc'], 'triggered_only': ['@']},
-	    \       {'complete_items': ['lsp', 'snippet', 'buffers']},
-        \       {'complete_items': ['path'], 'triggered_only': ['/']},
-	    \       ]
-	    \   }
-	    \}
-
-lua require'completion'.addCompletionSource('vimpandoc', require'vimpandoc'.complete_item)
-autocmd BufEnter * lua require'completion'.on_attach()
+autocmd BufEnter *.md lua require'completion'.On_attach_vim()
 
 nnoremap <silent> <Leader><TAB> <cmd> NextDiagnosticCycle <CR>
 nnoremap <silent> gd            <cmd>lua vim.lsp.buf.declaration()<CR>
