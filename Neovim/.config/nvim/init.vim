@@ -13,7 +13,8 @@ set rtp+=/usr/local/opt/fzf
 packadd! nvim-r
 packadd! ultisnips
 packadd! table-mode
-packadd! dracula
+packadd! nord-vim
+"packadd! dracula
 packadd! vim-pandoc
 packadd! vim-pandoc-syntax
 packadd! vim-addon-mw-utils
@@ -31,7 +32,7 @@ packadd! auto-pairs
 " => Basic Customization
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set termguicolors
-colorscheme dracula
+colorscheme nord
 let g:dracula_bold = 1
 let g:dracula_italic = 1
 let g:dracula_underline = 1
