@@ -196,7 +196,7 @@ let g:completion_auto_change_source = 1
 
 luafile ~/.config/nvim/init.lua
 
-autocmd BufEnter *.md lua require'completion'.On_attach_vim()
+autocmd BufEnter *.md lua require'completion'.on_attach()
 
 nnoremap <silent> <Leader><TAB> <cmd> NextDiagnosticCycle <CR>
 nnoremap <silent> gd            <cmd>lua vim.lsp.buf.declaration()<CR>
