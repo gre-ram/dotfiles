@@ -5,7 +5,7 @@ local on_attach_vim = function()
 end
 
 nvim_lsp.r_language_server.setup{
-    on_attach = on_attach_vim 
+    on_attach = on_attach_vim
 }
 
 nvim_lsp.texlab.setup{
@@ -19,6 +19,11 @@ nvim_lsp.pyls.setup{
 }
 
 nvim_lsp.vimls.setup{
-    on_attach = on_attach_vim 
+    on_attach = on_attach_vim
+}
+
+nvim_lsp.sumneko_lua.setup{
+    on_attach = on_attach_vim,
+    cmd = {"/Users/gregor/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/bin/macOS/lua-language-server", "-E", "/Users/gregor/.cache/nvim/nvim_lsp/sumneko_lua/lua-language-server/main.lua"};
 }
 
