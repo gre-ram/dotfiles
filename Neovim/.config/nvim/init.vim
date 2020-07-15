@@ -192,11 +192,18 @@ inoremap <silent><expr> <TAB>
   \ completion#trigger_completion()
 
 let g:completion_enable_snippet = 'UltiSnips'
+let g:completion_chain_complete_list = {
+	    \ 'default' : {
+	    \   'default': [
+	    \       {'complete_items': ['lsp', 'snippet', 'path']},
+	    \       {'mode': '<c-p>'},
+	    \       {'mode': '<c-n>'}],
+	    \   'comment': []
+	    \   }
+	    \}
 let g:completion_auto_change_source = 1
-
-luafile ~/.config/nvim/init.lua
-
-autocmd BufEnter *.md lua require'completion'.on_attach()
+luafile ~/.config/nvim/lsp.lua
+autocmd BufEnter * lua require'completion'.on_attach()
 
 nnoremap <silent> <Leader><TAB> <cmd> NextDiagnosticCycle <CR>
 nnoremap <silent> gd            <cmd>lua vim.lsp.buf.declaration()<CR>
@@ -208,4 +215,3 @@ nnoremap <silent> 1gD           <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gr            <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> g0            <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gW            <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-
