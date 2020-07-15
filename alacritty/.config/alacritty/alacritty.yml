@@ -36,12 +36,18 @@ colors:
 
 font:
   normal:
-    family: MesloLGS NF
+    family: JetBrainsMono Nerd Font 
+    style: Regular
   bold:
-    family: MesloLGS NF
+    family: JetBrainsMono Nerd Font
+    style: Extra Bold
   italic:
-    family: MesloLGS NF
-    size: 12.3
+    family: JetBrainsMono Nerd Font
+    style: Italics
+  offset:
+      y: 4
+  glyph_offset:
+      y: 2
   
 shell:
   #program: /usr/local/bin/zsh
