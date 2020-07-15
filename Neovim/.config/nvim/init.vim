@@ -201,6 +201,7 @@ let g:completion_chain_complete_list = {
 	    \   'comment': []
 	    \   }
 	    \}
+
 let g:completion_auto_change_source = 1
 luafile ~/.config/nvim/lsp.lua
 autocmd BufEnter * lua require'completion'.on_attach()
