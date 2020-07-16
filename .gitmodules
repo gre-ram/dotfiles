@@ -74,12 +74,3 @@
 [submodule "fzf.vim"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/fzf.vim
 	url = https://github.com/junegunn/fzf.vim.git
-[submodule "deoplete"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/deoplete.nvim
-	url = https://github.com/Shougo/deoplete.nvim.git
-[submodule "deoplete-lsp"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/deoplete-lsp
-	url = https://github.com/Shougo/deoplete-lsp.git
-[submodule "deoplete-biblatex"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/deoplete-biblatex
-	url = https://github.com/lionawurscht/deoplete-biblatex.git
