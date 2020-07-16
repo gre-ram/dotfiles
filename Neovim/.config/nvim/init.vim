@@ -22,9 +22,9 @@ packadd! tlib_vim
 packadd! vim-surround
 "packadd! vim-slime
 packadd! nvim-lsp
-"packadd! completion-nvim
+packadd! completion-nvim
 packadd! diagnostic-nvim
-"packadd! completion-buffers
+packadd! completion-buffers
 packadd! vim-devicons
 packadd! auto-pairs
 
@@ -33,13 +33,6 @@ packadd! auto-pairs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set termguicolors
 colorscheme nord
-let g:dracula_bold = 1
-let g:dracula_italic = 1
-let g:dracula_underline = 1
-let g:dracula_undercurl = 1
-let g:dracula_inverse = 1
-let g:dracula_colorterm = 1
-hi LineNr ctermbg=NONE guibg=NONE
 syntax on
 set spelllang=de,en
 set nobackup
@@ -155,7 +148,7 @@ set statusline+=%#currentStatusLine#
 set statusline+=\ %{toupper(g:currentmode[mode()])}
 set statusline+=%#tabline#
 set statusline+=\  
-set statusline+=\ %f
+set statusline+=\ \ %f
 set statusline+=%m
 set statusline+=\ %{GitStatus()}
 set statusline+=%=
@@ -175,6 +168,17 @@ set statusline+=\
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+  \ pumvisible() ? "\<C-n>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ completion#trigger_completion()
+
+let g:completion_enable_snippet = 'UltiSnips'
 let g:UltiSnipsExpandTrigger		= "<Plug>"
 let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
@@ -182,6 +186,7 @@ let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
 
 luafile ~/.config/nvim/lsp.lua
+autocmd BufEnter * lua require'completion'.on_attach()
 
 nnoremap <silent> <Leader><TAB> <cmd> NextDiagnosticCycle <CR>
 nnoremap <silent> gd            <cmd>lua vim.lsp.buf.declaration()<CR>
