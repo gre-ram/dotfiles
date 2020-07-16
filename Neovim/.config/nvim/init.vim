@@ -23,9 +23,9 @@ packadd! tlib_vim
 packadd! vim-surround
 "packadd! vim-slime
 packadd! nvim-lsp
-packadd! completion-nvim
+"packadd! completion-nvim
 packadd! diagnostic-nvim
-packadd! completion-buffers
+"packadd! completion-buffers
 packadd! vim-devicons
 packadd! auto-pairs
 
@@ -182,30 +182,7 @@ let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
 
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <TAB>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ completion#trigger_completion()
-
-let g:completion_enable_snippet = 'UltiSnips'
-let g:completion_chain_complete_list = {
-	    \ 'default' : {
-	    \   'default': [
-	    \       {'complete_items': ['lsp', 'snippet', 'path']},
-	    \       {'mode': '<c-p>'},
-	    \       {'mode': '<c-n>'}],
-	    \   'comment': []
-	    \   }
-	    \}
-
-let g:completion_auto_change_source = 1
 luafile ~/.config/nvim/lsp.lua
-autocmd BufEnter * lua require'completion'.on_attach()
 
 nnoremap <silent> <Leader><TAB> <cmd> NextDiagnosticCycle <CR>
 nnoremap <silent> gd            <cmd>lua vim.lsp.buf.declaration()<CR>
