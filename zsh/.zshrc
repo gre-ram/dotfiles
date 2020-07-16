@@ -9,6 +9,7 @@ export EDITOR="nvim"
 PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 autoload -U colors && colors
 export CLICOLOR=1
 
@@ -252,4 +253,6 @@ function -report-start-time() {
   fi
 }
 add-zsh-hook precmd -report-start-time
+
+
 
