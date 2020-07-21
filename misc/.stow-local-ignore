@@ -2,4 +2,5 @@
 Brewfile
 python_nvim_dependencies\.txt
 iterm2\.json
+init\.el
 Notate\.workflow\/*
