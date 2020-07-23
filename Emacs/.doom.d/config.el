@@ -3,10 +3,6 @@
 (add-to-list 'default-frame-alist
              '(ns-appearance . dark))
 
-(global-auto-revert-mode t)
-
-(add-hook 'org-mode-hook #'auto-fill-mode)
-
 (setq user-full-name "Gregor Willenbrock"
       user-mail-address "g@wbrck.de")
 (setq doom-theme 'doom-one)
@@ -22,3 +18,12 @@
  projectile-project-search-path '("~/Code/")
  dired-dwim-target t
  )
+
+(use-package! org-ref
+  :config
+  (setq reftex-default-bibliography '("~/main.bib"))
+  (setq org-ref-completion-library 'org-ref-ivy-cite))
+
+(use-package! citeproc-org
+  :config
+  (citeproc-org-setup))
