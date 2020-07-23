@@ -20,4 +20,5 @@
  dart-format-on-save t
  mac-command-modifier 'meta
  projectile-project-search-path '("~/Code/")
- dired-dwim-target t)
+ dired-dwim-target t
+ )
