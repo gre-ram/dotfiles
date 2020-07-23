@@ -10,7 +10,7 @@
 (setq user-full-name "Gregor Willenbrock"
       user-mail-address "g@wbrck.de")
 (setq doom-theme 'doom-one)
-(setq org-directory "~/org/")
+(setq org-directory "~/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org")
 (setq display-line-numbers-type t)
 
 (setq
