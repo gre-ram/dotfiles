@@ -27,3 +27,5 @@
 (use-package! citeproc-org
   :config
   (citeproc-org-setup))
+
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
