@@ -8,6 +8,7 @@ export LANG="en_US.UTF-8"
 export EDITOR="nvim"
 PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH
+export PATH="/usr/local/sbin:$PATH"
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 autoload -U colors && colors
 export CLICOLOR=1
