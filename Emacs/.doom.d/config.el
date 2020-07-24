@@ -28,4 +28,7 @@
   :config
   (citeproc-org-setup))
 
+(after! lsp-python-ms
+  (set-lsp-priority! 'mspyls 1))
+
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))

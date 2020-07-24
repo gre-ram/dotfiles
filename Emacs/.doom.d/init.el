@@ -41,7 +41,8 @@
        :editor
        (evil +everywhere); come to the dark side, we have cookies
        file-templates    ; auto-snippets for empty files
-       fold              ; (nigh) universal code folding
+       fold
+       format-all
        (format +onsave)  ; automated prettiness
        multiple-cursors  ; editing in many places at once
        snippets          ; my elves. They type so I don't have to
@@ -67,7 +68,7 @@
        ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
        lookup              ; navigate your code and its documentation
-       lsp
+       (lsp +eglot)
        macos             ; MacOS-specific commands
        magit             ; a git porcelain for Emacs
        pdf               ; pdf enhancements
