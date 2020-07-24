@@ -1,15 +1,15 @@
 window:
   dimensions:
     columns: 120
-    lines: 64
+    lines: 73
   padding:
     x: 10
     y: 10
   dynamic_padding: true
   decorations: buttonless
   position:
-      x: 1750
-      y: 60
+      x: 2200
+      y: 70
 
 colors:
   primary:
