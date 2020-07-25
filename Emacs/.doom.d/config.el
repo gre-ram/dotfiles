@@ -11,7 +11,7 @@
 
 (setq
  doom-font (font-spec :family "SF Mono" :size 16)
- doom-big-font (font-spec :family "SF Mono" :size 32)
+ doom-big-font (font-spec :family "SF Mono" :size 34)
  doom-variable-pitch-font (font-spec :family "Avenir Next" :size 14)
  dart-format-on-save t
  mac-command-modifier 'meta
