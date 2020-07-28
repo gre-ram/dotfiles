@@ -54,7 +54,7 @@
        vc                ; version-control and Emacs, sitting in a tree
 
        :term
-       eshell            ; the elisp shell that works everywhere
+       eshell
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
@@ -95,10 +95,10 @@
         +export
         +present
         +noter
+        +pandoc
         +jupyter
         +pomodoro
-        +ref
-        +roam)
+        +ref)
        (python +lsp +pyenv)            ; beautiful is better than ugly
        rest              ; Emacs as a REST client
        rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
