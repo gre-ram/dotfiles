@@ -3,7 +3,7 @@ set encoding=utf-8
 set shell=/usr/local/bin/zsh
 let maplocalleader = ','
 let g:mapleader ="\<Space>"
-let g:python3_host_prog = expand('$PYENV_ROOT/versions/py3nvim/bin/python')
+let g:python3_host_prog = expand('$PYENV_ROOT/versions/Neovim/bin/python')
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins (to get all helpfiles exec :helptags ALL
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
