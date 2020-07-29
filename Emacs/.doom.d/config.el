@@ -28,7 +28,8 @@
   :config
   (citeproc-org-setup))
 
-(after! lsp-python-ms
-  (set-lsp-priority! 'mspyls 1))
 
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
+
+(setq lsp-clients-python-library-directories "Users/gregor/.pyenv/versions/3.8.5/bin/pyls")
