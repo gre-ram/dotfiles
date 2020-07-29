@@ -1,24 +1,22 @@
-# If you come from bash you might have to change your $PATH.
-#export PATH=$HOME/bin:/usr/local/bin:$PATH
-
 ################################
 ###########  Basic  ############
 ################################
 export LANG="en_US.UTF-8"
 export EDITOR="nvim"
-PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-export PATH
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
-source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-autoload -U colors && colors
-export CLICOLOR=1
-
+export PATH="$HOME/bin:/usr/local/bin:$PATH"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
 fi
+
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+autoload -U colors && colors
+export CLICOLOR=1
 
 setopt AUTO_CD                 # [default] .. is shortcut for cd .. (etc)
 setopt AUTO_PARAM_SLASH        # tab completing directory appends a slash
@@ -253,4 +251,5 @@ function -report-start-time() {
   fi
 }
 add-zsh-hook precmd -report-start-time
+
 
