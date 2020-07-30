@@ -9,8 +9,6 @@ let g:python3_host_prog = expand('$PYENV_ROOT/versions/Neovim/bin/python') "not 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 packadd! vim-fugitive
 packadd! vim-gitgutter
-set rtp+=/usr/local/opt/fzf
-packadd! fzf.vim
 packadd! nvim-r
 packadd! ultisnips
 packadd! table-mode

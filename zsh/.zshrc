@@ -6,7 +6,6 @@ export EDITOR="nvim"
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$HOME/bin:/usr/local/bin:$PATH"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; then
@@ -70,7 +69,6 @@ alias gsurr='git submodule update --recursive --remote'
 
 alias vi='nvim'
 alias vim='nvim'
-alias tmux-start='session=$(tmux ls | fzf | pcregrep -o "^\w+") && tmux -u attach -t $session || tmux -u new-session -A -s main'
 
 ls -G . &>/dev/null && alias ls='ls -G'
 alias lsa='ls -lah'
