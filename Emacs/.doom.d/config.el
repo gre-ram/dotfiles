@@ -31,5 +31,5 @@
 
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
-
-(setq lsp-clients-python-library-directories "Users/gregor/.pyenv/versions/3.8.5/bin/pyls")
+(getenv "global_bin_pypath")
+(locate-file "pyls" "Users/gregor/.pyenv/versions/3.8.5/bin/pyls")
