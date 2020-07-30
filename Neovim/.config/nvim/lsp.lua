@@ -14,8 +14,7 @@ nvim_lsp.texlab.setup{
 }
 
 nvim_lsp.pyls.setup{
-    on_attach = on_attach_vim,
-    cmd = {global_bin_pypath .. "pyls"}
+    on_attach = on_attach_vim
 }
 
 nvim_lsp.vimls.setup{

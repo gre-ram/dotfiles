@@ -14,21 +14,5 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "python.pythonPath": "/Users/gregor/.pyenv/shims/python",
-  "python.venvPath": "~/.pyenv",
-  "python.linting.pylintPath": "${env:global_bin_pypath}pylint",
-  "python.formatting.yapfPath": "${env:global_bin_pypath}yapf",
-  "python.formatting.blackPath": "${env:global_bin_pypath}black",
-  "python.jediPath": "${env:global_bin_pypath}jedi",
-  "python.linting.flake8Path": "${env:global_bin_pypath}flake8",
-  "python.linting.mypyPath": "${env:global_bin_pypath}mypy",
-  "python.linting.prospectorPath": "${env:global_bin_pypath}prospector",
-  "python.linting.pycodestylePath": "${env:global_bin_pypath}pycodestyle",
-  "python.linting.pydocstylePath": "${env:global_bin_pypath}pydocstyle",
-  "python.linting.pylamaPath": "${env:global_bin_pypath}pylama",
-  "python.dataScience.debugpyDistPath": "${global_bin_pypath}debugpy",
-  "python.formatting.provider": "yapf",
-  "python.linting.banditPath": "${env:global_bin_pypath}bandit",
-  "python.formatting.autopep8Path": "${env:global_bin_pypath}autopep8",
-  "python.autoComplete.extraPaths": []
+  "python.venvPath": "~/.pyenv"
 }
