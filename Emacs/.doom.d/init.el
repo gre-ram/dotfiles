@@ -67,7 +67,7 @@
        ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
        lookup              ; navigate your code and its documentation
-       (lsp +eglot)
+       lsp
        macos             ; MacOS-specific commands
        magit             ; a git porcelain for Emacs
        pdf               ; pdf enhancements

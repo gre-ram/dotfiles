@@ -31,5 +31,5 @@
 
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
-(getenv "global_bin_pypath")
-(locate-file "pyls" "Users/gregor/.pyenv/versions/3.8.5/bin/pyls")
+(setq global-bin-pypath (getenv "global_bin_pypath"))
+(setq lsp-pyls-server-command (format "%s/%s" global-bin-pypath "pyls"))
