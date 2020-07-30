@@ -11,7 +11,7 @@ packadd! vim-fugitive
 packadd! vim-gitgutter
 packadd! nvim-r
 packadd! ultisnips
-packadd! Command-T
+packadd! ctrlp.vim
 packadd! table-mode
 packadd! nord-vim
 "packadd! dracula
