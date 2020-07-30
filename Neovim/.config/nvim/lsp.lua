@@ -1,5 +1,4 @@
-local pyenv_root = os.getenv("PYENV_ROOT")
-local pyenv_global = os.getenv("pyenv_global")
+local pyls_bin_path = os.getenv("pyls_bin_path")
 local nvim_lsp = require'nvim_lsp'
 local on_attach_vim = function()
     require'diagnostic'.on_attach()
@@ -16,7 +15,7 @@ nvim_lsp.texlab.setup{
 
 nvim_lsp.pyls.setup{
     on_attach = on_attach_vim,
-    cmd = { pyenv_root .. "/versions/" .. pyenv_global .. "/bin/pyls" }
+    cmd = {pyls_bin_path}
 }
 
 nvim_lsp.vimls.setup{

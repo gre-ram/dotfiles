@@ -13,7 +13,7 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
 fi
-export pyenv_global="$(eval pyenv global)"
+export pyls_bin_path="$PYENV_ROOT"/versions/"$(eval pyenv global)"/bin/pyls""
 
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 autoload -U colors && colors
