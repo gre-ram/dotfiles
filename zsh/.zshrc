@@ -3,6 +3,7 @@
 ################################
 export LANG="en_US.UTF-8"
 export EDITOR="nvim"
+fpath+=~/.zfunc
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$HOME/bin:/usr/local/bin:$PATH"

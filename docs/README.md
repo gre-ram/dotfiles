@@ -5,6 +5,6 @@ Make sure to install [Homebrew](https://brew.sh) and clone this Repo with `git c
 
 ## Dependencies
 visidata, pandocfilters, pynvim
-
+[Poetry](https://python-poetry.org/docs/#installation)
 ## Update
 Update Plugins via `git submodule update --recursive`
