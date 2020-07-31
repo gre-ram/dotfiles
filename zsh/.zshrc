@@ -3,12 +3,13 @@
 ################################
 export LANG="en_US.UTF-8"
 export EDITOR="nvim"
-export PATH="$PATH:$HOME/.poetry/bin"
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$HOME/bin:/usr/local/bin:$PATH"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
+export PIPENV_VENV_IN_PROJECT=1
+export PIPENV_PYTHON="$PYENV_ROOT/shims/python"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
@@ -108,7 +109,6 @@ bindkey '^Z' fg-bg
 ################################
 ########## Completion ##########
 ################################
-fpath+=~/.zfunc
 autoload -Uz compinit && compinit
 autoload bashcompinit && bashcompinit
 zstyle ':completion:*' list-suffixes
