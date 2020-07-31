@@ -12,6 +12,7 @@ export PIPENV_VENV_IN_PROJECT=1
 export PIPENV_PYTHON="$PYENV_ROOT/shims/python"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
 fi
 
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
