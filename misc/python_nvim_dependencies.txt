@@ -4,5 +4,8 @@ pandocfilters
 Default Dev:
 'python-language-server[all]'
 
-With Brew: 
-visidata
+In a pyenv-virtualenv with name "Neovim":
+pynvim
+
+(With Brew: 
+visidata)
