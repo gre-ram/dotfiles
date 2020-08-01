@@ -17,15 +17,13 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 ;;(set-default-font "Source Code Pro")
-(set-frame-font "Source Code Pro-14" nil t)
+(set-frame-font "SF Mono-18" nil t)
 
 (setq mac-allow-anti-aliasing t)
 
-(use-package powerline
-    :ensure t
-    :config
-    (powerline-center-evil-theme)
-    )
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
 
 (use-package nord-theme
     :ensure t
