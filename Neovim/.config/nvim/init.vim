@@ -66,6 +66,14 @@ set signcolumn=yes
 autocmd TermOpen * setlocal nonumber
 autocmd TermOpen * setlocal norelativenumber
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Keybindings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nnoremap <silent> <leader>bn <cmd> bnext <CR>
+nnoremap <silent> <leader>bp <cmd> bprevious <CR>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Pandoc und Citation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -89,12 +97,8 @@ let R_hi_fun_globenv = 2
 let R_csv_app = 'tmux new-window $PYENV_ROOT/shims/vd'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" =>  Airline and Movingarround
+" =>  Airline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <leader>b :buffers<cr>:b<space>
-nnoremap <leader>gt :bn<cr>
-nnoremap <leader>gT :bp<cr>
-nnoremap <leader>q :bd<cr>
 
 function! GitStatus()
     let [a,m,r] = GitGutterGetHunkSummary()
