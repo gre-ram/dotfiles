@@ -29,6 +29,7 @@
     :ensure t
     :demand)
 
+
 (use-package git-gutter
   :ensure git-gutter-fringe
   :hook ((prog-mode . git-gutter-mode)
