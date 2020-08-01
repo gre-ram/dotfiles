@@ -49,9 +49,23 @@
   :ensure t)
 
 (use-package evil
-  :ensure t ;; install the evil package if not installed
-  :config ;; tweak evil after loading it
+  :ensure t
+  :init
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
+  :config
   (evil-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
+
+(use-package evil-surround
+  :ensure t
+  :config
+  (global-evil-surround-mode 1))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
