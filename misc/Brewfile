@@ -37,7 +37,7 @@ brew "wget"
 brew "xpdf"
 brew "zlib"
 brew "zsh"
-brew "d12frosted/emacs-plus/emacs-plus@26", args: ["with-modern-icon"]
+brew "d12frosted/emacs-plus/emacs-plus", args: ["with-modern-icon"]
 brew "saulpw/vd/visidata"
 cask "alacritty"
 cask "deepl"
