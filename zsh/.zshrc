@@ -15,8 +15,6 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
 fi
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 autoload -U colors && colors
@@ -38,6 +36,18 @@ setopt PROMPT_SUBST            # Allow for functions in the prompt.
 setopt no_prompt_bang
 setopt prompt_percent
 setopt NO_CASE_GLOB            # Case Insensitive Globbing
+
+################################
+#########  Setup fzf  ##########
+################################
+
+if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
+  export PATH="${PATH:+${PATH}:}/usr/local/opt/fzf/bin"
+fi
+# Auto-completion
+[[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2> /dev/null
+# Key bindings
+source "/usr/local/opt/fzf/shell/key-bindings.zsh"
 
 ################################
 ############ Aliases ###########
