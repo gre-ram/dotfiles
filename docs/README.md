@@ -4,6 +4,13 @@ Make sure to install [Homebrew](https://brew.sh) and clone this Repo with `git c
 2. Use [GNU Stow](https://www.gnu.org/software/stow/) with `stow *`
 
 ## Dependencies
-visidata, pandocfilters, pynvim
+### Python
+- Global:
+ - `pandocfilters`
+- Default Dev (optional):
+ - `pipenv install --dev 'python-language-server[all]'
+- In pyenv-virtualenv with name "Neovim":
+  - `pynvim`
+
 ## Update
 Update Plugins via `git submodule update --recursive`
