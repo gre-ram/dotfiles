@@ -1,18 +1,16 @@
 {
   "editor.formatOnSave": true,
-  "terminal.external.osxExec": "iTerm2.app",
+  "terminal.external.osxExec": "Alacritty.app",
   "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
   "workbench.colorTheme": "Visual Studio Dark",
   "workbench.iconTheme": "Monokai Pro Icons",
   "editor.fontFamily": "JetBrainsMono Nerd Font",
   "editor.fontSize": 12,
   "git.enableSmartCommit": true,
-  "terminal.integrated.shell.osx": "/bin/zsh",
+  "terminal.integrated.shell.osx": "/usr/local/bin/zsh",
   "window.zoomLevel": 0,
   "git.autofetch": true,
   "cSpell.language": "\"en,de\"",
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "python.venvPath": "~/.pyenv"
-}
+  }
