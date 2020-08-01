@@ -8,7 +8,7 @@ Make sure to install [Homebrew](https://brew.sh) and clone this Repo with `git c
 - Global:
   - `pandocfilters`
 - Default Dev (optional):
-  - `pipenv install --dev 'python-language-server[all]'
+  - `pipenv install --dev 'python-language-server[all]'`
 - In pyenv-virtualenv with name "Neovim":
   - `pynvim`
 
