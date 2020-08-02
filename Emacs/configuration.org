@@ -170,6 +170,5 @@ Highlighting of latest changes.
 ** Main Org Conf
 ** Ref etc
 #+begin_src emacs-lisp
-(use-package org-ref)
 (use-package citeproc-org)
 #+end_src
