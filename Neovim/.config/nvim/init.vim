@@ -18,6 +18,8 @@ packadd! nord-vim
 "packadd! dracula
 packadd! vim-pandoc
 packadd! vim-pandoc-syntax
+packadd! vimwiki
+packadd! vim-zettel
 packadd! vim-addon-mw-utils
 packadd! tlib_vim
 packadd! vim-surround
