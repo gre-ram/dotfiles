@@ -18,8 +18,7 @@ packadd! nord-vim
 "packadd! dracula
 packadd! vim-pandoc
 packadd! vim-pandoc-syntax
-packadd! vimwiki
-packadd! vim-zettel
+packadd! vim-waikiki
 packadd! vim-addon-mw-utils
 packadd! tlib_vim
 packadd! vim-surround
@@ -90,6 +89,10 @@ let g:pandoc#biblio#bibs = [$HOME.'/main.bib']
 let g:pandoc#completion#bib#use_preview = 1
 let g:pandoc#folding#fdc = 0
 let g:pandoc#folding#level = 999
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Zettelkasten
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => R IDE
