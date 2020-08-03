@@ -26,6 +26,14 @@ Always compile packages, and use the newest version available.
   (setq load-prefer-newer t)
 #+end_src
 
+* Basic Env Conf
+** get Path
+#+begin_src emacs-lisp
+(use-package exec-path-from-shell
+    :config
+    (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
+#+end_src
 * Set personal information
 
 ** Who am I? Where am I?
@@ -141,7 +149,6 @@ Use =evil= with Org agendas.
 
 *** TODO checkout company completion later   
 
-
 * Git
 Highlighting of latest changes.
 #+begin_src emacs-lisp
@@ -169,6 +176,37 @@ Highlighting of latest changes.
 * Org
 ** Main Org Conf
 ** Ref etc
+*** Using ivy-bibtex
 #+begin_src emacs-lisp
-(use-package citeproc-org)
+(use-package ivy-bibtex
+    ;commands ivy-bibtex "ivy-bibtex" "" t
+    :config
+    (autoload 'ivy-bibtex "ivy-bibtex" "" t)
+    ; TODO trying to do this with commands 
+    (setq ivy-re-builders-alist
+      '((ivy-bibtex . ivy--regex-ignore-order)
+        (t . ivy--regex-plus))))
+    (setq bibtex-completion-bibliography
+      '("~/Documents/Bibliothek/main.bib"))
+    (setq bibtex-completion-library-path
+      '("~/Documents/Bibliothek/pdfs"))
+    (setq bibtex-completion-notes-path
+        "~/Documents/Bibliothek/notes")
+    (setq bibtex-completion-notes-extension ".org")
+    (setq bibtex-completion-pdf-symbol "")
+    (setq bibtex-completion-notes-symbol "")
+    (setq bibtex-completion-format-citation-functions
+      '((org-mode      . bibtex-completion-format-citation-pandoc-citeproc)
+	(markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
+	(default       . bibtex-completion-format-citation-pandoc-citeproc)))
+
 #+end_src
+*** And ox-pandoc for exporting 
+#+begin_src emacs-lisp
+(use-package ox-pandoc
+    :config
+    (setq org-pandoc-options-for-docx '((standalone . nil))))
+#+end_src 
+
+
+
