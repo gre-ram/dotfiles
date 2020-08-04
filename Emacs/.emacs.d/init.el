@@ -23,7 +23,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (citeproc-org magit diff-hl smex flx counsel which-key doom-modeline nord-theme evil-org evil-surround evil-collection evil auto-compile use-package))))
+    (ox-pandoc ivy-bibtex magit diff-hl smex flx counsel which-key doom-modeline nord-theme evil-org evil-surround evil-collection evil exec-path-from-shell auto-compile use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
