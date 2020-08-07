@@ -80,27 +80,39 @@ nnoremap <silent> <leader>bp <cmd> bprevious <CR>
 " => Pandoc und Citation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-command -nargs=*  GetBib  r ! ~/.scripts/getbib.zsh <args>
-
-let g:pandoc#completion#bib#mode = "citeproc"
-let g:pandoc#biblio#sources = "g"
-let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
-let g:pandoc#biblio#bibs = [$HOME.'/main.bib']
-let g:pandoc#completion#bib#use_preview = 1
-let g:pandoc#folding#fdc = 0
-let g:pandoc#folding#level = 999
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Zettelkasten Wiki
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:nv_search_paths = ['~/Documents/myBib/notes']
+let g:zettel_notes_dict = ''
+let g:zettel_pdf_dict = ''
+let g:zettel_bib_file = ''
+
+function! GetCiteKeyUnderCursor() abort
+    let line = getline('.')
+    let key = matchstr(line,
+                \ '\%<'.(col('.')+1).'c'.
+                \ '\(@\)\zs[^,\];[:space:]]\+'.
+                \ '\%>'.col('.').'c')
+    return key
+endfun
+
+let g:pandoc#completion#bib#mode = "citeproc"
+let g:pandoc#biblio#sources = "g"
+let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
+let g:pandoc#biblio#bibs = [$HOME.'/Documents/myBib/main.bib']
+let g:pandoc#completion#bib#use_preview = 1
+let g:pandoc#folding#fdc = 0
+let g:pandoc#folding#level = 999
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => R IDE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 let R_hl_term = 0 "R Output is colored by
 let R_hi_fun_globenv = 2
-let R_csv_app = 'tmux new-window $PYENV_ROOT/shims/vd'
+let R_csv_app = 'tmux new-window vd'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Airline
