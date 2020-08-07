@@ -1,32 +1,19 @@
 #+TITLE: Emacs Configuration
 #+OPTIONS: toc:nil num:nil
 
-* Configure =use-package=
-
-I use =use-package= to install and configure my packages. My =init.el= includes
-the initial setup for =package.el= and ensures that =use-package= is installed,
-since I wanna do that right away.
-
-This makes sure that =use-package= will install the package if it's not already
-available. It also means that I should be able to open Emacs for the first time
-on a fresh Debian box and have my whole environment automatically installed. I'm
-not /totally/ sure about that, but we're gettin' close.
-
+* Basic Env Conf
+** Configure =use-package=
 #+begin_src emacs-lisp
   (require 'use-package-ensure)
   (setq use-package-always-ensure t)
 #+end_src
-
 Always compile packages, and use the newest version available.
-
 #+begin_src emacs-lisp
   (use-package auto-compile
     :config (auto-compile-on-load-mode))
 
   (setq load-prefer-newer t)
 #+end_src
-
-* Basic Env Conf
 ** get Path
 #+begin_src emacs-lisp
 (use-package exec-path-from-shell
@@ -34,8 +21,6 @@ Always compile packages, and use the newest version available.
     (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
 #+end_src
-* Set personal information
-
 ** Who am I? Where am I?
 
 #+begin_src emacs-lisp
@@ -104,12 +89,14 @@ Use =evil= with Org agendas.
     (tool-bar-mode 0)
     (menu-bar-mode 0)
   (scroll-bar-mode -1)
+(global-display-line-numbers-mode)
+(setq display-line-numbers-type 'relative)
 #+end_src
 
 ** Theme & Modeline
 
 #+begin_src emacs-lisp
-(use-package nord-theme
+(use-package dracula-theme
     :demand)
 (use-package doom-modeline
   :init (doom-modeline-mode 1))
@@ -125,7 +112,7 @@ Use =evil= with Org agendas.
 ** Font
 #+begin_src emacs-lisp
 (setq hrs/default-font "SF Mono")
-(setq hrs/default-font-size 9)
+(setq hrs/default-font-size 16)
 (setq hrs/current-font-size hrs/default-font-size)
 
 (setq hrs/font-change-increment 1.1)
@@ -189,13 +176,13 @@ other, future frames."
   (use-package flx)
   (use-package smex)
 
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "(%d/%d) ")
-  (setq ivy-initial-inputs-alist nil)
-  (setq ivy-re-builders-alist
-        '((swiper . ivy--regex-plus)
-          (t . ivy--regex-fuzzy))))
+  (ivy-mode 1))
+  ;  (setq ivy-use-virtual-buffers t)
+  ;  (setq ivy-count-format "(%d/%d) ")
+  ;  (setq ivy-initial-inputs-alist nil)
+  ;(setq ivy-re-builders-alist
+  ;      '((swiper . ivy--regex-plus)
+  ;        (t . ivy--regex-fuzzy))))
 #+end_src
 
 *** TODO checkout company completion later   
@@ -226,37 +213,51 @@ Highlighting of latest changes.
 #+end_src
 * Org
 ** Main Org Conf
+   (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELLED(c)")))
 ** Ref etc
-*** Using ivy-bibtex
+*** Using org-ref
 #+begin_src emacs-lisp
-(use-package ivy-bibtex
-    ;commands ivy-bibtex "ivy-bibtex" "" t
-    :config
-    (autoload 'ivy-bibtex "ivy-bibtex" "" t)
-    ; TODO trying to do this with commands 
-    (setq ivy-re-builders-alist
-      '((ivy-bibtex . ivy--regex-ignore-order)
-        (t . ivy--regex-plus))))
-    (setq bibtex-completion-bibliography
-      '("~/Documents/Bibliothek/main.bib"))
-    (setq bibtex-completion-library-path
-      '("~/Documents/Bibliothek/pdfs"))
-    (setq bibtex-completion-notes-path
-        "~/Documents/Bibliothek/notes")
-    (setq bibtex-completion-notes-extension ".org")
-    (setq bibtex-completion-pdf-symbol "")
-    (setq bibtex-completion-notes-symbol "")
-    (setq bibtex-completion-format-citation-functions
-      '((org-mode      . bibtex-completion-format-citation-pandoc-citeproc)
-	(markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
-	(default       . bibtex-completion-format-citation-pandoc-citeproc)))
+(use-package org-ref
+    :init
+    ;; setup org-ref
+    (setq org-ref-bibliography-notes "~/Dropbox/Apps/MobileOrg/bibnotes.org"
+          org-ref-default-bibliography '("~/Documents/Bibliothek/main.bib")
+          org-ref-pdf-directory "~/Documents/Bibliothek/pdfs/")
+    (unless (file-exists-p org-ref-pdf-directory)
+      (make-directory org-ref-pdf-directory t))
+    ;; Some org-mode customization
+    (setq org-src-fontify-natively t
+      org-confirm-babel-evaluate nil
+      org-src-preserve-indentation t)
+    (setq bibtex-autokey-year-length 4
+      bibtex-autokey-name-year-separator "-"
+      bibtex-autokey-year-title-separator "-"
+      bibtex-autokey-titleword-separator "-"
+      bibtex-autokey-titlewords 2
+      bibtex-autokey-titlewords-stretch 1
+      bibtex-autokey-titleword-length 5)      
+      (setq org-latex-default-packages-alist
+      (-remove-item
+       '("" "hyperref" nil)
+       org-latex-default-packages-alist))
+    ;; Append new packages
+    (add-to-list 'org-latex-default-packages-alist '("" "natbib" "") t)
+    (add-to-list 'org-latex-default-packages-alist
+	     '("linktocpage,pdfstartview=FitH,colorlinks,
+    linkcolor=blue,anchorcolor=blue,
+    citecolor=blue,filecolor=blue,menucolor=blue,urlcolor=blue"
+	       "hyperref" nil)
+	     t)
+    :config)
 
 #+end_src
+
 *** And ox-pandoc for exporting 
 #+begin_src emacs-lisp
 (use-package ox-pandoc
     :config
-    (setq org-pandoc-options-for-docx '((standalone . nil))))
+    (setq org-pandoc-options-for-docx '((standalone . nil))
+    ))
 #+end_src 
 
 
