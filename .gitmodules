@@ -74,9 +74,6 @@
 [submodule "fzf.vim"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/fzf.vim
 	url = https://github.com/junegunn/fzf.vim
-[submodule "vim-waikiki"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-waikiki
-	url = https://github.com/fcpg/vim-waikiki
 [submodule "notational-fzf"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/notational-fzf-vim
 	url = https://github.com/alok/notational-fzf-vim
