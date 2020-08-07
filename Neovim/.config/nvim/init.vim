@@ -17,6 +17,7 @@ packadd! table-mode
 packadd! nord-vim
 "packadd! dracula
 packadd! vim-pandoc
+packadd! notational-fzf-vim
 packadd! vim-pandoc-syntax
 packadd! vim-waikiki
 packadd! vim-addon-mw-utils
@@ -91,8 +92,10 @@ let g:pandoc#folding#fdc = 0
 let g:pandoc#folding#level = 999
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Zettelkasten
+" => Zettelkasten Wiki
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:nv_search_paths = ['~/Documents/myBib/notes']
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => R IDE
