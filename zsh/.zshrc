@@ -3,7 +3,7 @@
 ################################
 export LANG="en_US.UTF-8"
 export EDITOR="nvim"
-export PATH="$PATH:$HOME/.emacs.d/bin"
+export PATH="$PATH:$HOME/.scripts"
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$HOME/bin:/usr/local/bin:$PATH"
@@ -53,23 +53,12 @@ source "/usr/local/opt/fzf/shell/key-bindings.zsh"
 ############ Aliases ###########
 ################################
 
-alias g2cp="cd ~/Documents/Sci-Bib/Projekte/Politische_Frauen && open . && l"
-alias g2methoden="cd ~/Documents/Sci-Bib/Methoden && l"
-alias g2sci-bib="cd ~/Documents/Sci-Bib && l"
 alias g2code="cd ~/Code && l"
-alias g2drafts="cd ~/Documents/Drafts && l"
 alias g2vimrc="vim ~/dotfiles/Neovim/.config/nvim/init.vim"
 alias g2tmuxconf="vim ~/dotfiles/tmux/.tmux.conf"
 alias g2zshrc="vim ~/dotfiles/zsh/.zshrc"
 
-alias internet="~/.scripts/internet.sh"
-
 alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
-alias getbib="~/.scripts/getbib.zsh"
-alias addbib="~/.scripts/addbib.sh"
-alias sepbib="~/.scripts/sepbib.sh"
-alias notate="~/.scripts/notate.zsh" 
-alias getnotes="~/.scripts/getnotes.zsh"
 
 alias g='git'
 alias ga='git add'
