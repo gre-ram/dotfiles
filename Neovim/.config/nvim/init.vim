@@ -15,7 +15,6 @@ packadd! fzf.vim
 packadd! table-mode
 packadd! nord-vim
 "packadd! dracula
-packadd! vim-pandoc
 packadd! notational-fzf-vim
 packadd! vim-pandoc-syntax
 packadd! vim-addon-mw-utils
@@ -26,6 +25,7 @@ packadd! nvim-lsp
 packadd! diagnostic-nvim
 packadd! deoppet.nvim
 packadd! deoplete.nvim
+let g:deoplete#enable_at_startup = 1
 packadd! deoplete-lsp
 packadd! deoplete-biblatex
 packadd! vim-devicons
@@ -89,6 +89,12 @@ let g:nv_search_paths = ['~/Documents/myBib/notes']
 let g:zettel_notes_dict = ''
 let g:zettel_pdf_dict = ''
 let g:zettel_bib_file = ''
+let g:deoplete#sources#biblatex#bibfile = '~/Documents/myBib/main.bib'
+call deoplete#custom#source('biblatex', 'filetypes', ['pandoc'])
+
+augroup pandoc_syntax
+        au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+augroup END
 
 function! GetCiteKeyUnderCursor() abort
     let line = getline('.')
@@ -99,11 +105,6 @@ function! GetCiteKeyUnderCursor() abort
     return key
 endfun
 
-let g:pandoc#completion#bib#mode = "citeproc"
-let g:pandoc#biblio#sources = "g"
-let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
-let g:pandoc#biblio#bibs = [$HOME.'/Documents/myBib/main.bib']
-let g:pandoc#completion#bib#use_preview = 1
 let g:pandoc#folding#fdc = 0
 let g:pandoc#folding#level = 999
 
@@ -187,8 +188,6 @@ set statusline+=\
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting & Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set completeopt=menuone,noinsert,noselect
-set shortmess+=c
 
 function! s:check_back_space() abort
     let col = col('.') - 1

@@ -50,9 +50,6 @@
 [submodule "diagnostic-nvim"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/diagnostic-nvim
 	url = https://github.com/nvim-lua/diagnostic-nvim.git
-[submodule "vim-pandoc"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-pandoc
-	url = https://github.com/vim-pandoc/vim-pandoc.git
 [submodule "auto-pairs"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/auto-pairs
 	url = git://github.com/jiangmiao/auto-pairs.git
