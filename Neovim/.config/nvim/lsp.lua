@@ -1,4 +1,3 @@
-local global_bin_pypath = os.getenv("global_bin_pypath")
 local nvim_lsp = require'nvim_lsp'
 local on_attach_vim = function()
     require'diagnostic'.on_attach()
@@ -21,7 +20,7 @@ nvim_lsp.vimls.setup{
     on_attach = on_attach_vim
 }
 
-nvim_lsp.sumneko_lua.setup{
+nvim_lsp.bashls.setup{
     on_attach = on_attach_vim
 }
 
