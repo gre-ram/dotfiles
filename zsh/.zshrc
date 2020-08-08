@@ -186,7 +186,7 @@ gitstatus_stop 'MY' && gitstatus_start -s -1 -u -1 -c -1 -d -1 'MY'
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd my_git_prompt
 
-RPROMPT_BASE="%F{white}%~%f"
+RPROMPT_BASE="%F{white}%(5~.%-3~··%1~.%~)%f"
 RPROMPT_BASE+='${GITSTATUS_PROMPT:+ $GITSTATUS_PROMPT}'
 
 # Anonymous function to avoid leaking variables.
