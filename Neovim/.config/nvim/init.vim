@@ -25,6 +25,10 @@ packadd! vim-surround
 "packadd! vim-slime
 packadd! nvim-lsp
 packadd! diagnostic-nvim
+packadd! deoppet.nvim
+packadd! deoplete.nvim
+packadd! deoplete-lsp
+packadd! deoplete-biblatex
 packadd! vim-devicons
 packadd! auto-pairs
 
