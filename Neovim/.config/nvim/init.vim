@@ -10,7 +10,6 @@ let g:python3_host_prog = expand('$PYENV_ROOT/versions/Neovim/bin/python')
 packadd! vim-fugitive
 packadd! vim-gitgutter
 packadd! nvim-r
-packadd! ultisnips
 set rtp+=/usr/local/opt/fzf
 packadd! fzf.vim
 packadd! table-mode
