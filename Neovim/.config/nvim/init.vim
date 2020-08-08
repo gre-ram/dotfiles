@@ -23,7 +23,6 @@ packadd! vim-surround
 "packadd! vim-slime
 packadd! nvim-lsp
 packadd! diagnostic-nvim
-packadd! deoppet.nvim
 packadd! deoplete.nvim
 let g:deoplete#enable_at_startup = 1
 packadd! deoplete-lsp
@@ -91,6 +90,7 @@ let g:zettel_pdf_dict = ''
 let g:zettel_bib_file = ''
 let g:deoplete#sources#biblatex#bibfile = '~/Documents/myBib/main.bib'
 call deoplete#custom#source('biblatex', 'filetypes', ['pandoc'])
+let g:deoplete#sources#biblatex#startpattern = '@'
 
 augroup pandoc_syntax
         au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
@@ -197,8 +197,7 @@ endfunction
 inoremap <silent><expr> <TAB>
   \ pumvisible() ? "\<C-n>" :
   \ <SID>check_back_space() ? "\<TAB>" :
-  \ completion#trigger_completion()
-
+  \ deoplete#complete()
 
 luafile ~/.config/nvim/lsp.lua
 
