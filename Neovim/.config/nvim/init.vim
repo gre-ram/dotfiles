@@ -24,9 +24,7 @@ packadd! tlib_vim
 packadd! vim-surround
 "packadd! vim-slime
 packadd! nvim-lsp
-packadd! completion-nvim
 packadd! diagnostic-nvim
-packadd! completion-buffers
 packadd! vim-devicons
 packadd! auto-pairs
 
@@ -199,31 +197,10 @@ inoremap <silent><expr> <TAB>
   \ <SID>check_back_space() ? "\<TAB>" :
   \ completion#trigger_completion()
 
-let g:completion_enable_snippet = 'UltiSnips'
-let g:UltiSnipsExpandTrigger		= "<Plug>"
-let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
-let g:UltiSnipsRemoveSelectModeMappings = 0
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
 
 luafile ~/.config/nvim/lsp.lua
-let g:completion_auto_change_source = 1
 
-lua require'completion'.addCompletionSource('vimpandoc', require'vimpandoc'.complete_item)
-let g:completion_chain_complete_list = {
-	    \ 'default' : {
-	    \   'default': [
-        \       {'complete_items': ['path'], 'triggered_only': ['/']}, 
-	    \       {'complete_items': ['lsp', 'snippet']},
-	    \       {'complete_items': ['vimpandoc'], 'triggered_only': ['@']},
-	    \       ],
-	    \   'comment': []
-	    \   }
-	    \}
-
-autocmd BufEnter * lua require'completion'.on_attach()
 nnoremap <silent> <Leader><TAB> <cmd> NextDiagnosticCycle <CR>
-
 nnoremap <silent> gd            <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> <c-]>         <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> K             <cmd>lua vim.lsp.buf.hover()<CR>

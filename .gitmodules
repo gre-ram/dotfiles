@@ -50,15 +50,9 @@
 [submodule "nvim-lsp"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/nvim-lsp
 	url = https://github.com/neovim/nvim-lsp.git
-[submodule "completion-nvim"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/completion-nvim
-	url = https://github.com/nvim-lua/completion-nvim.git
 [submodule "diagnostic-nvim"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/diagnostic-nvim
 	url = https://github.com/nvim-lua/diagnostic-nvim.git
-[submodule "completion-buffers"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/completion-buffers
-	url = https://github.com/steelsojka/completion-buffers.git
 [submodule "vim-pandoc"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-pandoc
 	url = https://github.com/vim-pandoc/vim-pandoc.git
@@ -77,3 +71,15 @@
 [submodule "notational-fzf"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/notational-fzf-vim
 	url = https://github.com/alok/notational-fzf-vim
+[submodule "deoplete"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/deoplete.nvim
+	url = https://github.com/Shougo/deoplete.nvim
+[submodule "deoppet"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/deoppet.nvim
+	url = https://github.com/Shougo/deoppet.nvim
+[submodule "deoplete-biblatex"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/deoplete-biblatex
+	url = https://github.com/lionawurscht/deoplete-biblatex
+[submodule "deoplete-lsp"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/deoplete-lsp
+	url = https://github.com/Shougo/deoplete-lsp
