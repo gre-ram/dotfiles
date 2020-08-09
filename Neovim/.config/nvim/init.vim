@@ -76,28 +76,38 @@ autocmd TermOpen * setlocal norelativenumber
 nnoremap <silent> <leader>bn <cmd> bnext <CR>
 nnoremap <silent> <leader>bp <cmd> bprevious <CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Pandoc und Citation
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-augroup pandoc_syntax
-        au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-    augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Zettelkasten Wiki
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:nv_search_paths = ['~/Documents/myBib/notes']
-let g:zettel_notes_dict = ''
-let g:zettel_pdf_dict = ''
-let g:zettel_bib_file = ''
+augroup pandoc_syntax
+        au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+augroup END
 
-function! GetCiteKeyUnderCursor() abort
-    let line = getline('.')
-    let key = matchstr(line,
+let g:nv_search_paths = ['~/Documents/myBib/notes']
+let g:zettel_pdf_dict = '~/Documents/myBib/pdfs'
+let g:zettel_bib_file = '~/Documents/myBib/main.bib'
+
+function GetCiteKeyUnderCursor() abort
+    let l:line = getline('.')
+    let l:key = matchstr(line,
                 \ '\%<'.(col('.')+1).'c'.
                 \ '\(@\)\zs[^,\];[:space:]]\+'.
                 \ '\%>'.col('.').'c')
-    return key
+    return l:key
+endfun
+
+function OpenCiteKeyInBib() abort
+    let l:key = GetCiteKeyUnderCursor()
+    let l:string = "e " . g:zettel_bib_file . " | /" . l:key
+    echom l:string
+    return l:string
+endfun
+
+function OpenCiteKeyPDF() abort
+    let l:key = GetCiteKeyUnderCursor()
+    let l:string = "silent ! open " . g:zettel_pdf_dict . "/" . l:key . ".pdf"
+    return l:string
 endfun
 
 let g:pandoc#completion#bib#mode = "citeproc"
@@ -108,6 +118,9 @@ let g:pandoc#completion#bib#use_preview = 1
 let g:pandoc#folding#fdc = 0
 let g:pandoc#folding#level = 999
 
+nnoremap <silent> <leader>cn :exec "NV " . GetCiteKeyUnderCursor() <CR>
+nnoremap <silent> <leader>cb :exec OpenCiteKeyInBib() <CR>
+nnoremap <silent> <leader>cp :exec OpenCiteKeyPDF() <CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => R IDE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
