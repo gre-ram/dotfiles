@@ -24,6 +24,7 @@ packadd! vim-surround
 packadd! nvim-lsp
 packadd! diagnostic-nvim
 packadd! deoplete.nvim
+packadd! float-preview.nvim
 let g:deoplete#enable_at_startup = 1
 packadd! deoplete-lsp
 packadd! deoplete-biblatex
@@ -188,11 +189,14 @@ set statusline+=\
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting & Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set completeopt-=preview
+set completeopt+=noselect
 
 function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
+
 
 inoremap <silent><expr> <TAB>
   \ pumvisible() ? "\<C-n>" :

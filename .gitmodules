@@ -77,3 +77,6 @@
 [submodule "deoplete-lsp"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/deoplete-lsp
 	url = https://github.com/Shougo/deoplete-lsp
+[submodule "float-preview"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/float-preview.nvim
+	url = https://github.com/ncm2/float-preview.nvim
