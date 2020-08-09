@@ -80,7 +80,9 @@ nnoremap <silent> <leader>bp <cmd> bprevious <CR>
 " => Pandoc und Citation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-
+augroup pandoc_syntax
+        au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+    augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Zettelkasten Wiki
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -186,6 +188,8 @@ set statusline+=\
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting & Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+luafile ~/.config/nvim/lsp.lua
+lua require'completion'.addCompletionSource('vimpandoc', require'vimpandoc'.complete_item)
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
@@ -199,38 +203,39 @@ inoremap <silent><expr> <TAB>
   \ <SID>check_back_space() ? "\<TAB>" :
   \ completion#trigger_completion()
 
-let g:completion_enable_snippet = 'UltiSnips'
 let g:UltiSnipsExpandTrigger		= "<Plug>"
 let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
-
-luafile ~/.config/nvim/lsp.lua
+let g:completion_enable_snippet = 'UltiSnips'
+let g:completion_enable_auto_hover = 1
 let g:completion_auto_change_source = 1
+let g:completion_max_items = 10
+let g:completion_enable_auto_paren = 0
+let g:completion_timer_cycle = 80
+let g:completion_auto_change_source = 1
+let g:completion_matching_ignore_case = 1
+" let g:completion_trigger_keyword_length = 3
 
-lua require'completion'.addCompletionSource('vimpandoc', require'vimpandoc'.complete_item)
 let g:completion_chain_complete_list = {
-	    \ 'default' : {
-	    \   'default': [
-        \       {'complete_items': ['path'], 'triggered_only': ['/']}, 
-	    \       {'complete_items': ['lsp', 'snippet']},
-	    \       {'complete_items': ['vimpandoc'], 'triggered_only': ['@']},
-	    \       ],
-	    \   'comment': []
-	    \   }
-	    \}
+    \ 'default' : {
+    \   'default': [
+    \       {'complete_items': ['snippet', 'buffers']},
+    \],
+    \   'comment': [{'complete_items': ['path'], 'triggered_only': ['/']}]
+    \   },
+    \ 'markdown.pandoc': {
+    \   'default': [
+    \       {'complete_items': ['snippet']},
+    \       {'complete_items': ['vimpandoc'], 'triggered_only': ['@']}
+    \]
+    \   }
+    \}
+imap  <c-j> <Plug>(completion_next_source)
+imap  <c-k> <Plug>(completion_prev_source)
 
-autocmd BufEnter * lua require'completion'.on_attach()
-nnoremap <silent> <Leader><TAB> <cmd> NextDiagnosticCycle <CR>
-
-nnoremap <silent> gd            <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> <c-]>         <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K             <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD            <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k>         <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD           <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr            <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0            <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW            <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> ff            <cmd>lua vim.lsp.buf.formatting()<CR>
+augroup CompletionStartUp
+    autocmd!
+    autocmd BufEnter *.md lua require'completion'.on_attach()
+augroup end
