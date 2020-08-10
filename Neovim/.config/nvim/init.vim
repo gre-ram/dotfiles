@@ -22,7 +22,6 @@ packadd! vim-pandoc-syntax
 packadd! vim-addon-mw-utils
 packadd! tlib_vim
 packadd! vim-surround
-"packadd! vim-slime
 packadd! nvim-lsp
 packadd! completion-nvim
 packadd! diagnostic-nvim
@@ -73,12 +72,19 @@ autocmd TermOpen * setlocal norelativenumber
 " => Keybindings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nnoremap <silent> <leader>bn <cmd> bnext <CR>
-nnoremap <silent> <leader>bp <cmd> bprevious <CR>
+function FixLastSpellError()
+    normal! mm[s1z=`m
+endfun
+
+nnoremap <leader>bn <cmd> bnext <CR>
+nnoremap <leader>bp <cmd> bprevious <CR>
+nnoremap <leader>bd <cmd> bd <CR>
+nnoremap <leader>sf :source %<cr>
+nnoremap <leader>sp :call FixLastSpellError() <cr>  
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Zettelkasten Wiki
+" => Zettelkasten Wiki with Pandoc Markdown
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup pandoc_syntax
         au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
@@ -88,39 +94,41 @@ let g:nv_search_paths = ['~/Documents/myBib/notes']
 let g:zettel_pdf_dict = '~/Documents/myBib/pdfs'
 let g:zettel_bib_file = '~/Documents/myBib/main.bib'
 
-function GetCiteKeyUnderCursor() abort
-    let l:line = getline('.')
-    let l:key = matchstr(line,
+function! GetCiteKeyUnderCursor() abort
+    let line = getline('.')
+    let key = matchstr(line,
                 \ '\%<'.(col('.')+1).'c'.
                 \ '\(@\)\zs[^,\];[:space:]]\+'.
                 \ '\%>'.col('.').'c')
-    return l:key
+    return key
 endfun
 
-function OpenCiteKeyInBib() abort
-    let l:key = GetCiteKeyUnderCursor()
-    let l:string = "e " . g:zettel_bib_file . " | /" . l:key
-    echom l:string
-    return l:string
+function! OpenCiteKeyInBib() abort
+    let key = GetCiteKeyUnderCursor()
+    let string = "e " . g:zettel_bib_file . " | /" . l:key
+    execute string
 endfun
 
-function OpenCiteKeyPDF() abort
-    let l:key = GetCiteKeyUnderCursor()
-    let l:string = "silent ! open " . g:zettel_pdf_dict . "/" . l:key . ".pdf"
-    return l:string
+function! OpenCiteKeyNote() abort 
+    let key = GetCiteKeyUnderCursor()
+    let string = "NV " . key
+    execute string
+endfun
+
+function! OpenCiteKeyPDF() abort
+    let key = GetCiteKeyUnderCursor()
+    let string = "silent ! open " . g:zettel_pdf_dict . "/" . l:key . ".pdf"
+    execute string
 endfun
 
 let g:pandoc#completion#bib#mode = "citeproc"
 let g:pandoc#biblio#sources = "g"
 let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
 let g:pandoc#biblio#bibs = [$HOME.'/Documents/myBib/main.bib']
-let g:pandoc#completion#bib#use_preview = 1
-let g:pandoc#folding#fdc = 0
-let g:pandoc#folding#level = 999
 
-nnoremap <silent> <leader>cn :exec "NV " . GetCiteKeyUnderCursor() <CR>
-nnoremap <silent> <leader>cb :exec OpenCiteKeyInBib() <CR>
-nnoremap <silent> <leader>cp :exec OpenCiteKeyPDF() <CR>
+nnoremap <silent> <leader>cn :call OpenCiteKeyNote() <CR>
+nnoremap <silent> <leader>cb :call OpenCiteKeyInBib() <CR>
+nnoremap <silent> <leader>cp :call OpenCiteKeyPDF() <CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => R IDE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
