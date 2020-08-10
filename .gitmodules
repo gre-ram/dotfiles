@@ -41,9 +41,6 @@
 [submodule "pyenv-pip-migrate"]
 	path = pyenv-plugins/.pyenv/plugins/pyenv-pip-migrate
 	url = git://github.com/pyenv/pyenv-pip-migrate.git
-[submodule "vim-slime"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-slime
-	url = https://github.com/jpalardy/vim-slime.git
 [submodule "vim-surround"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-surround
 	url = https://github.com/tpope/vim-surround
