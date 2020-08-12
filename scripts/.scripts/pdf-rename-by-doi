@@ -1,0 +1,149 @@
+#!/bin/bash
+#
+# pdf-rename-by-doi v0.2
+#
+# Copyright (C) 2015 Ati Sharma
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# test for install dependencies
+test -z $( \
+    test $(which bibtool) && \
+    test $(which bibclean) && \
+    test $(which pdftotext) && \
+    test $(which curl) && echo true\
+    ) && \
+    echo "$(basename $0) requires poppler-utils, curl, bibtool and bibclean to be installed and in your path." >&2 && \
+    exit 1
+
+# default pdf name key format string
+# same syntax as key generation of bibtool
+# uses - instead of : as default since : is reserved on Mac OS
+BIBKEYFMT='%3n(author)-Journal-Title-%+4d(year)'
+
+while getopts vf:d: opt; do
+    case $opt in
+        d)
+            DOI_ARG="$OPTARG"
+            ;;
+        v)
+            VERBOSE=TRUE
+            ;;
+        f)
+            # replace bibtool-like format with placeholders
+            BIBKEYFMT=$(echo $OPTARG | sed 's/(title)/Title/g' | sed 's/(journal)/Journal/g')
+            ;;
+    esac
+done
+
+shift $((OPTIND - 1))
+
+# All the things that you don't want in your bibtex entry, separated by \|
+BIBENTRYFILTER='= ,\|\"-\"\|url'
+
+# loop over arguments and extract DOIs
+# uses regex from http://www.mit.edu/people/lucylim/BibDesk.html
+# can use pdf metainfo sometimesm as in
+# DOI=$(pdfinfo -meta $FILE ... )
+# but this is found to be less commonly supplied, and requires poppler-utils.
+for FILE in "$@"; do
+
+    # skip directories
+    if [ -d "$FILE" ];
+    then
+        echo "Skipping directory $FILE" >&2
+        continue
+    fi
+
+    if [ -z $DOI_ARG ]
+    then 
+        DOI=$(pdftotext -q -l 2 "$FILE" - \
+            | sed 's/Digital Object Identifier[:]*/doi:/g' \
+            | grep -m1 -A1 'DOI\|doi' \
+            | sed 's/[\[\]]/ /g' \
+            | sed 's/dx\.doi\.org\// doi:/g' \
+            | sed 's/doi>/ doi:/g' \
+            | sed 's/</ /g' \
+            | sed -n -e 's_.*[Dd][Oo][Ii][:) ] *\([[:digit:]][[:digit:]]*.[[:alnum:])(.-]*/[[:alnum:])(.-][[:alnum:]):(.-]*[[:alnum:]-]\).*_\1_p' )
+    else
+        DOI="$DOI_ARG"
+    fi
+
+    # test here for DOI returned
+    if [ -z $DOI ]
+    then
+        echo "Skipping $FILE, no DOI found" >&2
+        continue
+    fi
+
+    URL="http://dx.doi.org/$DOI"
+
+    # uses crossref API
+    # see http://www.crossref.org/CrossTech/2011/11/turning_dois_into_formatted_ci.html
+    # resolve URL
+    BIBENTRY=$(curl -s -LH "Accept: text/bibliography; style=bibtex" $URL \
+        | sed 's/,/,\n/g' \
+        | sed 's/}}/}\n}/' \
+        | grep -v "$BIBENTRYFILTER" \
+        | bibclean -delete-empty-values -no-check-values \
+        | bibtool -F -f "$BIBKEYFMT" )
+    KEY=$(echo $BIBENTRY \
+        | sed 's/,/,\n/g' \
+        | grep "@" \
+        | sed 's/@[[:alnum:]]*{[ \t]*\([^,]*\),/\1/' \
+        | tr '[:upper:]' '[:lower:]' \
+        | sed 's/\<\([[:alnum:]]*\)\>/\u\1/g' \
+        | sed 's/\<Mc\([[:alnum:]]\)/Mc\u\1/g' \
+        )
+    TITLE=$(echo $BIBENTRY \
+        | sed 's/,/,\n/g' \
+        | grep 'title' \
+        | tr '-' ' ' \
+        | cut -d'=' -f2 \
+        | tr -dc '[[:alnum:]]. ' \
+        | tr '[:upper:]' '[:lower:]' \
+        | sed 's/\B.//g;s/\s//g' )
+    JOURNAL=$(echo $BIBENTRY \
+        | sed 's/,/,\n/g' \
+        | grep 'journal' \
+        | cut -d'=' -f2 \
+        | tr -dc '[[:alnum:]] ' \
+        | tr '-' ' ' \
+        | sed 's/\B.//g;s/\s//g' )
+
+    NEWBASENAME=$(echo $KEY | sed "s/Title/$TITLE/" | sed "s/Journal/$JOURNAL/")
+
+    BASE=$(basename "$FILE")
+    NEWFILENAME=$(echo $FILE | sed "s#$BASE#$NEWBASENAME#" | sed 's#\.pdf\.pdf#\.pdf#g' ).pdf
+
+    # test here for filename existing
+    if [ -z "$NEWBASENAME" ]
+    then
+        echo "Skipping $FILE, missing new filename" >&2
+        continue
+    fi
+
+    # allow for possibility of using '/' in -f argument to create subdirectories by year or journal (for example)
+    mkdir -p $(dirname "$NEWFILENAME")
+    
+    if [[ $VERBOSE ]]
+    then
+        echo "moving $FILE to $NEWFILENAME";
+    fi
+
+    # finally, do the move
+    mv "$FILE" "$NEWFILENAME"
+    
+
+done 
