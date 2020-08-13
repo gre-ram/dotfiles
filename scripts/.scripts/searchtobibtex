@@ -58,5 +58,5 @@ for URL in $DOI; do
     # uses crossref API
     # see http://www.crossref.org/CrossTech/2011/11/turning_dois_into_formatted_ci.html
     # resolve URL
-    curl -s -LH "Accept: text/bibliography; style=bibtex" $URL | sed 's/,/,\n/g' | sed 's/}}/}\n}/' | grep -v "$BIBENTRYFILTER" | bibclean -delete-empty-values -no-check-values | bibtool -F -f "$BIBKEYFMT";
+    curl -s -LH "Accept: text/bibliography; style=bibtex" $URL | sed 's/,/,\n/g' | sed 's/}}/}\n}/' | grep -v "$BIBENTRYFILTER" | bibclean -delete-empty-values -no-check-values | bibtool "$BIBKEYFMT";
 done

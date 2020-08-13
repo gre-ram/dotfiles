@@ -30,8 +30,8 @@ test -z $( \
 # default pdf name key format string
 # same syntax as key generation of bibtool
 # uses - instead of : as default since : is reserved on Mac OS
-BIBKEYFMT='%3n(author)-Journal-Title-%+4d(year)'
 
+BIBKEYFMT='-- fmt.et.al={} -f "{%N(shortauthor) # %-1n(author) # %-1n(editor) # %-1n(bookauthor) # ohneAutor }_{%-1T(title) # %-1T(booktitle) # ohneTitel}_{%+4d(year) # ohneJahr}" -r biblatex  main.bib'
 while getopts vf:d: opt; do
     case $opt in
         d)
