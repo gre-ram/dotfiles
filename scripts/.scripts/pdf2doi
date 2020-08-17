@@ -1,37 +1,5 @@
 #!/bin/bash
-#
-# pdftobibtex v0.2
-#
-# Copyright (C) 2015 Ati Sharma
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-# 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# test for install dependencies
-test -z $( \
-    test $(which bibtool) && \
-    test $(which bibclean) && \
-    test $(which pdftotext) && \
-    test $(which curl) && echo true\
-    ) && \
-    echo "$(basename $0) requires poppler-utils, curl, bibtool and bibclean to be installed and in your path." >&2 && \
-    exit 1
-
-# default pdf name key format string
-# same syntax as key generation of bibtool
-# uses - instead of : as default since : is reserved on Mac OS
-
-BIBKEYFMT='-- fmt.et.al={} -f "{%N(shortauthor) # %-1n(author) # %-1n(editor) # %-1n(bookauthor) # ohneAutor }_{%-1T(title) # %-1T(booktitle) # ohneTitel}_{%+4d(year) # ohneJahr}" -r biblatex  main.bib'
 while getopts f: opt; do
     case $opt in
         f)
@@ -50,6 +18,28 @@ BIBENTRYFILTER='= ,\|\"-\"\|url'
 # can use pdf metainfo sometimesm as in
 # DOI=$(pdfinfo -meta $FILE ... )
 # but this is found to be less commonly supplied, and requires poppler-utils.
+
+check_file() {
+    find ~/Documents/Sci-Bib/. | grep -i -q ${1}
+    if [ $? -eq 0 ]
+    then
+            old_file=$(find ~/Documents/Sci-Bib/. | grep -i ${1})
+            get_old_info $old_file
+            mv $old_file "old""$key"".txt"
+            make_file
+            if [ -z ${old_pdf+x} ]; then : ; else mv "$old_pdf" "$key"".pdf" ; fi
+            exit 1
+    else
+            :   
+    fi
+}
+
+extract_doi() {
+    doi=$(pdfinfo "$1" | grep -io "doi:.*") ||
+    doi=$(pdftotext "$1" - | pcregrep -M -o "\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?![\"&\'<>])\S)+)\b" | head -n 1) ||
+    exit 1
+}
+
 for FILE in "$@"; do
 
     # skip directories
@@ -84,3 +74,6 @@ for FILE in "$@"; do
     curl -s -LH "Accept: text/bibliography; style=bibtex" $URL | sed 's/,/,\n/g' | sed 's/}}/}\n}/' | grep -v "$BIBENTRYFILTER" | bibclean -delete-empty-values -no-check-values | bibtool -F -f "$BIBKEYFMT";
 
 done 
+
+
+#########################
