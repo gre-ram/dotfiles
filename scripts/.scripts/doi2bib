@@ -1,7 +1,2 @@
 #!/bin/bash
-
-getbib () {
-    curl -s "https://api.crossref.org/works/$1/transform/application/x-bibtex" -w "\\n" | grep -v '= ,\|\"-\"\|url' | bibtool -- fmt.et.al={} -r biblatex -F -f "{%N(shortauthor) # %-1n(author) # %-1n(editor) # %-1n(bookauthor) # ohneAutor }_{%-1T(title) # %-1T(booktitle) # ohneTitel }_{%+4d(year) # ohneJahr}"
-}
-
-getbib $1
+curl -s "https://api.crossref.org/works/$1/transform/application/x-bibtex" -w "\\n" | grep -v '= ,\|\"-\"\|url' | bibtool -- fmt.et.al={} -r biblatex -F -f "{%N(shortauthor) # %-1n(author) # %-1n(editor) # %-1n(bookauthor) # ohneAutor }_{%-1T(title) # %-1T(booktitle) # ohneTitel }_{%+4d(year) # ohneJahr}"
