@@ -1,6 +1,4 @@
 ^\.DS\_Store
 Brewfile
-python_nvim_dependencies\.txt
-iterm2\.json
 init\.el
-Notate\.workflow\/*
+vs\-code\-settings\.json

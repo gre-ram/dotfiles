@@ -1,3 +1,5 @@
 #!/bin/sh
+#  sort.format = {{%1.#s(crossref)a#z}$key} sort.reverse = off sort = on
+bib =$(cat) 
 
-echo $@
+bibtool -- "fmt.et.al={} sort.format = {{%1.#s(crossref)a#z}$key} sort.reverse = off sort = on" -r biblatex -F -f "{%N(shortauthor) # %-1n(author) # %-1n(editor) # %-1n(bookauthor) # ohneAutor }_{%-1T(title) # %-1T(booktitle) # ohneTitel }_{%+4d(year) # ohneJahr}" -d -i - ~/Documents/myBib/main.bib -o ~/Documents/myBib/main.bib
