@@ -1,4 +1,11 @@
 #!/bin/sh
-bib=$(cat) 
+bib=$(cat | bibtool -R -r biblatex)
+key=$(echo $bib | pcregrep -M -o "\S+(\d\d\d\d|ohneJahr)(?=,)")
 
-echo $bib | bibtool -R -r biblatex -i /dev/stdin ~/Documents/myBib/main.bib -o ~/Documents/myBib/main.bib 
+if grep -Fq $key ~/Documents/myBib/main.bib
+then
+    echo "${key} found in main.bib. Abort..."
+    exit 1
+else
+   echo $bib | bibtool -R -r biblatex -i /dev/stdin ~/Documents/myBib/main.bib -o ~/Documents/myBib/main.bib 
+fi
