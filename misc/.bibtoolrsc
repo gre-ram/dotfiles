@@ -8,6 +8,6 @@ fmt.et.al = ""
 key.base = lower
 preserve.keys = off
 preserve.key.case = off
-sort.format = {{%1.#s(crossref)a#z}$key}
+sort.format = {{%1.#s(crossref)a#z}\%s(\$key)}
 sort.reverse = off
 sort = on
