@@ -7,5 +7,6 @@ then
     echo "${key} found in main.bib. Abort..."
     exit 1
 else
-   echo $bib | bibtool -R -r biblatex -i /dev/stdin ~/Documents/myBib/main.bib -o ~/Documents/myBib/main.bib 
+    echo $bib | bibtool -R -r biblatex -i /dev/stdin ~/Documents/myBib/main.bib -o ~/Documents/myBib/main.bib 
+    echo $bib | mail -s "Read @${key}" $TICKMAIL 
 fi
