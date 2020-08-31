@@ -3,7 +3,7 @@ move_file() {
     find ~/Documents/Sci-Bib/. | grep -wq "${1}.pdf"
     if [ $? -eq 1 ]
     then
-        mv "${PWD}/${2}" "$HOME/Documents/myBib/pdfs/${1}.pdf"
+        mv "${2}" "$HOME/Documents/myBib/pdfs/${1}.pdf"
     else
             echo "${1}.pdf was found. Abort..."
             exit 1
@@ -12,27 +12,37 @@ move_file() {
 
 use_doi=false
 use_ayt=false
-while getopts d:a:y:t: opt; do
+use_bib=false
+while getopts bd:a:y:t: opt; do
     case $opt in
+        b)
+            use_bib=true
+            use_ayt=false
+            use_doi=false
+            ;;
         d)
             doi=$OPTARG
             use_doi=true
             use_ayt=false
+            use_bib=false
             ;;
         a)
             author=$OPTARG
             use_ayt=true
             use_doi=false
+            use_bib=false
             ;;
         y)
             year=$OPTARG
             use_ayt=true
             use_doi=false
+            use_bib=false
             ;;
         t)
             title=$OPTARG
             use_ayt=true
             use_doi=false
+            use_bib=false
             ;;
         ?)
             exit 1
@@ -57,10 +67,22 @@ then
     key=$(echo $bib | pcregrep -M -o "\S+(\d\d\d\d|ohneJahr)(?=,)")
     echo $bib | bib2myBib
     move_file $key $1
+elif [ "$use_bib" = true ]
+then
+    bib=$(pbpaste | bibtool -R -r biblatex)
+    key=$(echo $bib | pcregrep -M -o "\S+(\d\d\d\d|ohneJahr)(?=,)")
+    if [[ "$key" == "" ]]; then
+        exit 1
+    fi
+    echo $bib | bib2myBib
+    move_file $key $1
 else
     doi=$(pdf2doi $1)
     bib=$(doi2bib $doi | bibtool -R -r biblatex)
     key=$(echo $bib | pcregrep -M -o "\S+(\d\d\d\d|ohneJahr)(?=,)")
+    if [[ "$key" == "" ]]; then
+        exit 1
+    fi
     echo $bib | bib2myBib
     move_file $key $1
 fi
