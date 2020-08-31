@@ -38,12 +38,13 @@ for FILE in "$@"; do
         echo "Skipping directory $FILE" >&2
         continue
     fi
-
-    doi=$(pdfinfo "$FILE" | pcregrep -i -o '10.\d{4,9}\/[-._;()\/:A-Z0-9]+' | tr [:space:] '\n' | sed 's/\.$//' | head -n 1) ||
-    doi=$(pdftotext -l 3 "$FILE" - | pcregrep -i -o '10.\d{4,9}\/[-._;()\/:A-Z0-9]+' | tr [:space:] '\n' | sed 's/\.$//' | head -n 1) || 
-    doi=$(pdftotext "$FILE" - | pcregrep -i -o '10.\d{4,9}\/[-._;()\/:A-Z0-9]+' | tr [:space:] '\n' | sed 's/\.$//' | tail -n 1) ||  
-    continue 
-
+    doi=$(pdfinfo "$FILE" | pcregrep -i -o '10.\d{4,9}\/[-._;()\/:A-Z0-9]+' | tr [:space:] '\n' | sed 's/\.$//' | head -n 1)
+    if [[ $doi == "" ]]; then
+        doi=$(pdftotext -l 3 "$FILE" - | pcregrep -i -o '10.\d{4,9}\/[-._;()\/:A-Z0-9]+' | tr [:space:] '\n' | sed 's/\.$//' | head -n 1)
+    fi
+    if [[ $doi == "" ]]; then
+        doi=$(pdftotext "$FILE" - | pcregrep -i -o '10.\d{4,9}\/[-._;()\/:A-Z0-9]+' | tr [:space:] '\n' | sed 's/\.$//' | tail -n 1) 
+    fi
     echo $doi
 done
 
