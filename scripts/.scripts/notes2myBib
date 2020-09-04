@@ -1,0 +1,14 @@
+#!/bin/sh
+
+find ~/Documents/Sci-Bib/. | grep -wq "${1}.md"
+if [ $? -eq 1 ]
+then
+    mv "${2}" "$HOME/Documents/myBib/pdfs/${1}.pdf"
+else
+        echo "${1}.pdf was found. Abort..."
+        exit 1
+fi
+
+notes=$(skimnotes get -format txt "${1}.pdf" -)
+
+echo $notes

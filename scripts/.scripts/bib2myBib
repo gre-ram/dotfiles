@@ -8,6 +8,5 @@ then
     exit 1
 else
     echo $bib | bibtool -R -r biblatex -i /dev/stdin ~/Documents/myBib/main.bib -o ~/Documents/myBib/main.bib 
-    touch "~/Documents/myBib/bib-notes/${key}.md"
     echo $bib | mail -s "Read @${key}" $TICKMAIL 
 fi
