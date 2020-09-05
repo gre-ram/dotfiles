@@ -1,4 +1,20 @@
 #!/bin/sh
+pretag=$(echo "")
+while getopts t: opt; do
+    case $opt in
+        t)
+            opts=$OPTARG
+            pretag=$(echo "${opts}, ")
+            ;;
+        ?)
+            echo "scipt usage: "
+            exit 1
+            ;;
+    esac
+done
+
+shift $((OPTIND - 1))
+
 key=$(echo $1 | tr -d .pdf)
 cat $HOME/Documents/myBib/main.bib | grep -wq "$key"
 if [ $? -eq 1 ]
@@ -8,21 +24,49 @@ then
 else
     echo "$key was found in main.bib. Continue..."
 fi
-real_page=$(cat $HOME/Documents/myBib/main.bib | pcregrep -o -M "(?<=$key)(.|\n)*" | pcregrep -v -M "^\}(.|\n)*" | pcregrep -o "Pages\s+=\s\{\d+" | pcregrep -o "\d+" )
-real_page_minus=$(($real_page - 1))
 
+real_page=$(cat $HOME/Documents/myBib/main.bib | pcregrep -o -M "(?<=$key)(.|\n)*" | pcregrep -v -M "^\}(.|\n)*" | pcregrep -o "Pages\s+=\s\{\d+" | pcregrep -o "\d+" )
+if [ $? -eq 1 ]
+then
+    echo "No Pagenumber in Bibfile. Abort..."
+    exit 1
+fi
+
+find ~/Documents/myBib/notes/*.md | pcregrep -o "(?<=notes\/)\S+_\S+_(\d\d\d\d|ohneJahr)(?=-\d)" | grep -wq "$key"
+if [ $? -eq 1 ]
+then
+    echo "$key wasn't found in notes folder. Continue..."
+else
+    echo "$key already exists in notes folder. Abort..."
+    exit 1
+fi
+
+
+real_page_minus=$(expr $real_page - 1)
 notes=$(skimnotes get -format text "${key}.pdf" - )
 echo "$notes" | while read -d "*" line
 do
-    pdf_page=$(echo $line | pcregrep -o "(?<=page\s)\d*")
-    page=$(expr $real_page_minus + $pdf_page)
     if [[ $line == *'Hervorhebung'* ]]; then 
         inner_content=$(echo $line | pcregrep -M -o "(?<=\d\s).*")
-        cite_string=$(echo "'${inner_content}' [@${key}, S. ${page}]")
-        echo $cite_string
+        pdf_page=$(echo $line | pcregrep -o "(?<=page\s)\d*")
+        page=$(expr $real_page_minus + $pdf_page)
+        title=$(echo "${key}-${RANDOM}")
+        tags=$(echo "")
+        content_string=$(echo "'${inner_content}' [@${key}, S. ${page}]")
     elif [[ $line == *'Fixiert'* ]]; then 
         tags=$(echo "$line" | sed -n 2p)
-        content=$(echo "$line" | sed '1,3d')
+        pdf_page=$(echo $line | pcregrep -o "(?<=page\s)\d*")
+        page=$(expr $real_page_minus + $pdf_page)
+        content_string=$(echo "$line" | sed '1,3d')
+        title=$(echo "${key}-${RANDOM}")
+    else
+        continue
     fi     
+    echo "---" > "$HOME/Documents/myBib/notes/$title.md"
+    echo "title: '${title}'" >> "$HOME/Documents/myBib/notes/$title.md"
+    echo "tags: [${pretag}${tags}]" >> "$HOME/Documents/myBib/notes/$title.md"
+    echo "..." >> "$HOME/Documents/myBib/notes/$title.md"
+    echo "" >> "$HOME/Documents/myBib/notes/$title.md"
+    echo "$content_string" >> "$HOME/Documents/myBib/notes/$title.md"
 done
-
+echo "done! :)"
