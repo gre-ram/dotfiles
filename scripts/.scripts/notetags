@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+cd $HOME/Documents/myBib/notes
+
+[[ -f tags ]] && rm tags
+grep --exclude="*.bib" -r "tags : [" * | while read line; do
+    file=$(echo "$line" | cut -d: -f1)
+    unparsed_tags=$(echo "$line" | cut -d: -f2)
+    tags=$(echo $unparsed_tags | sed -e "s/tags = {//g" -e "s/,\|}//g")
+    for tag in $tags; do
+        echo "$tag	$file	/^$unparsed_tags$/;" >> tags
+    done
+done
