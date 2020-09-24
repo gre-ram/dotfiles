@@ -214,15 +214,12 @@ lua require'completion'.addCompletionSource('vimpandoc', require'vimpandoc'.comp
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <TAB>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ completion#trigger_completion()
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+nmap <tab> <Plug>(completion_smart_tab)
+nmap <s-tab> <Plug>(completion_smart_s_tab)
+imap  <c-j> <Plug>(completion_next_source)
+imap  <c-k> <Plug>(completion_prev_source)
 
 let g:UltiSnipsExpandTrigger		= "<Plug>"
 let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
@@ -236,7 +233,6 @@ let g:completion_enable_auto_paren = 0
 let g:completion_timer_cycle = 80
 let g:completion_auto_change_source = 0
 let g:completion_matching_ignore_case = 1
-" let g:completion_trigger_keyword_length = 3
 
 let g:completion_chain_complete_list = {
     \ 'default' : {
@@ -252,8 +248,6 @@ let g:completion_chain_complete_list = {
     \]
     \   }
     \}
-imap  <c-j> <Plug>(completion_next_source)
-imap  <c-k> <Plug>(completion_prev_source)
 
 augroup CompletionStartUp
     autocmd!
