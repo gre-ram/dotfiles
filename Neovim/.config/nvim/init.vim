@@ -22,7 +22,7 @@ packadd! vim-pandoc-syntax
 packadd! vim-addon-mw-utils
 packadd! tlib_vim
 packadd! vim-surround
-packadd! nvim-lsp
+packadd! nvim-lspconfig
 packadd! completion-nvim
 packadd! diagnostic-nvim
 packadd! completion-buffers

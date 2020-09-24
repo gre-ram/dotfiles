@@ -44,9 +44,6 @@
 [submodule "vim-surround"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-surround
 	url = https://github.com/tpope/vim-surround
-[submodule "nvim-lsp"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/nvim-lsp
-	url = https://github.com/neovim/nvim-lsp.git
 [submodule "completion-nvim"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/completion-nvim
 	url = https://github.com/nvim-lua/completion-nvim.git
@@ -74,3 +71,6 @@
 [submodule "notational-fzf"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/notational-fzf-vim
 	url = https://github.com/alok/notational-fzf-vim
+[submodule "nvim-lspconfig"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/nvim-lspconfig
+	url = https://github.com/neovim/nvim-lspconfig
