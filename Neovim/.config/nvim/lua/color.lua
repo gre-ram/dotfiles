@@ -92,7 +92,7 @@ Group.new("PMenu", colors.nord_4, colors.nord_2)
 Group.new("PmenuSbar", colors.nord_4, colors.nord_2)
 Group.new("PMenuSel", colors.nord_6, colors.nord_9)
 Group.new("PmenuThumb", colors.nord_8, colors.nord_3)
-Group.new("SpecialKey",colors.nord_3, colors.nord_3)
+Group.new("SpecialKey",colors.nord_3, colors.none, styles.italic)
 Group.new("SpellBad",colors.nord_11, colors.nord_0)
 Group.new("SpellCap",colors.nord_13, colors.nord_0)
 Group.new("SpellLocal",colors.nord_5, colors.nord_0)
@@ -124,32 +124,11 @@ Group.new('vimBracket',      groups.Delimiter, colors.none)
 Group.new('vimMap',          groups.vimcommand, colors.none)
 Group.new('nvimMap',         groups.vimMap, colors.none)
 
--- startify
-Group.new("StartifyFile",colors.nord_6, colors.none)
-Group.new("StartifyFooter",colors.none, colors.none)
-Group.new("StartifyHeader",colors.nord_8, colors.none)
-Group.new("StartifyNumber",colors.nord_7, colors.none)
-Group.new("StartifyPath",colors.nord_8, colors.none)
-Group.new("StartifyBracket", groups.Delimiter, groups.Delimiter)
-Group.new("StartifySlash", groups.Normal, groups.Normal)
-Group.new("StartifySpecial", groups.Comment, groups.Comment)
-
 -- gitgutter
 Group.new("GitGutterAdd",          colors.nord_14, colors.none)
 Group.new("GitGutterDelete",       colors.nord_11, colors.none)
 Group.new("GitGutterChange",       colors.nord_13, colors.none)
 Group.new("GitGutterChangeDelete", colors.nord_11, colors.none)
-
--- built-in LSP
-Group.new("LSPDiagnosticsWarning", colors.nord_13, colors.none)
-Group.new("LSPDiagnosticsError", colors.nord_11, colors.none)
-Group.new("LSPDiagnosticsInformation", colors.nord_8, colors.none)
-Group.new("LSPDiagnosticsHint", colors.nord_10, colors.none)
-
--- TS
-Group.new("TSDefinition", groups.Type, groups.Type, styles.italic)
-Group.new("TSString", groups.String, groups.String, styles.italic)
-Group.new("TSDefinitionUsage", groups.CursorLine, groups.CursorLine)
 
 -- TeleScope
 Group.new("TelescopeSelection", colors.nord_11, colors.nord_8, styles.bold)
