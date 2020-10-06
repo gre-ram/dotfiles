@@ -33,6 +33,7 @@ packadd! diagnostic-nvim
 packadd! completion-buffers
 packadd! completion-treesitter
 packadd! vim-devicons
+packadd! nvim-colorizer.lua
 packadd! auto-pairs
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -72,7 +73,7 @@ set updatetime=300
 set signcolumn=yes
 autocmd TermOpen * setlocal nonumber
 autocmd TermOpen * setlocal norelativenumber
-
+lua require'colorizer'.setup()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Keybindings

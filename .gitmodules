@@ -92,3 +92,6 @@
 [submodule "completion-treesitter"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/completion-treesitter
 	url = https://github.com/nvim-treesitter/completion-treesitter
+[submodule "nvim-colorizer.lua"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/nvim-colorizer.lua
+	url = https://github.com/norcalli/nvim-colorizer.lua
