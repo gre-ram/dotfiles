@@ -14,9 +14,6 @@
 [submodule "vim-table-mode"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/table-mode
 	url = git@github.com:dhruvasagar/vim-table-mode.git
-[submodule "dracula"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/dracula
-	url = https://github.com/dracula/vim.git
 [submodule "pandoc-syntax"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-pandoc-syntax
     url = https://github.com/vim-pandoc/vim-pandoc-syntax.git
@@ -59,9 +56,6 @@
 [submodule "auto-pairs"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/auto-pairs
 	url = git://github.com/jiangmiao/auto-pairs.git
-[submodule "nord-vim"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/nord-vim
-	url = https://github.com/arcticicestudio/nord-vim.git
 [submodule "pyenv-virtualenv"]
 	path = pyenv-plugins/.pyenv/plugins/pyenv-virtualenv
 	url = https://github.com/pyenv/pyenv-virtualenv.git
@@ -95,3 +89,6 @@
 [submodule "nvim-colorizer.lua"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/nvim-colorizer.lua
 	url = https://github.com/norcalli/nvim-colorizer.lua
+[submodule "colorbuddy.nvim"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/colorbuddy.nvim
+	url = https://github.com/tjdevries/colorbuddy.nvim

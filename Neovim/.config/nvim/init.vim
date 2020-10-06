@@ -14,8 +14,6 @@ packadd! ultisnips
 set rtp+=/usr/local/opt/fzf
 packadd! fzf.vim
 packadd! table-mode
-packadd! nord-vim
-"packadd! dracula
 packadd! vim-pandoc
 packadd! notational-fzf-vim
 packadd! vim-pandoc-syntax
@@ -35,13 +33,14 @@ packadd! completion-treesitter
 packadd! vim-devicons
 packadd! nvim-colorizer.lua
 packadd! auto-pairs
+packadd! colorbuddy.nvim
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Basic Customization
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set termguicolors
-colorscheme nord
 syntax on
+lua require('colorbuddy').colorscheme('color')
 set spelllang=de,en
 set nobackup
 set noswapfile
