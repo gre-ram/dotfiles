@@ -21,6 +21,9 @@ packadd! notational-fzf-vim
 packadd! vim-pandoc-syntax
 packadd! vim-addon-mw-utils
 packadd! tlib_vim
+packadd! plenary.nvim
+packadd! popup.nvim
+packadd! telescope.nvim
 packadd! vim-surround
 packadd! nvim-lspconfig
 packadd! completion-nvim

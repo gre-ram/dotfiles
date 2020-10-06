@@ -74,3 +74,12 @@
 [submodule "nvim-lspconfig"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig
+[submodule "plenary.nvim"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/plenary.nvim
+	url = https://github.com/nvim-lua/plenary.nvim
+[submodule "telescope.nvim"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/telescope.nvim
+	url = https://github.com/nvim-lua/telescope.nvim
+[submodule "popup.nvim"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/popup.nvim
+	url = https://github.com/nvim-lua/popup.nvim
