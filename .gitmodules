@@ -83,3 +83,12 @@
 [submodule "popup.nvim"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/popup.nvim
 	url = https://github.com/nvim-lua/popup.nvim
+[submodule "lsp-status.nvim"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/lsp-status.nvim
+	url = https://github.com/nvim-lua/lsp-status.nvim
+[submodule "nvim-treesitter"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/nvim-treesitter
+	url = https://github.com/nvim-treesitter/nvim-treesitter
+[submodule "completion-treesitter"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/completion-treesitter
+	url = https://github.com/nvim-treesitter/completion-treesitter

@@ -24,11 +24,14 @@ packadd! tlib_vim
 packadd! plenary.nvim
 packadd! popup.nvim
 packadd! telescope.nvim
+packadd! nvim-treesitter
 packadd! vim-surround
 packadd! nvim-lspconfig
+packadd! lsp-status.nvim
 packadd! completion-nvim
 packadd! diagnostic-nvim
 packadd! completion-buffers
+packadd! completion-treesitter
 packadd! vim-devicons
 packadd! auto-pairs
 
