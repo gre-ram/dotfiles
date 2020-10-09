@@ -46,7 +46,7 @@ font:
     style: Extra Bold
   italic:
     family: JetBrainsMono Nerd Font
-    style: Italics
+    style: Italic
   offset:
       y: 4
   glyph_offset:
