@@ -92,3 +92,6 @@
 [submodule "colorbuddy.nvim"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/colorbuddy.nvim
 	url = https://github.com/tjdevries/colorbuddy.nvim
+[submodule "cyclist.vim"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/cyclist.vim
+	url = https://github.com/tjdevries/cyclist.vim

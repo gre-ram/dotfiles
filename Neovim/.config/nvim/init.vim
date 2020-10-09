@@ -14,6 +14,7 @@ packadd! ultisnips
 set rtp+=/usr/local/opt/fzf
 packadd! fzf.vim
 packadd! table-mode
+packadd! cyclist.vim
 packadd! vim-pandoc
 packadd! notational-fzf-vim
 packadd! vim-pandoc-syntax
