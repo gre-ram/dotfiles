@@ -92,3 +92,6 @@
 [submodule "colorbuddy.nvim"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/colorbuddy.nvim
 	url = https://github.com/tjdevries/colorbuddy.nvim
+[submodule "completion-bib"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/completion-bib
+	url = https://github.com/gwbrck/completion-bib
