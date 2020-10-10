@@ -44,7 +44,7 @@ fi
 
 real_page_minus=$(expr $real_page - 1)
 notes=$(skimnotes get -format text "${key}.pdf" - )
-echo "$notes" | while read -d "*" line
+echo "${notes} *" | sed '1s/^.//' | cat | while read -d "*" line
 do
     if [[ $line == *'Hervorhebung'* ]]; then 
         inner_content=$(echo $line | pcregrep -M -o "(?<=\d\s).*")
@@ -59,6 +59,11 @@ do
         page=$(expr $real_page_minus + $pdf_page)
         content_string=$(echo "$line" | sed '1,3d')
         title=$(echo "${key}-${RANDOM}")
+    elif [[ $line == *'terstreichun'* ]]; then 
+        echo "Unterschtreichung gefunden"
+        content=$(echo "$line")
+        reminders add Ausleihen $content
+        continue
     else
         continue
     fi     
