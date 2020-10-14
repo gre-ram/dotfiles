@@ -1,4 +1,5 @@
 #!/bin/sh
+
 pretag=$(echo "")
 while getopts t: opt; do
     case $opt in
@@ -37,11 +38,11 @@ if [ $? -eq 1 ]
 then
     echo "$key wasn't found in notes folder. Continue..."
 else
-    echo "$key already exists in notes folder. Abort..."
-    exit 1
+    echo "$key already exists in notes folder. Overwriting..."
+    rm ~/Documents/myBib/notes/$key*.md 
 fi
 
-
+todolist=$(reminders show Ausleihen)
 real_page_minus=$(expr $real_page - 1)
 notes=$(skimnotes get -format text "${key}.pdf" - )
 echo "${notes} *" | sed '1s/^.//' | cat | while read -d "*" line
@@ -60,9 +61,13 @@ do
         content_string=$(echo "$line" | sed '1,3d')
         title=$(echo "${key}-${RANDOM}")
     elif [[ $line == *'terstreichun'* ]]; then 
-        echo "Unterschtreichung gefunden"
-        content=$(echo "$line")
-        reminders add Ausleihen $content
+        echo "Weitere Quelle gefunden"
+        content=$(echo $line | pcregrep -M -o "(?<=\d\s).*")
+        if [[ $todolist == *"${content}"* ]]; then
+            continue
+        else
+            reminders add Ausleihen $content
+        fi
         continue
     else
         continue
