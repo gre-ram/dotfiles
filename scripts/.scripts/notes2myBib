@@ -25,7 +25,7 @@ else
     echo "$key was found in main.bib. Continue..."
 fi
 
-real_page=$(cat $HOME/Documents/myBib/main.bib | pcregrep -o -M "(?<=$key)(.|\n)*" | pcregrep -v -M "^\}(.|\n)*" | pcregrep -o "Pages\s+=\s\{\d+" | pcregrep -o "\d+" )
+real_page=$(cat $HOME/Documents/myBib/main.bib | pcregrep -o -M "(?<=$key)(.|\n)*" | pcregrep -v -M "^\}(.|\n)*" | pcregrep -o "pages\s+=\s\{\d+" | pcregrep -o "\d+" )
 if [ $? -eq 1 ]
 then
     echo "No Pagenumber in Bibfile. Abort..."
