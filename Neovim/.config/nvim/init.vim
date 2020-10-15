@@ -227,10 +227,8 @@ lua require'completion'.addCompletionSource('vimpandoc', require'vimpandoc'.comp
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-nmap <tab> <Plug>(completion_smart_tab)
-nmap <s-tab> <Plug>(completion_smart_s_tab)
+imap <tab> <Plug>(completion_smart_tab)
+imap <s-tab> <Plug>(completion_smart_s_tab)
 imap  <c-j> <Plug>(completion_next_source)
 imap  <c-k> <Plug>(completion_prev_source)
 
