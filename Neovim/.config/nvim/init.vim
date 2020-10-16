@@ -13,6 +13,7 @@ packadd! nvim-r
 packadd! ultisnips
 set rtp+=/usr/local/opt/fzf
 packadd! fzf.vim
+packadd! corpus
 packadd! table-mode
 packadd! vim-pandoc
 packadd! notational-fzf-vim

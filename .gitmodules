@@ -95,3 +95,6 @@
 [submodule "completion-bib"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/completion-bib
 	url = https://github.com/gwbrck/completion-bib
+[submodule "corpus"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/corpus
+	url = https://github.com/wincent/corpus
