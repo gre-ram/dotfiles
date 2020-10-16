@@ -12,12 +12,11 @@ packadd! vim-gitgutter
 packadd! nvim-r
 packadd! table-mode
 packadd! vim-pandoc-syntax
-"packadd! vim-addon-mw-utils
-"packadd! tlib_vim
 packadd! plenary.nvim
 packadd! popup.nvim
 packadd! telescope.nvim
 packadd! nvim-treesitter
+"packadd! maybe using for snippets in future: snippets.nvim
 packadd! vim-surround
 packadd! nvim-lspconfig
 packadd! lsp-status.nvim

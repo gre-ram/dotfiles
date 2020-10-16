@@ -14,12 +14,6 @@
 [submodule "pandoc-syntax"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-pandoc-syntax
     url = https://github.com/vim-pandoc/vim-pandoc-syntax.git
-[submodule "vim-addon-mw-utils"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-addon-mw-utils
-	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
-[submodule "tlib_vim"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/tlib_vim
-	url = https://github.com/tomtom/tlib_vim.git
 [submodule "vim-devicons"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-devicons
 	url = https://github.com/ryanoasis/vim-devicons.git
