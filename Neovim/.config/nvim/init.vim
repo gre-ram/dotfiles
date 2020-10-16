@@ -10,16 +10,10 @@ let g:python3_host_prog = expand('$PYENV_ROOT/versions/Neovim/bin/python')
 packadd! vim-fugitive
 packadd! vim-gitgutter
 packadd! nvim-r
-packadd! ultisnips
-set rtp+=/usr/local/opt/fzf
-packadd! fzf.vim
-packadd! corpus
 packadd! table-mode
-packadd! vim-pandoc
-packadd! notational-fzf-vim
 packadd! vim-pandoc-syntax
-packadd! vim-addon-mw-utils
-packadd! tlib_vim
+"packadd! vim-addon-mw-utils
+"packadd! tlib_vim
 packadd! plenary.nvim
 packadd! popup.nvim
 packadd! telescope.nvim
@@ -104,6 +98,8 @@ augroup pandoc_syntax
         au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
 augroup END
 
+lua require 'corpusconfig'
+
 let g:nv_search_paths = ['~/Documents/myBib/notes']
 let g:zettel_pdf_dict = '~/Documents/myBib/pdfs'
 let g:zettel_bib_file = '~/Documents/myBib/main.bib'
@@ -125,7 +121,7 @@ endfun
 
 function! OpenCiteKeyNote() abort 
     let key = GetCiteKeyUnderCursor()
-    let string = "NV " . key
+    let string = "Corpus " . key
     execute string
 endfun
 
@@ -134,11 +130,6 @@ function! OpenCiteKeyPDF() abort
     let string = "silent ! open " . g:zettel_pdf_dict . "/" . l:key . ".pdf"
     execute string
 endfun
-
-let g:pandoc#completion#bib#mode = "citeproc"
-let g:pandoc#biblio#sources = "g"
-let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
-let g:pandoc#biblio#bibs = [$HOME.'/Documents/myBib/main.bib']
 
 nnoremap <silent> <leader>cn :call OpenCiteKeyNote() <CR>
 nnoremap <silent> <leader>cb :call OpenCiteKeyInBib() <CR>
@@ -233,12 +224,7 @@ imap <s-tab> <Plug>(completion_smart_s_tab)
 imap  <c-j> <Plug>(completion_next_source)
 imap  <c-k> <Plug>(completion_prev_source)
 
-let g:UltiSnipsExpandTrigger		= "<Plug>"
-let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
-let g:UltiSnipsRemoveSelectModeMappings = 0
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.ultisnips/ultisnips']
-let g:completion_enable_snippet = 'UltiSnips'
+let g:completion_enable_snippet = ''
 let g:completion_enable_auto_hover = 1
 let g:completion_max_items = 10
 let g:completion_enable_auto_paren = 0
@@ -265,3 +251,4 @@ augroup CompletionStartUp
     autocmd!
     autocmd BufEnter *.md lua require'completion'.on_attach()
 augroup end
+

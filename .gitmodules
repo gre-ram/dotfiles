@@ -8,9 +8,6 @@
 [submodule "vim-gitgutter"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-gitgutter
 	url = https://github.com/airblade/vim-gitgutter.git
-[submodule "UltiSnips"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/UltiSnips
-	url = https://github.com/sirver/UltiSnips.git
 [submodule "vim-table-mode"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/table-mode
 	url = git@github.com:dhruvasagar/vim-table-mode.git
@@ -50,21 +47,12 @@
 [submodule "completion-buffers"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/completion-buffers
 	url = https://github.com/steelsojka/completion-buffers.git
-[submodule "vim-pandoc"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-pandoc
-	url = https://github.com/vim-pandoc/vim-pandoc.git
 [submodule "auto-pairs"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/auto-pairs
 	url = git://github.com/jiangmiao/auto-pairs.git
 [submodule "pyenv-virtualenv"]
 	path = pyenv-plugins/.pyenv/plugins/pyenv-virtualenv
 	url = https://github.com/pyenv/pyenv-virtualenv.git
-[submodule "fzf.vim"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/fzf.vim
-	url = https://github.com/junegunn/fzf.vim
-[submodule "notational-fzf"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/notational-fzf-vim
-	url = https://github.com/alok/notational-fzf-vim
 [submodule "nvim-lspconfig"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig
