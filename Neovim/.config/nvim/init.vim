@@ -3,7 +3,16 @@ set encoding=utf-8
 set shell=/usr/local/bin/zsh
 let maplocalleader = ','
 let g:mapleader ="\<Space>"
-let g:python3_host_prog = expand('$PYENV_ROOT/versions/Neovim/bin/python') 
+"
+" do something like this:
+" $ pyenv install 3.5.2
+" $ pyenv virtualenv 3.5.2 neovim3
+if glob('~/.pyenv/versions/neovim3/bin/python') != ''
+    let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
+else
+    let g:python3_host_prog = systemlist('which python3')[0]
+endif
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins (to get all helpfiles exec :helptags ALL
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
