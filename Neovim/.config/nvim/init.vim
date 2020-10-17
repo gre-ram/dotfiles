@@ -142,6 +142,7 @@ endfun
 nnoremap <silent> <leader>cn :call OpenCiteKeyNote() <CR>
 nnoremap <silent> <leader>cb :call OpenCiteKeyInBib() <CR>
 nnoremap <silent> <leader>cp :call OpenCiteKeyPDF() <CR>
+nnoremap <Leader>en <cmd>lua require'telescope.builtin'.find_files{ cwd = "~/.config/nvim/" }<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => R IDE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -222,7 +223,7 @@ set statusline+=\
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting & Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-luafile ~/.config/nvim/lsp.lua
+lua require 'lspconfig'
 lua require'completion'.addCompletionSource('vimpandoc', require'vimpandoc'.complete_item)
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
