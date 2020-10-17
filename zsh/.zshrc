@@ -37,22 +37,6 @@ setopt no_prompt_bang
 setopt prompt_percent
 setopt NO_CASE_GLOB            # Case Insensitive Globbing
 
-################################
-#########  Setup fzf  ##########
-################################
-
-if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
-  export PATH="${PATH:+${PATH}:}/usr/local/opt/fzf/bin"
-fi
-# Auto-completion
-[[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2> /dev/null
-# Key bindings
-source "/usr/local/opt/fzf/shell/key-bindings.zsh"
-
-################################
-############ Aliases ###########
-################################
-
 alias g2code="cd ~/Code && l"
 alias g2vimrc="vim ~/dotfiles/Neovim/.config/nvim/init.vim"
 alias g2tmuxconf="vim ~/dotfiles/tmux/.tmux.conf"
