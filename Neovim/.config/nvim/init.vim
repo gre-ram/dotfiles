@@ -21,6 +21,7 @@ packadd! vim-gitgutter
 packadd! nvim-r
 packadd! table-mode
 packadd! vim-pandoc-syntax
+packadd! vim-pandoc
 packadd! plenary.nvim
 packadd! popup.nvim
 packadd! telescope.nvim
@@ -33,7 +34,7 @@ packadd! completion-nvim
 packadd! diagnostic-nvim
 packadd! completion-buffers
 packadd! completion-treesitter
-packadd! completion-bib
+"packadd! completion-bib
 packadd! vim-devicons
 packadd! nvim-colorizer.lua
 packadd! auto-pairs
@@ -102,11 +103,9 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Zettelkasten Wiki with Pandoc Markdown
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup pandoc_syntax
-        au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-augroup END
-
-lua require 'corpusconfig'
+" augroup pandoc_syntax
+"         au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+" augroup END
 
 let g:nv_search_paths = ['~/Documents/myBib/notes']
 let g:zettel_pdf_dict = '~/Documents/myBib/pdfs'
@@ -143,6 +142,15 @@ nnoremap <silent> <leader>cn :call OpenCiteKeyNote() <CR>
 nnoremap <silent> <leader>cb :call OpenCiteKeyInBib() <CR>
 nnoremap <silent> <leader>cp :call OpenCiteKeyPDF() <CR>
 nnoremap <Leader>en <cmd>lua require'telescope.builtin'.find_files{ cwd = "~/.config/nvim/" }<CR>
+
+
+
+let g:pandoc#completion#bib#mode = "citeproc"
+let g:pandoc#biblio#sources = "g"
+let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
+let g:pandoc#biblio#bibs = [$HOME.'/Documents/myBib/main.bib']
+let g:pandoc#completion#bib#use_preview = 1
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => R IDE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -239,7 +247,7 @@ let g:completion_chain_complete_list = {
     \   'default': [
     \       {'complete_items': ['path'], 'triggered_only': ['/']},
     \       {'complete_items': ['lsp', 'snippet', 'buffers']},
-    \       {'complete_items': ['completion-bib']},
+    \       {'complete_items': ['vimpandoc']},
     \       {'mode': '<c-p>'},
     \       {'mode': '<c-n>'}],
     \   }
