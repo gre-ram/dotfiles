@@ -33,7 +33,7 @@ packadd! completion-nvim
 packadd! diagnostic-nvim
 packadd! completion-buffers
 packadd! completion-treesitter
-"packadd! completion-bib
+packadd! completion-bib
 packadd! vim-devicons
 packadd! nvim-colorizer.lua
 packadd! auto-pairs
@@ -229,6 +229,7 @@ set shortmess+=c
 
 autocmd BufEnter * lua require'completion'.on_attach()
 
+
 imap <tab> <Plug>(completion_smart_tab)
 imap <s-tab> <Plug>(completion_smart_s_tab)
 imap  <c-j> <Plug>(completion_next_source)
@@ -238,7 +239,7 @@ let g:completion_chain_complete_list = {
     \   'default': [
     \       {'complete_items': ['path'], 'triggered_only': ['/']},
     \       {'complete_items': ['lsp', 'snippet', 'buffers']},
-    \       {'complete_items': ['']},
+    \       {'complete_items': ['completion-bib']},
     \       {'mode': '<c-p>'},
     \       {'mode': '<c-n>'}],
     \   }
@@ -246,3 +247,4 @@ let g:completion_chain_complete_list = {
 let g:completion_matching_ignore_case = 1
 let g:completion_enable_auto_paren = 1
 let g:completion_auto_change_source = 1
+
