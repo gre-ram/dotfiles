@@ -4,15 +4,9 @@
 (setq display-line-numbers-type 'relative)
 
 
-(setq
-   myKonspekte (concat (getenv "HOME") "/Documents/ORG/Konspekte")
-   myBibfile (concat (getenv "HOME") "/Documents/ORG/main.bib")
-   myPdfs (concat (getenv "HOME") "/Documents/ORG/pdfs")
-   myNotes (concat (getenv "HOME") "/Documents/ORG/org-notes")
-   org-directory myNotes
-   org-roam-directory myNotes)
-
-
+(setq! +biblio-pdf-library-dir "/Users/gregor/Documents/ORG/pdfs/"
+       +biblio-default-bibliography-files '("/Users/gregor/Documents/ORG/main.bib")
+       +biblio-notes-path "/Users/gregor/Documents/ORG/notes/")
 
 
 (setq   bibtex-autokey-year-length 4
