@@ -1,11 +1,20 @@
 #!/bin/sh
+konspekt_init () {
+    echo "---" > $konspekt_file
+    echo "title: 'Konspekt für @${key}'" >> $konspekt_file
+    echo "tags: [${tags}]" >> $konspekt_file
+    echo "---" >> $konspekt_file
+    echo "" >> $konspekt_file
+    echo "# Konspekt für @${key}" >> $konspekt_file
+    echo "" >> $konspekt_file
+}
 
-pretag=$(echo "")
+
 while getopts t: opt; do
     case $opt in
         t)
             opts=$OPTARG
-            pretag=$(echo "${opts}, ")
+            tags=$(echo "${opts}, ")
             ;;
         ?)
             echo "scipt usage: "
@@ -15,68 +24,63 @@ while getopts t: opt; do
 done
 
 shift $((OPTIND - 1))
-
 key=$(echo $1 | tr -d .pdf)
+pdf_file=$(echo "${PWD}/${1}")
+echo $pdf_file
+konspekt_file=$(echo "${HOME}/Documents/myBib/Konspekte/${key}.md")
+cd $HOME/Documents/myBib/
+todolist=$(reminders show Ausleihen)
+git_status=$(git status -s)
+if [ -n "$git_status" ]; then
+    echo "There are uncommitted changes. Abort..."
+    exit 1
+fi
 cat $HOME/Documents/myBib/main.bib | grep -wq "$key"
-if [ $? -eq 1 ]
-then
+if [ $? -eq 1 ]; then
     echo "$key key wasn't found in main.bib. Abort..."
     exit 1
-else
-    echo "$key was found in main.bib. Continue..."
 fi
-
 real_page=$(cat $HOME/Documents/myBib/main.bib | pcregrep -o -M "(?<=$key)(.|\n)*" | pcregrep -v -M "^\}(.|\n)*" | pcregrep -o "pages\s+=\s\{\d+" | pcregrep -o "\d+" )
-if [ $? -eq 1 ]
-then
+if [ $? -eq 1 ]; then
     echo "No Pagenumber in Bibfile. Abort..."
     exit 1
 fi
-
-find ~/Documents/myBib/notes/*.md | pcregrep -o "(?<=notes\/)\S+_\S+_(\d\d\d\d|ohneJahr)(?=-\d)" | grep -wq "$key"
+real_page_minus=$(expr $real_page - 1)
+find $konspekt_file
 if [ $? -eq 1 ]
 then
-    echo "$key wasn't found in notes folder. Continue..."
+    konspekt_init
 else
-    echo "$key already exists in notes folder. Overwriting..."
-    rm ~/Documents/myBib/notes/$key*.md 
+    rm $konspekt_file 
+    konspekt_init
 fi
-
-todolist=$(reminders show Ausleihen)
-real_page_minus=$(expr $real_page - 1)
-notes=$(skimnotes get -format text "${key}.pdf" - )
+notes=$(skimnotes get -format text $pdf_file - )
 echo "${notes} *" | sed '1s/^.//' | cat | while read -d "*" line
 do
     if [[ $line == *'Hervorhebung'* ]]; then 
         inner_content=$(echo $line | pcregrep -M -o "(?<=\d\s).*")
         pdf_page=$(echo $line | pcregrep -o "(?<=page\s)\d*")
         page=$(expr $real_page_minus + $pdf_page)
-        title=$(echo "${key}-${RANDOM}")
-        tags=$(echo "")
-        content_string=$(echo "'${inner_content}' [@${key}, S. ${page}]")
+        echo "## Zitat auf Seite ${page}" >> $konspekt_file
+        echo "'${inner_content}' [@${key}, S. ${page}]" >> $konspekt_file
+        echo "" >> $konspekt_file
     elif [[ $line == *'Fixiert'* ]]; then 
-        tags=$(echo "$line" | sed -n 2p)
+        title=$(echo "$line" | sed -n 2p)
         pdf_page=$(echo $line | pcregrep -o "(?<=page\s)\d*")
         page=$(expr $real_page_minus + $pdf_page)
         content_string=$(echo "$line" | sed '1,3d')
-        title=$(echo "${key}-${RANDOM}")
+        echo "## ${title} S. ${page}" >> $konspekt_file
+        echo "${content_string} [@${key}, S. ${page}]" >> $konspekt_file
+        echo "" >> $konspekt_file
     elif [[ $line == *'terstreichun'* ]]; then 
-        echo "Weitere Quelle gefunden"
         content=$(echo $line | pcregrep -M -o "(?<=\d\s).*")
         if [[ $todolist == *"${content}"* ]]; then
             continue
         else
             reminders add Ausleihen $content
         fi
-        continue
     else
         continue
-    fi     
-    echo "---" > "$HOME/Documents/myBib/notes/$title.md"
-    echo "title: '${title}'" >> "$HOME/Documents/myBib/notes/$title.md"
-    echo "tags: [${pretag}${tags}]" >> "$HOME/Documents/myBib/notes/$title.md"
-    echo "..." >> "$HOME/Documents/myBib/notes/$title.md"
-    echo "" >> "$HOME/Documents/myBib/notes/$title.md"
-    echo "$content_string" >> "$HOME/Documents/myBib/notes/$title.md"
+    fi
 done
-echo "done! :)"
+git diff
