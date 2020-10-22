@@ -21,6 +21,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("24714e2cb4a9d6ec1335de295966906474fdb668429549416ed8636196cb1441" default))
  '(org-agenda-files '("~/Desktop/test.org"))
  '(package-selected-packages
    '(ox-pandoc ivy-bibtex magit diff-hl smex flx counsel which-key doom-modeline nord-theme evil-org evil-surround evil-collection evil exec-path-from-shell auto-compile use-package)))

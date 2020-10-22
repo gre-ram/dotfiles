@@ -97,7 +97,7 @@ Use =evil= with Org agendas.
 
 #+begin_src emacs-lisp
 (use-package dracula-theme
-    :demand)
+    :init)
 (use-package doom-modeline
   :init (doom-modeline-mode 1))
 (use-package all-the-icons)
@@ -212,53 +212,93 @@ Highlighting of latest changes.
   (add-hook 'with-editor-mode-hook 'evil-insert-state))
 #+end_src
 * Org
-** Main Org Conf
-   (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELLED(c)")))
-** Ref etc
-*** Using org-ref
-#+begin_src emacs-lisp
-(use-package org-ref
-    :init
-    ;; setup org-ref
-    (setq org-ref-bibliography-notes "~/Dropbox/Apps/MobileOrg/bibnotes.org"
-          org-ref-default-bibliography '("~/Documents/Bibliothek/main.bib")
-          org-ref-pdf-directory "~/Documents/Bibliothek/pdfs/")
-    (unless (file-exists-p org-ref-pdf-directory)
-      (make-directory org-ref-pdf-directory t))
-    ;; Some org-mode customization
-    (setq org-src-fontify-natively t
-      org-confirm-babel-evaluate nil
-      org-src-preserve-indentation t)
-    (setq bibtex-autokey-year-length 4
-      bibtex-autokey-name-year-separator "-"
-      bibtex-autokey-year-title-separator "-"
-      bibtex-autokey-titleword-separator "-"
-      bibtex-autokey-titlewords 2
-      bibtex-autokey-titlewords-stretch 1
-      bibtex-autokey-titleword-length 5)      
-      (setq org-latex-default-packages-alist
-      (-remove-item
-       '("" "hyperref" nil)
-       org-latex-default-packages-alist))
-    ;; Append new packages
-    (add-to-list 'org-latex-default-packages-alist '("" "natbib" "") t)
-    (add-to-list 'org-latex-default-packages-alist
-	     '("linktocpage,pdfstartview=FitH,colorlinks,
-    linkcolor=blue,anchorcolor=blue,
-    citecolor=blue,filecolor=blue,menucolor=blue,urlcolor=blue"
-	       "hyperref" nil)
-	     t)
-    :config)
+(setq myBib "~/Documents/ORG/roam/literature/library.bib")
+(setq myPdfs  "~/Zotero/storage/")
+(setq myNotes "~/Dropbox/org/roam/literature/")
 
-#+end_src
 
-*** And ox-pandoc for exporting 
-#+begin_src emacs-lisp
-(use-package ox-pandoc
+(use-package! org-ref
+    ;; :init
+    ; code to run before loading org-ref
     :config
-    (setq org-pandoc-options-for-docx '((standalone . nil))
+    (setq
+         org-ref-completion-library 'org-ref-ivy-cite
+         org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex
+         org-ref-default-bibliography (list "~/Dropbox/org/roam/literature/library.bib")
+         org-ref-bibliography-notes "~/Dropbox/org/roam/literature/bibnotes.org"
+         org-ref-note-title-format "* NOTES %y - %t\n :PROPERTIES:\n  :Custom_ID: %k\n  :NOTER_DOCUMENT: %F\n :ROAM_KEY: cite:%k\n  :AUTHOR: %9a\n  :JOURNAL: %j\n  :YEAR: %y\n  :VOLUME: %v\n  :PAGES: %p\n  :DOI: %D\n  :URL: %U\n :END:\n\n"
+         org-ref-notes-directory myNotes
+         org-ref-notes-function 'orb-edit-notes
     ))
-#+end_src 
 
+(after! org-ref
+  (setq
+   bibtex-completion-notes-path myNotes
+   bibtex-completion-bibliography "~/Dropbox/org/roam/literature/library.bib"
+   bibtex-completion-pdf-field "file"
+   bibtex-completion-notes-template-multiple-files
+   (concat
+    "#+TITLE: ${title}\n"
+    "#+ROAM_KEY: cite:${=key=}"
+    "#+ROAM_TAGS: ${keywords}"
+    "#+CREATED:%<%Y-%m-%d-%H-%M-%S>"
+    "Time-stamp: <>\n"
+    "- tags :: \n"
+    "* NOTES \n"
+    ":PROPERTIES:\n"
+    ":Custom_ID: ${=key=}\n"
+    ":NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")\n"
+    ":AUTHOR: ${author-abbrev}\n"
+    ":JOURNAL: ${journaltitle}\n"
+    ":DATE: ${date}\n"
+    ":YEAR: ${year}\n"
+    ":DOI: ${doi}\n"
+    ":URL: ${url}\n"
+    ":END:\n\n"
+    )
+   )
+)
 
+(use-package! org-roam-bibtex
+  :after (org-roam)
+  :hook (org-roam-mode . org-roam-bibtex-mode)
+  :config
+  (setq orb-preformat-keywords
+        '("=key=" "title" "url" "file" "author-or-editor" "keywords"))
+  (setq orb-templates
+        '(("r" "ref" plain (function org-roam-capture--get-point)
+           ""
+           :file-name "literature/%<%Y-%m-%d-%H-%M-%S>-${slug}"
+           :head "#+TITLE: ${=key=}: ${title}
+#+ROAM_KEY: ${ref}
+#+ROAM_TAGS:
+Time-stamp: <>
+- tags :: ${keywords}
 
+* ${title}
+  :PROPERTIES:
+  :Custom_ID: ${=key=}
+  :URL: ${url}
+  :AUTHOR: ${author-or-editor}
+  :NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")
+  :NOTER_PAGE:
+  :END:
+
+"
+
+           :unnarrowed t))))
+
+(use-package! org-noter
+  :after (:any org pdf-view)
+  :config
+  (setq
+   ;; The WM can handle splits
+   ;;org-noter-notes-window-location 'other-frame
+   ;; Please stop opening frames
+   ;;org-noter-always-create-frame nil
+   ;; I want to see the whole file
+   org-noter-hide-other nil
+   ;; Everything is relative to the rclone mega
+   org-noter-notes-search-path myNotes
+   )
+  )
