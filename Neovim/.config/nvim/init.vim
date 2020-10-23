@@ -237,7 +237,6 @@ set shortmess+=c
 
 autocmd BufEnter * lua require'completion'.on_attach()
 
-
 imap <tab> <Plug>(completion_smart_tab)
 imap <s-tab> <Plug>(completion_smart_s_tab)
 imap  <c-j> <Plug>(completion_next_source)
@@ -246,10 +245,10 @@ let g:completion_chain_complete_list = {
     \ 'default' : {
     \   'default': [
     \       {'complete_items': ['path'], 'triggered_only': ['/']},
-    \       {'complete_items': ['lsp', 'snippet', 'buffers']},
-    \       {'complete_items': ['vimpandoc']},
-    \       {'mode': '<c-p>'},
-    \       {'mode': '<c-n>'}],
+    \       {'mode': 'omni'},
+    \       {'complete_items': ['lsp', 'snippet']},
+    \       {'complete_items': ['buffers']},
+    \       ],
     \   }
     \}
 let g:completion_matching_ignore_case = 1
