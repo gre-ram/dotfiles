@@ -9,58 +9,46 @@
        +biblio-notes-path "/Users/gregor/Documents/ORG/roam/")
 
 
-(setq! orb-preformat-keywords
-        '("=key=" "title" "url" "file" "author-or-editor" "keywords"))
-  (setq! orb-templates
-        '(("r" "ref" plain (function org-roam-capture--get-point)
-           ""
-           :file-name "literature/%<%Y-%m-%d-%H-%M-%S>-${slug}"
-           :head "#+TITLE: ${=key=}: ${title}
-#+ROAM_KEY: ${ref}
-#+ROAM_TAGS:
-Time-stamp: <>
-- tags :: ${keywords}
-
-* ${title}
-  :PROPERTIES:
-  :Custom_ID: ${=key=}
-  :URL: ${url}
-  :AUTHOR: ${author-or-editor}
-  :NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")
-  :NOTER_PAGE:
-  :END:
-
-"
-
-           :unnarrowed t)))
+(setq! bibtex-completion-format-citation-functions
+  '((org-mode      . bibtex-completion-format-citation-pandoc-citeproc)
+    (latex-mode    . bibtex-completion-format-citation-cite)
+    (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
+    (default       . bibtex-completion-format-citation-pandoc-citeproc)))
 
 
-(setq!
-   bibtex-completion-pdf-field "file"
-   bibtex-completion-notes-template-multiple-files
-   (concat
-    "#+TITLE: ${title}\n"
-    "#+ROAM_KEY: cite:${=key=}"
-    "#+ROAM_TAGS: ${keywords}"
-    "#+CREATED:%<%Y-%m-%d-%H-%M-%S>"
-    "Time-stamp: <>\n"
-    "- tags :: \n"
-    "* NOTES \n"
-    ":PROPERTIES:\n"
-    ":Custom_ID: ${=key=}\n"
-    ":NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")\n"
-    ":AUTHOR: ${author-abbrev}\n"
-    ":JOURNAL: ${journaltitle}\n"
-    ":DATE: ${date}\n"
-    ":YEAR: ${year}\n"
-    ":DOI: ${doi}\n"
-    ":URL: ${url}\n"
-    ":END:\n\n"
-    )
-)
+(setq! bibtex-autokey-name-year-separator "_"
+       bibtex-autokey-year-title-separator "_"
+       bibtex-autokey-titlewords 1
+       bibtex-autokey-year-length 4
+       bibtex-autokey-edit-before-use nil
+       bibtex-autokey-additional-names nil
+       bibtex-autokey-titleword-ignore '("A" "An" "On" "The" "Eine" "Ein" "Der" "Die" "Das")
+       bibtex-autokey-titlewords-stretch 0
+       bibtex-autokey-titleword-length "all"
+       biblio-bibtex-use-autokey t
+       bibtex-comma-after-last-field t
+       org-ref-completion-library 'org-ref-ivy-cite
+        orb-citekey-format "@%s")
 
-(setq!
-         org-ref-completion-library 'org-ref-ivy-cite
-         org-ref-note-title-format "* NOTES %y - %t\n :PROPERTIES:\n  :Custom_ID: %k\n  :NOTER_DOCUMENT: %F\n :ROAM_KEY: cite:%k\n  :AUTHOR: %9a\n  :JOURNAL: %j\n  :YEAR: %y\n  :VOLUME: %v\n  :PAGES: %p\n  :DOI: %D\n  :URL: %U\n :END:\n\n"
-         org-ref-notes-function 'orb-edit-notes
-    )
+
+(setq orb-preformat-keywords
+      '("citekey" "title" "url" "author-or-editor" "keywords" "file")
+      orb-process-file-field t
+      orb-file-field-extensions "pdf")
+
+(setq orb-templates
+      '(("r" "ref" plain (function org-roam-capture--get-point)
+         ""
+         :file-name "Konspekte/${citekey}"
+         :head "#+TITLE: Konspekt von ${citekey}\n#+ROAM_KEY: ${ref}
+
+- tags ::
+- keywords :: ${keywords}
+
+* Konspekt
+:PROPERTIES:
+:Custom_ID: ${citekey}
+:AUTHOR: ${author-or-editor}
+:NOTER_DOCUMENT: ${file}
+:NOTER_PAGE:
+:END:")))

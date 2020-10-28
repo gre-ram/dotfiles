@@ -212,93 +212,62 @@ Highlighting of latest changes.
   (add-hook 'with-editor-mode-hook 'evil-insert-state))
 #+end_src
 * Org
+
+
+#+begin_src emacs-lisp
 (setq myBib "~/Documents/ORG/roam/literature/library.bib")
 (setq myPdfs  "~/Zotero/storage/")
 (setq myNotes "~/Dropbox/org/roam/literature/")
 
+(use-package ivy-bibtex)
+(use-package org-roam)
+(use-package org-roam-bibtex)
+(setq org-directory "/Users/gregor/Documents/ORG/")
+(setq +biblio-pdf-library-dir "/Users/gregor/Documents/ORG/pdfs/"
+       +biblio-default-bibliography-files '("/Users/gregor/Documents/ORG/main.bib")
+       +biblio-notes-path "/Users/gregor/Documents/ORG/roam/")
 
-(use-package! org-ref
-    ;; :init
-    ; code to run before loading org-ref
-    :config
-    (setq
-         org-ref-completion-library 'org-ref-ivy-cite
-         org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex
-         org-ref-default-bibliography (list "~/Dropbox/org/roam/literature/library.bib")
-         org-ref-bibliography-notes "~/Dropbox/org/roam/literature/bibnotes.org"
-         org-ref-note-title-format "* NOTES %y - %t\n :PROPERTIES:\n  :Custom_ID: %k\n  :NOTER_DOCUMENT: %F\n :ROAM_KEY: cite:%k\n  :AUTHOR: %9a\n  :JOURNAL: %j\n  :YEAR: %y\n  :VOLUME: %v\n  :PAGES: %p\n  :DOI: %D\n  :URL: %U\n :END:\n\n"
-         org-ref-notes-directory myNotes
-         org-ref-notes-function 'orb-edit-notes
-    ))
 
-(after! org-ref
-  (setq
-   bibtex-completion-notes-path myNotes
-   bibtex-completion-bibliography "~/Dropbox/org/roam/literature/library.bib"
-   bibtex-completion-pdf-field "file"
-   bibtex-completion-notes-template-multiple-files
-   (concat
-    "#+TITLE: ${title}\n"
-    "#+ROAM_KEY: cite:${=key=}"
-    "#+ROAM_TAGS: ${keywords}"
-    "#+CREATED:%<%Y-%m-%d-%H-%M-%S>"
-    "Time-stamp: <>\n"
-    "- tags :: \n"
-    "* NOTES \n"
-    ":PROPERTIES:\n"
-    ":Custom_ID: ${=key=}\n"
-    ":NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")\n"
-    ":AUTHOR: ${author-abbrev}\n"
-    ":JOURNAL: ${journaltitle}\n"
-    ":DATE: ${date}\n"
-    ":YEAR: ${year}\n"
-    ":DOI: ${doi}\n"
-    ":URL: ${url}\n"
-    ":END:\n\n"
-    )
-   )
-)
+(setq bibtex-completion-format-citation-functions
+  '((org-mode      . bibtex-completion-format-citation-pandoc-citeproc)
+    (latex-mode    . bibtex-completion-format-citation-cite)
+    (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
+    (default       . bibtex-completion-format-citation-pandoc-citeproc)))
 
-(use-package! org-roam-bibtex
-  :after (org-roam)
-  :hook (org-roam-mode . org-roam-bibtex-mode)
-  :config
-  (setq orb-preformat-keywords
-        '("=key=" "title" "url" "file" "author-or-editor" "keywords"))
-  (setq orb-templates
-        '(("r" "ref" plain (function org-roam-capture--get-point)
-           ""
-           :file-name "literature/%<%Y-%m-%d-%H-%M-%S>-${slug}"
-           :head "#+TITLE: ${=key=}: ${title}
-#+ROAM_KEY: ${ref}
-#+ROAM_TAGS:
-Time-stamp: <>
-- tags :: ${keywords}
 
-* ${title}
-  :PROPERTIES:
-  :Custom_ID: ${=key=}
-  :URL: ${url}
-  :AUTHOR: ${author-or-editor}
-  :NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")
-  :NOTER_PAGE:
-  :END:
+(setq bibtex-autokey-name-year-separator "_"
+       bibtex-autokey-year-title-separator "_"
+       bibtex-autokey-titlewords 1
+       bibtex-autokey-year-length 4
+       bibtex-autokey-edit-before-use nil
+       bibtex-autokey-additional-names nil
+       bibtex-autokey-titleword-ignore '("A" "An" "On" "The" "Eine" "Ein" "Der" "Die" "Das")
+       bibtex-autokey-titlewords-stretch 0
+       bibtex-autokey-titleword-length "all"
+       biblio-bibtex-use-autokey t
+       bibtex-comma-after-last-field t
+       orb-citekey-format "@%s")
 
-"
 
-           :unnarrowed t))))
+(setq orb-preformat-keywords
+      '("citekey" "title" "url" "author-or-editor" "keywords" "file")
+      orb-process-file-field t
+      orb-file-field-extensions "pdf")
 
-(use-package! org-noter
-  :after (:any org pdf-view)
-  :config
-  (setq
-   ;; The WM can handle splits
-   ;;org-noter-notes-window-location 'other-frame
-   ;; Please stop opening frames
-   ;;org-noter-always-create-frame nil
-   ;; I want to see the whole file
-   org-noter-hide-other nil
-   ;; Everything is relative to the rclone mega
-   org-noter-notes-search-path myNotes
-   )
-  )
+(setq orb-templates
+      '(("r" "ref" plain (function org-roam-capture--get-point)
+         ""
+         :file-name "Konspekte/${citekey}"
+         :head "#+TITLE: Konspekt von ${citekey}\n#+ROAM_KEY: ${ref}
+
+- tags ::
+- keywords :: ${keywords}
+
+* Konspekt
+:PROPERTIES:
+:Custom_ID: ${citekey}
+:AUTHOR: ${author-or-editor}
+:NOTER_DOCUMENT: ${file}
+:NOTER_PAGE:
+:END:")))
+#+end_src
