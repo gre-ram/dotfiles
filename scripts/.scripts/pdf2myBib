@@ -55,7 +55,7 @@ shift $((OPTIND-1))
 if [ "$use_doi" = true ]
 then
     bib=$(doi2bib $doi | bibtool -R -r biblatex)
-    key=$(echo $bib | pcregrep -M -o "\S+(\d\d\d\d|ohneJahr)(?=,)")
+    key=$(echo $bib | pcregrep -M -o "^@.*," | pcregrep -M -o "(?<=\{).*(?=,)")
     echo $bib | bib2myBib
     move_file $key $1
     exit 0
@@ -64,13 +64,13 @@ then
     #pass over to bib2myBib
     string="@article{articlekey, Author = {${author}, Title = {${title}}, Year = ${year}}}"
     bib=$(echo $string | bibtool -R -r biblatex)
-    key=$(echo $bib | pcregrep -M -o "\S+(\d\d\d\d|ohneJahr)(?=,)")
+    key=$(echo $bib | pcregrep -M -o "^@.*," | pcregrep -M -o "(?<=\{).*(?=,)")
     echo $bib | bib2myBib
     move_file $key $1
 elif [ "$use_bib" = true ]
 then
     bib=$(pbpaste | bibtool -R -r biblatex)
-    key=$(echo $bib | pcregrep -M -o "\S+(\d\d\d\d|ohneJahr)(?=,)")
+    key=$(echo $bib | pcregrep -M -o "^@.*," | pcregrep -M -o "(?<=\{).*(?=,)")
     if [[ "$key" == "" ]]; then
         exit 1
     fi
@@ -79,7 +79,7 @@ then
 else
     doi=$(pdf2doi $1)
     bib=$(doi2bib $doi | bibtool -R -r biblatex)
-    key=$(echo $bib | pcregrep -M -o "\S+(\d\d\d\d|ohneJahr)(?=,)")
+    key=$(echo $bib | pcregrep -M -o "^@.*," | pcregrep -M -o "(?<=\{).*(?=,)")
     if [[ "$key" == "" ]]; then
         exit 1
     fi
