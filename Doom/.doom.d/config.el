@@ -8,14 +8,6 @@
        +biblio-default-bibliography-files '("/Users/gregor/Documents/ORG/main.bib")
        +biblio-notes-path "/Users/gregor/Documents/ORG/roam/")
 
-
-(setq! bibtex-completion-format-citation-functions
-  '((org-mode      . bibtex-completion-format-citation-pandoc-citeproc)
-    (latex-mode    . bibtex-completion-format-citation-cite)
-    (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
-    (default       . bibtex-completion-format-citation-pandoc-citeproc)))
-
-
 (setq! bibtex-autokey-name-year-separator "_"
        bibtex-autokey-year-title-separator "_"
        bibtex-autokey-titlewords 1
@@ -27,8 +19,7 @@
        bibtex-autokey-titleword-length "all"
        biblio-bibtex-use-autokey t
        bibtex-comma-after-last-field t
-       org-ref-completion-library 'org-ref-ivy-cite
-        orb-citekey-format "@%s")
+       org-ref-completion-library 'org-ref-ivy-cite)
 
 
 (setq orb-preformat-keywords
@@ -42,10 +33,7 @@
          :file-name "Konspekte/${citekey}"
          :head "#+TITLE: Konspekt von ${citekey}\n#+ROAM_KEY: ${ref}
 
-- tags ::
-- keywords :: ${keywords}
-
-* Konspekt
+* Konspekt für ${citekey}
 :PROPERTIES:
 :Custom_ID: ${citekey}
 :AUTHOR: ${author-or-editor}
