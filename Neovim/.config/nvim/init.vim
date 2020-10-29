@@ -150,6 +150,7 @@ let g:pandoc#biblio#sources = "g"
 let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
 let g:pandoc#biblio#bibs = [$HOME.'/Documents/myBib/main.bib']
 let g:pandoc#completion#bib#use_preview = 1
+let g:pandoc#modules#disabled = ["folding"]
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => R IDE
