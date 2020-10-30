@@ -1,15 +1,4 @@
 #!/bin/sh
-move_file() {
-    find ~/Documents/Sci-Bib/. | grep -wq "${1}.pdf"
-    if [ $? -eq 1 ]
-    then
-        mv "${2}" "$HOME/Documents/myBib/pdfs/${1}.pdf"
-    else
-            echo "${1}.pdf was found. Abort..."
-            exit 1
-    fi
-}
-
 use_doi=false
 use_ayt=false
 use_bib=false
@@ -52,10 +41,23 @@ done
 
 shift $((OPTIND-1))
 
+
+move_file() {
+    find ~/Documents/myBib/pdfs/$1.pdf
+    if [ $? -eq 1 ]
+    then
+        mv "${2}" "$HOME/Documents/myBib/pdfs/${1}.pdf"
+        echo "in function 2 ${2}"
+    else
+            echo "${1}.pdf was found. Abort..."
+            exit 1
+    fi
+}
+
 if [ "$use_doi" = true ]
 then
     bib=$(doi2bib $doi | bibtool -R -r biblatex)
-    key=$(echo $bib | pcregrep -M -o "^@.*," | pcregrep -M -o "(?<=\{).*(?=,)")
+    key=$(echo $bib | pcregrep -M -o "^@[^\,]*" | pcregrep -M -o "(?<=\{).*")
     echo $bib | bib2myBib
     move_file $key $1
     exit 0
@@ -64,13 +66,13 @@ then
     #pass over to bib2myBib
     string="@article{articlekey, Author = {${author}, Title = {${title}}, Year = ${year}}}"
     bib=$(echo $string | bibtool -R -r biblatex)
-    key=$(echo $bib | pcregrep -M -o "^@.*," | pcregrep -M -o "(?<=\{).*(?=,)")
+    key=$(echo $bib | pcregrep -M -o "^@[^\,]*" | pcregrep -M -o "(?<=\{).*")
     echo $bib | bib2myBib
     move_file $key $1
 elif [ "$use_bib" = true ]
 then
     bib=$(pbpaste | bibtool -R -r biblatex)
-    key=$(echo $bib | pcregrep -M -o "^@.*," | pcregrep -M -o "(?<=\{).*(?=,)")
+    key=$(echo $bib | pcregrep -M -o "^@[^\,]*" | pcregrep -M -o "(?<=\{).*")
     if [[ "$key" == "" ]]; then
         exit 1
     fi
@@ -79,7 +81,7 @@ then
 else
     doi=$(pdf2doi $1)
     bib=$(doi2bib $doi | bibtool -R -r biblatex)
-    key=$(echo $bib | pcregrep -M -o "^@.*," | pcregrep -M -o "(?<=\{).*(?=,)")
+    key=$(echo $bib | pcregrep -M -o "^@[^\,]*" | pcregrep -M -o "(?<=\{).*")
     if [[ "$key" == "" ]]; then
         exit 1
     fi

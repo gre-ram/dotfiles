@@ -1,6 +1,6 @@
 #!/bin/sh
 bib=$(cat | bibtool -R -r biblatex)
-key=$(echo $bib | pcregrep -M -o "^@.*," | pcregrep -M -o "(?<=\{).*(?=,)")
+key=$(echo $bib | pcregrep -M -o "^@[^\,]*" | pcregrep -M -o "(?<=\{).*")
 
 if grep -Fq $key ~/Documents/myBib/main.bib
 then
