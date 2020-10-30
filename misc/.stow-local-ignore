@@ -2,3 +2,4 @@
 Brewfile
 init\.el
 vs\-code\-settings\.json
+pandoc\-templates
