@@ -1,11 +1,11 @@
 #!/bin/sh
 konspekt_init () {
     echo "---" > $konspekt_file
-    echo "title: 'Konspekt für @${key}'" >> $konspekt_file
+    echo "title: 'Konspekt für ${key}'" >> $konspekt_file
     echo "tags: [${tags}]" >> $konspekt_file
     echo "---" >> $konspekt_file
     echo "" >> $konspekt_file
-    echo "# Konspekt für @${key}" >> $konspekt_file
+    echo "# Anmerkungen" >> $konspekt_file
     echo "" >> $konspekt_file
 }
 
@@ -61,7 +61,7 @@ do
         inner_content=$(echo $line | pcregrep -M -o "(?<=\d\s).*")
         pdf_page=$(echo $line | pcregrep -o "(?<=page\s)\d*")
         page=$(expr $real_page_minus + $pdf_page)
-        echo "## Zitat auf Seite ${page}" >> $konspekt_file
+        echo "## Zitat S. ${page}" >> $konspekt_file
         echo "'${inner_content}' [@${key}, S. ${page}]" >> $konspekt_file
         echo "" >> $konspekt_file
     elif [[ $line == *'Fixiert'* ]]; then 
