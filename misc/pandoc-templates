@@ -1,1 +1,1 @@
-konspekt|pdf --csl ~/dotfiles/CSL/.csl/deutsche-gesellschaft-fur-psychologie.csl --bibliography ~/Documents/myBib/main.bib
+konspekt|pdf -V lang=de-DE --csl ~/dotfiles/CSL/.csl/apa.csl --bibliography ~/Documents/myBib/main.bib
