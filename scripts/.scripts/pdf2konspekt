@@ -24,7 +24,7 @@ while getopts t: opt; do
 done
 
 shift $((OPTIND - 1))
-key=$(echo $1 | tr -d .pdf)
+key=$(echo ${1%.pdf})
 pdf_file=$(echo "${PWD}/${1}")
 echo $pdf_file
 konspekt_file=$(echo "${HOME}/Documents/myBib/Konspekte/${key}.md")
