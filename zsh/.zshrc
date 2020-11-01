@@ -37,10 +37,12 @@ setopt no_prompt_bang
 setopt prompt_percent
 setopt NO_CASE_GLOB            # Case Insensitive Globbing
 
-alias g2code="cd ~/Code && l"
+alias g2code="~/Code"
 alias g2vimrc="vim ~/dotfiles/Neovim/.config/nvim/init.vim"
-alias g2tmuxconf="vim ~/dotfiles/tmux/.tmux.conf"
 alias g2zshrc="vim ~/dotfiles/zsh/.zshrc"
+alias g2pdfs="~/Documents/myBib/pdfs"
+alias g2Konspekte="~/Documents/myBib/Konspekte"
+
 
 alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
 
