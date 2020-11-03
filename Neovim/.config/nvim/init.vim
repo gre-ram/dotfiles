@@ -38,6 +38,7 @@ packadd! completion-treesitter
 packadd! vim-devicons
 packadd! nvim-colorizer.lua
 packadd! auto-pairs
+packadd! playground
 packadd! colorbuddy.nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Basic Customization
