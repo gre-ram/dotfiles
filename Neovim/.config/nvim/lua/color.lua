@@ -193,3 +193,7 @@ Group.new("TSInclude", colors.nord_9)
 Group.new("TSVariable", colors.nord_5)
 Group.new("TSVariableBuiltin", colors.nord_10)
 Group.new("TSTag", colors.nord_9)
+
+
+Group.new("LanguageToolGrammarError", colors.nord_11, colors.none, styles.underline)
+Group.new("LanguageToolSpellingError", colors.nord_12, colors.none, styles.underline)
