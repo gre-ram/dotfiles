@@ -86,9 +86,6 @@
 [submodule "playground"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/playground
 	url = https://github.com/nvim-treesitter/playground
-[submodule "bib-exzerp.nvim"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/bib-exzerpt.nvim
-	url = https://github.com/gwbrck/bib-exzerpt.nvim
 [submodule "LanguageTool.nvim"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/LanguageTool.nvim
 	url = https://github.com/vigoux/LanguageTool.nvim
