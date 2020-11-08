@@ -40,6 +40,7 @@ packadd! nvim-colorizer.lua
 packadd! auto-pairs
 packadd! playground
 packadd! colorbuddy.nvim
+packadd! LanguageTool.nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Basic Customization
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -153,6 +154,9 @@ let g:pandoc#biblio#bibs = [$HOME.'/Documents/myBib/main.bib']
 let g:pandoc#completion#bib#use_preview = 1
 let g:pandoc#modules#disabled = ["folding"]
 let g:pandoc#command#templates_file = expand('~/dotfiles/misc/pandoc-templates')
+
+let g:languagetool_server_jar = expand('/usr/local/Cellar/languagetool/*/libexec/languagetool-server.jar')
+autocmd Filetype pandoc LanguageToolSetUp
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => R IDE
