@@ -34,7 +34,7 @@ packadd! completion-nvim
 packadd! diagnostic-nvim
 packadd! completion-buffers
 packadd! completion-treesitter
-"packadd! bib-exzerpt.nvim 
+packadd! bib-exzerpt.nvim 
 packadd! vim-devicons
 packadd! nvim-colorizer.lua
 packadd! auto-pairs
