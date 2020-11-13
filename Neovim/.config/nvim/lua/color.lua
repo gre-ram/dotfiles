@@ -139,10 +139,10 @@ Group.new("GitGutterChange",       colors.nord_13, colors.none)
 Group.new("GitGutterChangeDelete", colors.nord_11, colors.none)
 
 -- built-in LSP
-Group.new("LSPDiagnosticsWarning", colors.nord_13, colors.none)
-Group.new("LSPDiagnosticsError", colors.nord_11, colors.none)
-Group.new("LSPDiagnosticsInformation", colors.nord_8, colors.none)
-Group.new("LSPDiagnosticsHint", colors.nord_10, colors.none)
+Group.new("LSPDiagnosticsDefaultWarning", colors.nord_13, colors.none)
+Group.new("LspDiagnosticsDefaultError", colors.nord_11, colors.none)
+Group.new("LSPDiagnosticsDefaultInformation", colors.nord_8, colors.none)
+Group.new("LSPDiagnosticsDefaultHint", colors.nord_10, colors.none)
 
 -- TS
 Group.new("TSDefinition", groups.Type, groups.Type, styles.italic)

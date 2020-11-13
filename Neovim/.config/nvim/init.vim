@@ -31,7 +31,6 @@ packadd! vim-surround
 packadd! nvim-lspconfig
 packadd! lsp-status.nvim
 packadd! completion-nvim
-packadd! diagnostic-nvim
 packadd! completion-buffers
 packadd! completion-treesitter
 packadd! bib-exzerpt.nvim 
@@ -243,6 +242,11 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
 autocmd BufEnter * lua require'completion'.on_attach()
+
+sign define LspDiagnosticsSignError text= texthl=LspDiagnosticsSignError linehl= numhl=
+sign define LspDiagnosticsSignWarning text= texthl=LspDiagnosticsSignWarning linehl= numhl=
+sign define LspDiagnosticsSignInformation text= texthl=LspDiagnosticsSignInformation linehl= numhl=
+sign define LspDiagnosticsSignHint text=ﬤ texthl=LspDiagnosticsSignHint linehl= numhl=
 
 imap <tab> <Plug>(completion_smart_tab)
 imap <s-tab> <Plug>(completion_smart_s_tab)

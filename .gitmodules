@@ -35,9 +35,6 @@
 [submodule "completion-nvim"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/completion-nvim
 	url = https://github.com/nvim-lua/completion-nvim.git
-[submodule "diagnostic-nvim"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/diagnostic-nvim
-	url = https://github.com/nvim-lua/diagnostic-nvim.git
 [submodule "completion-buffers"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/completion-buffers
 	url = https://github.com/steelsojka/completion-buffers.git

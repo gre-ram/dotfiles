@@ -13,7 +13,6 @@ local chain_complete_list = {
 
 local lsp = require'nvim_lsp'
 local on_attach_vim = function()
-    require'diagnostic'.on_attach()
     require'completion'.on_attach({
     sorting = 'alphabet',
     matching_strategy_list = {'exact', 'fuzzy'},
@@ -24,8 +23,21 @@ local on_attach_vim = function()
         vim.fn.nvim_buf_set_keymap(0, mode, key, result, {noremap=true, silent=true})
     end
 
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = false,
+    underline = true,
+    signs = {
+      priority = 20
+    },
+    update_in_insert = false,
+  }
+)
+
     mapper('n', 'ff', '<cmd> lua vim.lsp.buf.formatting() <CR>')
-    mapper('n', '<Leader><TAB>', '<cmd> NextDiagnosticCycle <CR>')
+    mapper('n', '<Leader><TAB>', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
+    mapper('n', '<Leader><S-TAB>', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
     mapper('n', 'gd', '<cmd>lua vim.lsp.buf.declaration()<CR>')
     mapper('n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>')
     mapper('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
