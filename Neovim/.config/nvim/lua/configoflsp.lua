@@ -11,7 +11,7 @@ local chain_complete_list = {
   }
 }
 
-local lsp = require'nvim_lsp'
+local lsp = require'lspconfig'
 local on_attach_vim = function()
     require'completion'.on_attach({
     sorting = 'alphabet',

@@ -237,7 +237,7 @@ set statusline+=\
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting & Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-lua require 'lspconfig'
+lua require 'configoflsp'
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
