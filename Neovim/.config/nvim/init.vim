@@ -163,7 +163,7 @@ autocmd Filetype pandoc LanguageToolSetUp
 
 let R_hl_term = 0 "R Output is colored by
 let R_hi_fun_globenv = 2
-let R_csv_app = 'tmux new-window vd'
+let R_csv_app = "terminal: vd"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Airline
