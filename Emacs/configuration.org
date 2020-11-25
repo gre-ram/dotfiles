@@ -164,7 +164,7 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
   :init (which-key-mode)
   :diminish which-key-mode
   :config
-  (setq which-key-idle-delay 1))
+  (setq which-key-idle-delay 0.5))
 
 #+end_src
 
