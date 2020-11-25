@@ -1,8 +1,11 @@
 check.double = on
+rewrite.rule {pages # "\([0-9]+\) *\(-\|---\) *\([0-9]+\)" = "\1--\3"}
+rewrite.rule {"^[\"{] *\([0-9]+\) *[\"}]$" "\1"}
+rewrite.rule {"^\" *\"$"}
+rewrite.rule {"^{ *}$"}
 select.crossrefs = on
 expand.crossref = on
 check.double.delete = off
-fmt.word.separator = "–"
 key.generation = on
 fmt.et.al = ""
 key.format = "{%N(shortauthor) # %-1n(author) # %-1n(editor) # %-1n(bookauthor) # ohneAutor }_{%-1T(title) # %-1T(booktitle) # ohneTitel }_{%+4d(year) # ohneJahr}"
@@ -18,5 +21,4 @@ print.indent = 1
 print.equal.right = off
 print.wide.equal = on
 print.use.tab = off
-add.field {year="%4d(year)"}
 print.line.length = 9999
