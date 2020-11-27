@@ -104,9 +104,6 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Zettelkasten Wiki with Pandoc Markdown
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" augroup pandoc_syntax
-"         au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-" augroup END
 
 let g:nv_search_paths = ['~/Documents/myBib/notes']
 let g:zettel_pdf_dict = '~/Documents/myBib/pdfs'
@@ -152,10 +149,14 @@ let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
 let g:pandoc#biblio#bibs = [$HOME.'/Documents/myBib/main.bib']
 let g:pandoc#completion#bib#use_preview = 1
 let g:pandoc#modules#disabled = ["folding"]
-let g:pandoc#command#templates_file = expand('~/dotfiles/misc/pandoc-templates')
 
 let g:languagetool_server_jar = expand('/usr/local/Cellar/languagetool/*/libexec/languagetool-server.jar')
 autocmd Filetype pandoc LanguageToolSetUp
+
+function! ToPDF() abort
+   let string = "!pandoc --pdf-engine=xelatex --citeproc -M lang:de-DE --csl ~/.pandoc/apa.csl --lua-filter ~/.pandoc/apa_und.lua --bibliography ~/Documents/myBib/main.bib -i " . expand('%:p') . " -o " . expand('%:p:r') . ".pdf && open " . expand('%:p:r') . ".pdf"
+   silent execute string
+endfun
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => R IDE
