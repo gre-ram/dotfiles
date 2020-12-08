@@ -464,6 +464,62 @@ You can add more =src= block templates below by copying one of the lines and cha
 
 #+end_src
 
+** BibRoam
+#+begin_src emacs-lisp
+(setq myBib "~/Documents/ORG/roam/literature/library.bib")
+(setq myPdfs  "~/Zotero/storage/")
+(setq myNotes "~/Dropbox/org/roam/literature/")
+
+(use-package ivy-bibtex)
+(use-package org-roam)
+(use-package org-roam-bibtex)
+(setq org-directory "/Users/gregor/Documents/ORG/")
+(setq +biblio-pdf-library-dir "/Users/gregor/Documents/ORG/pdfs/"
+       +biblio-default-bibliography-files '("/Users/gregor/Documents/ORG/main.bib")
+       +biblio-notes-path "/Users/gregor/Documents/ORG/roam/")
+
+
+(setq bibtex-completion-format-citation-functions
+  '((org-mode      . bibtex-completion-format-citation-pandoc-citeproc)
+    (latex-mode    . bibtex-completion-format-citation-cite)
+    (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
+    (default       . bibtex-completion-format-citation-pandoc-citeproc)))
+
+
+(setq bibtex-autokey-name-year-separator "_"
+       bibtex-autokey-year-title-separator "_"
+       bibtex-autokey-titlewords 1
+       bibtex-autokey-year-length 4
+       bibtex-autokey-edit-before-use nil
+       bibtex-autokey-additional-names nil
+       bibtex-autokey-titleword-ignore '("A" "An" "On" "The" "Eine" "Ein" "Der" "Die" "Das")
+       bibtex-autokey-titlewords-stretch 0
+       bibtex-autokey-titleword-length "all"
+       biblio-bibtex-use-autokey t
+       bibtex-comma-after-last-field t
+       orb-citekey-format "@%s")
+
+
+(setq orb-preformat-keywords
+      '("citekey" "title" "url" "author-or-editor" "keywords" "file")
+      orb-process-file-field t
+      orb-file-field-extensions "pdf")
+
+(setq orb-templates
+      '(("r" "ref" plain (function org-roam-capture--get-point)
+         ""
+         :file-name "Konspekte/${citekey}"
+         :head "#+TITLE: Konspekt von ${citekey}\n#+ROAM_KEY: ${ref}
+
+- tags ::
+- keywords :: ${keywords}\n\n* Konspekt
+:PROPERTIES:
+:Custom_ID: ${citekey}
+:AUTHOR: ${author-or-editor}
+:NOTER_DOCUMENT: ${file}
+:NOTER_PAGE:
+:END:")))
+#+end_src
 * Development
 
 ** Languages
@@ -603,8 +659,8 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
     ("C-c p" . projectile-command-map)
     :init
     ;; NOTE: Set this to the folder where you keep your Git repos!
-    (when (file-directory-p "~/Projects/Code")
-      (setq projectile-project-search-path '("~/Projects/Code")))
+    (when (file-directory-p "~/Code")
+      (setq projectile-project-search-path '("~/Code")))
     (setq projectile-switch-project-action #'projectile-dired))
 
   (use-package counsel-projectile
@@ -788,7 +844,10 @@ For more thoughts on Eshell, check out these articles by Pierre Neidhardt:
 #+end_src
 
 * File Management
-
+** Custom
+#+begin_src emacs-lisp
+(setq default-directory "~/")
+#+end_src
 ** Dired
 
 Dired is a built-in file manager for Emacs that does some pretty amazing things!  Here are some key bindings you should try out:
