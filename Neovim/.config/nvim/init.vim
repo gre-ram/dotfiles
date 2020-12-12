@@ -104,6 +104,7 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Zettelkasten Wiki with Pandoc Markdown
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set spellsuggest=fast
 
 let g:nv_search_paths = ['~/Documents/myBib/notes']
 let g:zettel_pdf_dict = '~/Documents/myBib/pdfs'
@@ -143,7 +144,7 @@ nnoremap <Leader>en <cmd>lua require'telescope.builtin'.find_files{ cwd = "~/.co
 
 
 
-let g:pandoc#completion#bib#mode = "citeproc"
+let g:pandoc#completion#bib#mode = "fallback"
 let g:pandoc#biblio#sources = "g"
 let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
 let g:pandoc#biblio#bibs = [$HOME.'/Documents/myBib/main.bib']
