@@ -159,6 +159,10 @@ function! ToPDF() abort
    silent execute string
 endfun
 
+function! ToWord() abort
+   let string = "!pandoc --citeproc -M lang:de-DE --csl ~/.pandoc/apa.csl --lua-filter ~/.pandoc/apa_und.lua --bibliography ~/Documents/myBib/main.bib -i " . expand('%:p') . " -o " . expand('%:p:r') . ".docx && open " . expand('%:p:r') . ".docx"
+   silent execute string
+endfun
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => R IDE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
