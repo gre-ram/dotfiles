@@ -1,4 +1,4 @@
-#+title: Emacs From Scratch Configuration
+#+title: Based on Emacs From Scratch
 #+OPTIONS: toc:nil num:nil
 
 * Welcome!
@@ -8,17 +8,9 @@ This is the configuration we've been building in the *Emacs From Scratch* series
 The following variables are used to tweak some of the configuration pieces for use in the live streams so you might need to adjust them for your local machine if you try to use this configuration directly.
 
 #+begin_src emacs-lisp
-
-;; NOTE: init.el is now generated from Emacs.org.  Please edit that file
-;;       in Emacs and init.el will be generated automatically!
-
-;; You will most likely need to adjust this font size for your system!
-(defvar efs/default-font-size 170)
-(defvar efs/default-variable-font-size 170)
-
+(defvar efs/default-font-size 160)
+(defvar efs/default-variable-font-size 160)
 #+end_src
-
-* Tips for Use
 
 In this document I've added links in many places that lead you to documentation for the various packages we use.  If you're looking at this file in Emacs, you can put your cursor on a link and press =C-c C-o= or run =M-x org-open-at-point= to open the link in your web browser.
 
@@ -29,6 +21,7 @@ This section configures basic UI settings that remove unneeded elements to make 
 #+begin_src emacs-lisp
 
   (setq inhibit-startup-message t)
+  (setq frame-resize-pixelwise t)
 
   (scroll-bar-mode -1)        ; Disable visible scrollbar
   (tool-bar-mode -1)          ; Disable the toolbar
@@ -53,6 +46,20 @@ This section configures basic UI settings that remove unneeded elements to make 
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 #+end_src
+** Mac specific Config
+
+#+begin_src emacs-lisp
+(when (equal system-type 'darwin)
+  (setq mac-command-modifier 'meta)
+  (setq mac-option-modifier 'none)
+  (set-fontset-font t 'symbol (font-spec :family "Apple Symbols") nil 'prepend)
+  (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend)
+  (use-package ns-auto-titlebar
+    :init (ns-auto-titlebar-mode +1))
+  (set-terminal-coding-system 'utf-8)
+  (set-keyboard-coding-system 'utf-8)
+  (prefer-coding-system 'utf-8))
+#+end_src
 
 ** Font Configuration
 
@@ -71,6 +78,7 @@ I am using the [[https://github.com/tonsky/FiraCode][Fira Code]] and [[https://f
 #+end_src
 
 * Keybinding Configuration
+
 
 This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil-mode]] for a Vi-like modal editing experience.  [[https://github.com/noctuid/general.el][general.el]] is used for easy keybinding configuration that integrates well with which-key.  [[https://github.com/emacs-evil/evil-collection][evil-collection]] is used to automatically configure various Emacs modes with Vi-like keybindings for evil-mode.
 
@@ -265,10 +273,10 @@ The =efs/org-font-setup= function configures various text faces to tweak the siz
                     (org-level-2 . 1.1)
                     (org-level-3 . 1.05)
                     (org-level-4 . 1.0)
-                    (org-level-5 . 1.1)
-                    (org-level-6 . 1.1)
-                    (org-level-7 . 1.1)
-                    (org-level-8 . 1.1)))
+                    (org-level-5 . 1.0)
+                    (org-level-6 . 1.0)
+                    (org-level-7 . 1.0)
+                    (org-level-8 . 1.0)))
       (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
 
     ;; Ensure that anything that should be fixed-pitch in Org files appears that way
@@ -678,8 +686,8 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
     :custom
     (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-  (use-package evil-magit
-    :after magit)
+  ;;(use-package evil-magit
+  ;;  :after magit)
 
   ;; NOTE: Make sure to configure a GitHub token before using this package!
   ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
@@ -687,6 +695,8 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
   (use-package forge)
 
 #+end_src
+
+#+RESULTS:
 
 ** Commenting
 
@@ -733,7 +743,7 @@ Run a terminal with =M-x term!=
 
   (use-package term
     :config
-    (setq explicit-shell-file-name "bash") ;; Change this to zsh, etc
+    (setq explicit-shell-file-name "zsh") ;; Change this to zsh, etc
     ;;(setq explicit-zsh-args '())         ;; Use 'explicit-<shell>-args for shell-specific args
 
     ;; Match the default Bash shell prompt.  Update this if you have a custom prompt
