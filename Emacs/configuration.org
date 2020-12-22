@@ -52,6 +52,7 @@ This section configures basic UI settings that remove unneeded elements to make 
 (when (equal system-type 'darwin)
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier 'none)
+  (setq insert-directory-program "gls")
   (use-package ns-auto-titlebar
     :init (ns-auto-titlebar-mode +1))
   (set-terminal-coding-system 'utf-8)
