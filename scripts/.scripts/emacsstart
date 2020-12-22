@@ -1,0 +1,10 @@
+#!/bin/bash
+lsof -c Emacs | grep -q server || emacs --daemon
+
+emacsclient -n -e "(if (> (length (frame-list)) 1) 't)" | grep -q t
+if [ "$?" = "1" ]; then
+    emacsclient -c -n
+else
+    emacsclient -e "(ns-raise-emacs)" 
+fi
+

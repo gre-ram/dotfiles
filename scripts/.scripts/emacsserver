@@ -1,3 +1,0 @@
-#!/bin/bash
-    
-lsof -c Emacs | grep server | tr -s " " | cut -d' ' -f8
