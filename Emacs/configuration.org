@@ -272,9 +272,6 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 #+end_src
 
 * Org Mode
-
-[[https://orgmode.org/][Org Mode]] is one of the hallmark features of Emacs.  It is a rich document editor, project planner, task and time tracker, blogging engine, and literate coding utility all wrapped up in one package.
-
 ** Basic Config
 
 This section contains the basic configuration for =org-mode= plus the configuration for Org agendas and capture templates.  There's a lot to unpack in here so I'd recommend watching the videos for [[https://youtu.be/VcgjTEa0kU4][Part 5]] and [[https://youtu.be/PNE-mgkZ6HM][Part 6]] for a full explanation.
@@ -460,38 +457,33 @@ You can add more =src= block templates below by copying one of the lines and cha
 
 ** BibRoam
 #+begin_src emacs-lisp
-(setq myBib "~/Documents/ORG/roam/literature/library.bib")
-(setq myPdfs  "~/Zotero/storage/")
-(setq myNotes "~/Dropbox/org/roam/literature/")
-
+(setq myBib '("~/Documents/TestBib/main.bib"))
+(setq myPdfs  "~/Documents/TestBib/pdfs")
+(setq myRoam "~/Documents/TestBib/Roam")
 (use-package ivy-bibtex)
+(setq bibtex-completion-bibliography myBib)
+(setq bibtex-autokey-name-year-separator "_"
+      bibtex-autokey-year-title-separator "_"
+      bibtex-autokey-titlewords 1
+      bibtex-autokey-year-length 4
+      bibtex-autokey-edit-before-use nil
+      bibtex-autokey-additional-names 1
+      bibtex-autokey-titleword-ignore '("A" "An" "On" "The" "Eine" "Ein" "Der" "Die" "Das")
+      bibtex-autokey-titlewords-stretch 0
+      bibtex-autokey-titleword-length "5"
+      bibtex-autokey-names 2
+      bibtex-autokey-additional-names "-etal"
+      biblio-bibtex-use-autokey t
+      bibtex-comma-after-last-field t)
+
+(use-package org-ref
+       :after (org ivy-bibtex)
+       :init
+       (setq org-ref-completion-library 'org-ref-ivy-cite)
+       (setq org-ref-default-bibliography myBib))
+(use-package citeproc-org)
 (use-package org-roam)
 (use-package org-roam-bibtex)
-(setq org-directory "/Users/gregor/Documents/ORG/")
-(setq +biblio-pdf-library-dir "/Users/gregor/Documents/ORG/pdfs/"
-       +biblio-default-bibliography-files '("/Users/gregor/Documents/ORG/main.bib")
-       +biblio-notes-path "/Users/gregor/Documents/ORG/roam/")
-
-
-(setq bibtex-completion-format-citation-functions
-  '((org-mode      . bibtex-completion-format-citation-pandoc-citeproc)
-    (latex-mode    . bibtex-completion-format-citation-cite)
-    (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
-    (default       . bibtex-completion-format-citation-pandoc-citeproc)))
-
-
-(setq bibtex-autokey-name-year-separator "_"
-       bibtex-autokey-year-title-separator "_"
-       bibtex-autokey-titlewords 1
-       bibtex-autokey-year-length 4
-       bibtex-autokey-edit-before-use nil
-       bibtex-autokey-additional-names nil
-       bibtex-autokey-titleword-ignore '("A" "An" "On" "The" "Eine" "Ein" "Der" "Die" "Das")
-       bibtex-autokey-titlewords-stretch 0
-       bibtex-autokey-titleword-length "all"
-       biblio-bibtex-use-autokey t
-       bibtex-comma-after-last-field t
-       orb-citekey-format "@%s")
 
 
 (setq orb-preformat-keywords
