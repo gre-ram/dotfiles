@@ -1,25 +1,9 @@
-#+TITLE: Based on Emacs From Scratch
+#+TITLE: Config based on Emacs From Scratch
 #+OPTIONS: toc:nil num:nil
 
-* Welcome!
-
-This is the configuration we've been building in the *Emacs From Scratch* series, now written as an Org Mode document.
-
-The following variables are used to tweak some of the configuration pieces for use in the live streams so you might need to adjust them for your local machine if you try to use this configuration directly.
-
-#+begin_src emacs-lisp
-  (defvar efs/default-font-size 160)
-  (defvar efs/default-variable-font-size 160)
-#+end_src
-
-In this document I've added links in many places that lead you to documentation for the various packages we use.  If you're looking at this file in Emacs, you can put your cursor on a link and press =C-c C-o= or run =M-x org-open-at-point= to open the link in your web browser.
-
 * Basic UI Configuration
-
-This section configures basic UI settings that remove unneeded elements to make Emacs look a lot more minimal and modern.  If you're just getting started in Emacs, the menu bar might be helpful so you can remove the =(menu-bar-mode -1)= line if you'd like to still see that.
-
+This section configures basic UI settings that remove unneeded elements to make Emacs look a lot more minimal and modern.
 #+begin_src emacs-lisp
-
   (setq inhibit-startup-message t)
   (setq frame-resize-pixelwise t)
 
@@ -44,8 +28,8 @@ This section configures basic UI settings that remove unneeded elements to make 
 	                treemacs-mode-hook
                   eshell-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
 #+end_src
+
 ** Mac specific Config
 
 #+begin_src emacs-lisp
@@ -76,24 +60,40 @@ This section configures basic UI settings that remove unneeded elements to make 
 #+end_src
 
 ** Font Configuration
-
 #+begin_src emacs-lisp
+(defun gwbrck/set-font-faces ()
+  (set-face-attribute 'default nil :font "Fira Code" :height 160)
+  (set-face-attribute 'fixed-pitch nil :font "Fira Code" :height 1.0)
+  (set-face-attribute 'variable-pitch nil :font "Cantarell" :weight 'regular :height 1.0)
+  (set-fontset-font t 'symbol (font-spec :family "Apple Symbols" :height 1.0) nil 'prepend)
+  (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji" :height 1.0) nil 'prepend)
 
-(defun efs/set-font-faces ()
-  (message "Setting faces!")
-  (set-face-attribute 'default nil :font "Fira Code" :height efs/default-font-size)
-  (set-face-attribute 'fixed-pitch nil :font "Fira Code" :height efs/default-font-size)
-  (set-face-attribute 'variable-pitch nil :font "Cantarell" :height efs/default-variable-font-size :weight 'regular))
-  (set-fontset-font t 'symbol (font-spec :family "Apple Symbols") nil 'prepend)
-  (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend)
+    (dolist (face '((org-level-1 . 1.2)
+                    (org-level-2 . 1.1)
+                    (org-level-3 . 1.1)
+                    (org-level-4 . 1.0)
+                    (org-level-5 . 1.0)
+                    (org-level-6 . 1.0)
+                    (org-level-7 . 1.0)
+                    (org-level-8 . 1.0)))
+      (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
+
+ (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
+ (set-face-attribute 'org-code nil   :inherit 'fixed-pitch)
+ (set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
+ (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+ (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+ (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+ (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+ (set-face-attribute 'org-block-begin-line nil :height 0.8))
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions
               (lambda (frame)
                 (setq doom-modeline-icon t)
                 (with-selected-frame frame
-                  (efs/set-font-faces))))
-    (efs/set-font-faces))
+                  (gwbrck/set-font-faces))))
+    (gwbrck/set-font-faces))
 #+end_src
 
 * Keybinding Configuration
@@ -275,40 +275,6 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 
 [[https://orgmode.org/][Org Mode]] is one of the hallmark features of Emacs.  It is a rich document editor, project planner, task and time tracker, blogging engine, and literate coding utility all wrapped up in one package.
 
-** Better Font Faces
-
-The =efs/org-font-setup= function configures various text faces to tweak the sizes of headings and use variable width fonts in most cases so that it looks more like we're editing a document in =org-mode=.  We switch back to fixed width (monospace) fonts for code blocks and tables so that they display correctly.
-
-#+begin_src emacs-lisp
-
-  (defun efs/org-font-setup ()
-    ;; Replace list hyphen with dot
-    (font-lock-add-keywords 'org-mode
-                            '(("^ *\\([-]\\) "
-                               (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-
-    ;; Set faces for heading levels
-    (dolist (face '((org-level-1 . 1.2)
-                    (org-level-2 . 1.1)
-                    (org-level-3 . 1.05)
-                    (org-level-4 . 1.0)
-                    (org-level-5 . 1.0)
-                    (org-level-6 . 1.0)
-                    (org-level-7 . 1.0)
-                    (org-level-8 . 1.0)))
-      (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
-
-    ;; Ensure that anything that should be fixed-pitch in Org files appears that way
-    (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-    (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
-    (set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
-    (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-    (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-    (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-    (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
-
-#+end_src
-
 ** Basic Config
 
 This section contains the basic configuration for =org-mode= plus the configuration for Org agendas and capture templates.  There's a lot to unpack in here so I'd recommend watching the videos for [[https://youtu.be/VcgjTEa0kU4][Part 5]] and [[https://youtu.be/PNE-mgkZ6HM][Part 6]] for a full explanation.
@@ -440,7 +406,8 @@ This section contains the basic configuration for =org-mode= plus the configurat
     (define-key global-map (kbd "C-c j")
       (lambda () (interactive) (org-capture nil "jj")))
 
-    (efs/org-font-setup))
+   ;; (gwbrck/set-font-faces)
+)
 
 #+end_src
 
