@@ -83,3 +83,6 @@
 [submodule "LanguageTool.nvim"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/LanguageTool.nvim
 	url = https://github.com/vigoux/LanguageTool.nvim
+[submodule "nvim-web-devicons"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/nvim-web-devicons
+	url = https://github.com/kyazdani42/nvim-web-devicons

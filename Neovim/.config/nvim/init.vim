@@ -30,6 +30,7 @@ packadd! nvim-treesitter
 packadd! vim-surround
 packadd! nvim-lspconfig
 packadd! lsp-status.nvim
+packadd! nvim-web-devicons
 packadd! completion-nvim
 packadd! completion-buffers
 packadd! completion-treesitter
