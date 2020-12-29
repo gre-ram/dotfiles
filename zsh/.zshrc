@@ -3,6 +3,7 @@
 ################################
 export LANG="en_US.UTF-8"
 export EDITOR="nvim"
+PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 export PATH="$PATH:$HOME/.scripts"
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
@@ -17,8 +18,10 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 # source ~/Documents/.ENVS.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-autoload -U colors && colors
+
+test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
 export CLICOLOR=1
+autoload -U colors && colors
 
 setopt AUTO_CD                 # [default] .. is shortcut for cd .. (etc)
 setopt AUTO_PARAM_SLASH        # tab completing directory appends a slash
@@ -60,10 +63,10 @@ alias vi='nvim'
 alias vim='nvim'
 
 ls -G . &>/dev/null && alias ls='ls -G'
-alias lsa='ls -lah'
-alias l='ls -lah'
-alias ll='ls -lh'
-alias la='ls -lAh'
+alias lsa='gls -lah --color=always'
+alias l='gls -lah --color=always'
+alias ll='gls -lh --color=always'
+alias la='gls -lAh --color=always'
 alias -g ...='../..'
 alias -g ....='../../..'
 alias -g .....='../../../..'

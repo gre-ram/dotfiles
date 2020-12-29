@@ -86,3 +86,6 @@
 [submodule "nvim-web-devicons"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/nvim-web-devicons
 	url = https://github.com/kyazdani42/nvim-web-devicons
+[submodule "dir_colors"]
+	path = misc/nord-dircolors
+	url = https://github.com/arcticicestudio/nord-dircolors
