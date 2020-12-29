@@ -3,7 +3,7 @@
 ################################
 export LANG="en_US.UTF-8"
 export EDITOR="nvim"
-PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 export PATH="$PATH:$HOME/.scripts"
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
@@ -63,10 +63,10 @@ alias vi='nvim'
 alias vim='nvim'
 
 ls -G . &>/dev/null && alias ls='ls -G'
-alias lsa='gls -lah --color=always'
-alias l='gls -lah --color=always'
-alias ll='gls -lh --color=always'
-alias la='gls -lAh --color=always'
+alias lsa='ls -lah --color=always'
+alias l='ls -lah --color=always'
+alias ll='ls -lh --color=always'
+alias la='ls -lAh --color=always'
 alias -g ...='../..'
 alias -g ....='../../..'
 alias -g .....='../../../..'
