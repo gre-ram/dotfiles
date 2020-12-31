@@ -476,14 +476,15 @@ You can add more =src= block templates below by copying one of the lines and cha
       biblio-bibtex-use-autokey t
       bibtex-comma-after-last-field t)
 
-(use-package org-ref
-       :after (org ivy-bibtex)
-       :init
-       (setq org-ref-completion-library 'org-ref-ivy-cite)
-       (setq org-ref-default-bibliography myBib))
 (use-package citeproc-org)
 (use-package org-roam)
 (use-package org-roam-bibtex)
+
+(setq bibtex-completion-format-citation-functions
+      '((org-mode      . bibtex-completion-format-citation-pandoc-citeproc)
+        (latex-mode    . bibtex-completion-format-citation-cite)
+        (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
+        (default       . bibtex-completion-format-citation-pandoc-citeproc)))
 
 
 (setq orb-preformat-keywords
