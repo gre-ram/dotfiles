@@ -259,21 +259,21 @@ imap <tab> <Plug>(completion_smart_tab)
 imap <s-tab> <Plug>(completion_smart_s_tab)
 imap  <c-j> <Plug>(completion_next_source)
 imap  <c-k> <Plug>(completion_prev_source)
+
 let g:completion_chain_complete_list = {
     \ 'pandoc': [
     \       {'complete_items': ['path'], 'triggered_only': ['/']},
-    \       {'complete_items': ['completion-bib']},
     \       {'mode': 'omni'},
+    \       {'mode': 'spel'},
     \       {'complete_items': ['snippet']},
     \       {'complete_items': ['buffers']},
     \],
     \ 'default': [
     \       {'complete_items': ['path'], 'triggered_only': ['/']},
-    \       {'complete_items': ['completion-bib']},
     \       {'complete_items': ['lsp', 'snippet']},
     \       {'complete_items': ['buffers']},
     \]
     \}
+
 let g:completion_matching_ignore_case = 1
 let g:completion_enable_auto_paren = 1
-let g:completion_auto_change_source = 1
