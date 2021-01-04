@@ -156,12 +156,12 @@ let g:languagetool_server_jar = expand('/usr/local/Cellar/languagetool/*/libexec
 autocmd Filetype pandoc LanguageToolSetUp
 
 function! ToPDF() abort
-   let string = "!pandoc --pdf-engine=xelatex --citeproc -M lang:de-DE --csl ~/.pandoc/apa.csl --lua-filter ~/.pandoc/apa_und.lua --bibliography ~/Documents/myBib/main.bib -i " . expand('%:p') . " -o " . expand('%:p:r') . ".pdf && open " . expand('%:p:r') . ".pdf"
+   let string = "!pandoc --pdf-engine=xelatex --citeproc --csl ~/.pandoc/apa.csl --lua-filter ~/.pandoc/apa_und.lua --bibliography ~/Documents/myBib/main.bib -i " . expand('%:p') . " -o " . expand('%:p:r') . ".pdf && open " . expand('%:p:r') . ".pdf"
    silent execute string
 endfun
 
 function! ToWord() abort
-   let string = "!pandoc --citeproc -M lang:de-DE --csl ~/.pandoc/apa.csl --lua-filter ~/.pandoc/apa_und.lua --bibliography ~/Documents/myBib/main.bib -i " . expand('%:p') . " -o " . expand('%:p:r') . ".docx && open " . expand('%:p:r') . ".docx"
+   let string = "!pandoc --citeproc --csl ~/.pandoc/apa.csl --lua-filter ~/.pandoc/apa_und.lua --bibliography ~/Documents/myBib/main.bib -i " . expand('%:p') . " -o " . expand('%:p:r') . ".docx && open " . expand('%:p:r') . ".docx"
    silent execute string
 endfun
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -264,7 +264,6 @@ let g:completion_chain_complete_list = {
     \ 'pandoc': [
     \       {'complete_items': ['path'], 'triggered_only': ['/']},
     \       {'mode': 'omni'},
-    \       {'mode': 'spel'},
     \       {'complete_items': ['snippet']},
     \       {'complete_items': ['buffers']},
     \],
@@ -277,3 +276,4 @@ let g:completion_chain_complete_list = {
 
 let g:completion_matching_ignore_case = 1
 let g:completion_enable_auto_paren = 1
+let g:completion_auto_change_source = 1
