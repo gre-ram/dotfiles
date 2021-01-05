@@ -36,15 +36,16 @@ packadd! vim-devicons
 packadd! nvim-colorizer.lua
 packadd! auto-pairs
 packadd! playground
-packadd! colorbuddy.nvim
 packadd! LanguageTool.nvim
+packadd! edge
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Basic Customization
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set termguicolors
 set shell=/usr/local/bin/zsh
 syntax on
-lua require('colorbuddy').colorscheme('color')
+let g:edge_transparent_background = 1
+colorscheme edge
 set listchars=tab:»\ ,eol:↲
 set list
 set spelllang=de,en
@@ -280,3 +281,4 @@ let g:completion_chain_complete_list = {
 let g:completion_matching_ignore_case = 1
 let g:completion_enable_auto_paren = 1
 let g:completion_auto_change_source = 1
+

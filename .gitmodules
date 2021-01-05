@@ -68,9 +68,6 @@
 [submodule "nvim-colorizer.lua"]
 	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/nvim-colorizer.lua
 	url = https://github.com/norcalli/nvim-colorizer.lua
-[submodule "colorbuddy.nvim"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/colorbuddy.nvim
-	url = https://github.com/tjdevries/colorbuddy.nvim
 [submodule "pyenv-default-packages"]
 	path = pyenv-plugins/.pyenv/plugins/pyenv-default-packages
 	url = https://github.com/jawshooah/pyenv-default-packages
@@ -89,3 +86,6 @@
 [submodule "dir_colors"]
 	path = misc/nord-dircolors
 	url = https://github.com/arcticicestudio/nord-dircolors
+[submodule "edge"]
+	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/edge
+	url = https://github.com/sainnhe/edge
