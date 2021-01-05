@@ -1,6 +1,3 @@
-set nocompatible
-set encoding=utf-8
-set shell=/usr/local/bin/zsh
 let maplocalleader = ','
 let g:mapleader ="\<Space>"
 "
@@ -45,6 +42,7 @@ packadd! LanguageTool.nvim
 " => Basic Customization
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set termguicolors
+set shell=/usr/local/bin/zsh
 syntax on
 lua require('colorbuddy').colorscheme('color')
 set listchars=tab:»\ ,eol:↲
@@ -68,7 +66,7 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 set number
-set relativenumber
+set nonumber
 set rnu
 set timeout timeoutlen=1000 ttimeoutlen=100
 set laststatus=2
@@ -81,6 +79,11 @@ set signcolumn=yes
 autocmd TermOpen * setlocal nonumber
 autocmd TermOpen * setlocal norelativenumber
 lua require'colorizer'.setup()
+
+augroup highlight_yank
+    autocmd!
+    au TextYankPost * silent! lua vim.highlight.on_yank{higroup="Search", timeout=300}
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Keybindings
