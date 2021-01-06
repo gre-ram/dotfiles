@@ -1,21 +1,21 @@
 [submodule "vim-fugitive"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-fugitive
+	path = Neovim/.config/nvim/pack/submodules/start/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
 [submodule "Nvim-R"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/Nvim-R
+	path = Neovim/.config/nvim/pack/submodules/opt/Nvim-R
 	url = https://github.com/jalvesaq/Nvim-R.git
     branch = master
 [submodule "vim-gitgutter"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-gitgutter
+	path = Neovim/.config/nvim/pack/submodules/start/vim-gitgutter
 	url = https://github.com/airblade/vim-gitgutter.git
 [submodule "vim-table-mode"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/table-mode
+	path = Neovim/.config/nvim/pack/submodules/opt/table-mode
 	url = git@github.com:dhruvasagar/vim-table-mode.git
 [submodule "pandoc-syntax"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-pandoc-syntax
+	path = Neovim/.config/nvim/pack/submodules/opt/vim-pandoc-syntax
     url = https://github.com/vim-pandoc/vim-pandoc-syntax.git
 [submodule "vim-devicons"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-devicons
+	path = Neovim/.config/nvim/pack/submodules/opt/vim-devicons
 	url = https://github.com/ryanoasis/vim-devicons.git
 [submodule "zsh-syntax-highlighting"]
 	path = zsh/.zsh/zsh-syntax-highlighting
@@ -30,62 +30,62 @@
 	path = pyenv-plugins/.pyenv/plugins/pyenv-pip-migrate
 	url = git://github.com/pyenv/pyenv-pip-migrate.git
 [submodule "vim-surround"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-surround
+	path = Neovim/.config/nvim/pack/submodules/opt/vim-surround
 	url = https://github.com/tpope/vim-surround
 [submodule "completion-nvim"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/completion-nvim
+	path = Neovim/.config/nvim/pack/submodules/opt/completion-nvim
 	url = https://github.com/nvim-lua/completion-nvim.git
 [submodule "completion-buffers"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/completion-buffers
+	path = Neovim/.config/nvim/pack/submodules/opt/completion-buffers
 	url = https://github.com/steelsojka/completion-buffers.git
 [submodule "auto-pairs"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/auto-pairs
+	path = Neovim/.config/nvim/pack/submodules/opt/auto-pairs
 	url = git://github.com/jiangmiao/auto-pairs.git
 [submodule "pyenv-virtualenv"]
 	path = pyenv-plugins/.pyenv/plugins/pyenv-virtualenv
 	url = https://github.com/pyenv/pyenv-virtualenv.git
 [submodule "nvim-lspconfig"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/nvim-lspconfig
+	path = Neovim/.config/nvim/pack/submodules/opt/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig
 [submodule "plenary.nvim"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/plenary.nvim
+	path = Neovim/.config/nvim/pack/submodules/opt/plenary.nvim
 	url = https://github.com/nvim-lua/plenary.nvim
 [submodule "telescope.nvim"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/telescope.nvim
+	path = Neovim/.config/nvim/pack/submodules/opt/telescope.nvim
 	url = https://github.com/nvim-lua/telescope.nvim
 [submodule "popup.nvim"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/popup.nvim
+	path = Neovim/.config/nvim/pack/submodules/opt/popup.nvim
 	url = https://github.com/nvim-lua/popup.nvim
 [submodule "lsp-status.nvim"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/lsp-status.nvim
+	path = Neovim/.config/nvim/pack/submodules/opt/lsp-status.nvim
 	url = https://github.com/nvim-lua/lsp-status.nvim
 [submodule "nvim-treesitter"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/nvim-treesitter
+	path = Neovim/.config/nvim/pack/submodules/opt/nvim-treesitter
 	url = https://github.com/nvim-treesitter/nvim-treesitter
 [submodule "completion-treesitter"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/completion-treesitter
+	path = Neovim/.config/nvim/pack/submodules/opt/completion-treesitter
 	url = https://github.com/nvim-treesitter/completion-treesitter
 [submodule "nvim-colorizer.lua"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/nvim-colorizer.lua
+	path = Neovim/.config/nvim/pack/submodules/opt/nvim-colorizer.lua
 	url = https://github.com/norcalli/nvim-colorizer.lua
 [submodule "pyenv-default-packages"]
 	path = pyenv-plugins/.pyenv/plugins/pyenv-default-packages
 	url = https://github.com/jawshooah/pyenv-default-packages
 [submodule "vim-panodc"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/vim-pandoc
+	path = Neovim/.config/nvim/pack/submodules/opt/vim-pandoc
 	url = https://github.com/vim-pandoc/vim-pandoc
 [submodule "playground"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/playground
+	path = Neovim/.config/nvim/pack/submodules/opt/playground
 	url = https://github.com/nvim-treesitter/playground
 [submodule "LanguageTool.nvim"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/LanguageTool.nvim
+	path = Neovim/.config/nvim/pack/submodules/opt/LanguageTool.nvim
 	url = https://github.com/vigoux/LanguageTool.nvim
 [submodule "nvim-web-devicons"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/nvim-web-devicons
+	path = Neovim/.config/nvim/pack/submodules/opt/nvim-web-devicons
 	url = https://github.com/kyazdani42/nvim-web-devicons
 [submodule "dir_colors"]
 	path = misc/nord-dircolors
 	url = https://github.com/arcticicestudio/nord-dircolors
 [submodule "edge"]
-	path = Neovim/.local/share/nvim/site/pack/Plugins/opt/edge
+	path = Neovim/.config/nvim/pack/submodules/opt/edge
 	url = https://github.com/sainnhe/edge

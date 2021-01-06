@@ -13,8 +13,7 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins (to get all helpfiles exec :helptags ALL
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-packadd! vim-fugitive
-packadd! vim-gitgutter
+packloadall
 packadd! nvim-r
 packadd! table-mode
 packadd! vim-pandoc-syntax
@@ -85,6 +84,8 @@ augroup highlight_yank
     autocmd!
     au TextYankPost * silent! lua vim.highlight.on_yank{higroup="Search", timeout=300}
 augroup END
+
+lua require 'gwbrck-statusline'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Keybindings
@@ -176,79 +177,11 @@ let R_hl_term = 0 "R Output is colored by
 let R_hi_fun_globenv = 2
 let R_csv_app = "terminal: vd"
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" =>  Airline
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-function! GitStatus()
-    let [a,m,r] = GitGutterGetHunkSummary()
-    let fugiline = FugitiveHead()
-    if (fugiline != '')
-        return printf(' %s:  %d ~ %d  %d',fugiline, a, m, r)
-    else
-        return printf('')
-    endif
-endfunction
-
-let g:currentmode={
-    \ 'n'  : 'N ',
-    \ 'no' : 'N·Operator Pending ',
-    \ 'v'  : 'V ',
-    \ 'V'  : 'V·Line ',
-    \ '' : 'V·Block ',
-    \ 's'  : 'Select ',
-    \ 'S'  : 'S·Line ',
-    \ '' : 'S·Block ',
-    \ 'i'  : 'I ',
-    \ 'R'  : 'Replace ',
-    \ 'Rv' : 'V·Replace ',
-    \ 'c'  : 'Command ',
-    \ 'cv' : 'Vim Ex ',
-    \ 'ce' : 'Ex ',
-    \ 'r'  : 'Prompt ',
-    \ 'rm' : 'More ',
-    \ 'r?' : 'Confirm ',
-    \ '!'  : 'Shell ',
-    \ 't'  : 'Terminal '
-    \}
-
-function! ChangeStatuslineColor()
-     if (mode() =~# '\v(n|no)')
-       exe 'hi! link currentStatusLine StatusLine'
-     elseif (mode() =~# '\v(v|V)' || g:currentmode[mode()] ==# 'V·Block' || get(g:currentmode, mode(), '') ==# 't')
-       exe 'hi! link currentStatusLine DiffChange'
-     elseif (mode() ==# 'i')
-       exe 'hi! link currentStatusLine DiffAdd'
-     else
-       exe 'hi! link currentStatusLine StatusLine'
-     endif
-     return ''
- endfunction
-
-set statusline=
-set statusline+=%{ChangeStatuslineColor()}
-set statusline+=%#currentStatusLine#
-set statusline+=\ %{toupper(g:currentmode[mode()])}
-set statusline+=%#tabline#
-set statusline+=\  
-set statusline+=\ \ %f
-set statusline+=%m
-set statusline+=\ %{GitStatus()}
-set statusline+=%=
-set statusline+=%#currentStatusLine#
-set statusline+=\ %Y
-set statusline+=\ %{WebDevIconsGetFileTypeSymbol()} 
-set statusline+=\ [\ %p%%
-set statusline+=\ ﮆ
-set statusline+=\ %l
-set statusline+=\ ﮇ
-set statusline+=\ %c\ ]
-set statusline+=\ 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " =>  Linting & Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua require 'configoflsp'
+
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
