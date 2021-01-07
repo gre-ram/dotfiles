@@ -3,39 +3,39 @@ local devicons = require'nvim-web-devicons'
 local Job = require('plenary.job')
 local curr_files = {}
 local blank = ' '
-local purple = '#B48EAD'
-local blue = '#81A1C1'
-local yellow = '#EBCB8B'
-local green = '#A3BE8C'
-local red = '#BF616A'
-local white_fg = '#e6e6e6'
-local black_fg = '#282c34'
-local bg = '#4d4d4d'
-
+local purple = vim.api.nvim_eval("synIDattr(synIDtrans(hlID('Purple')), 'fg', 'gui')")
+local blue = vim.api.nvim_eval("synIDattr(synIDtrans(hlID('Blue')), 'fg', 'gui')")
+local yellow = vim.api.nvim_eval("synIDattr(synIDtrans(hlID('Yellow')), 'fg', 'gui')")
+local green = vim.api.nvim_eval("synIDattr(synIDtrans(hlID('Green')), 'fg', 'gui')")
+local red = vim.api.nvim_eval("synIDattr(synIDtrans(hlID('Red')), 'fg', 'gui')")
+local bg_color = vim.api.nvim_eval("synIDattr(synIDtrans(hlID('StatusLine')), 'bg', 'gui')")
+local fg_color = vim.api.nvim_eval("synIDattr(synIDtrans(hlID('StatusLine')), 'bg', 'gui')")
+local fg_colorNC = vim.api.nvim_eval("synIDattr(synIDtrans(hlID('StatusLineNC')), 'fg', 'gui')")
+vim.cmd('hi! StatusLineNumbers guibg=' .. bg_color .. ' guifg=' .. fg_colorNC)
 
 -- Mode Prompt Table
 local current_mode = setmetatable({
-      ['n'] = 'NORMAL',
-      ['no'] = 'N·Operator Pending',
-      ['v'] = 'VISUAL',
-      ['V'] = 'V·Line',
-      ['^V'] = 'V·Block',
-      ['s'] = 'Select',
-      ['S'] = 'S·Line',
-      ['^S'] = 'S·Block',
-      ['i'] = 'INSERT',
-      ['ic'] = 'INSERT',
-      ['ix'] = 'INSERT',
-      ['R'] = 'Replace',
-      ['Rv'] = 'V·Replace',
-      ['c'] = 'COMMAND',
-      ['cv'] = 'Vim Ex',
-      ['ce'] = 'Ex',
-      ['r'] = 'Prompt',
-      ['rm'] = 'More',
-      ['r?'] = 'Confirm',
-      ['!'] = 'Shell',
-      ['t'] = 'TERMINAL'
+      ['n'] = ' N ',
+      ['no'] = ' N·Operator Pending ',
+      ['v'] = ' V ',
+      ['V'] = ' V·Line ',
+      ['^V'] = ' V·Block ',
+      ['s'] = ' Select ',
+      ['S'] = ' S·Line ',
+      ['^S'] = ' S·Block ',
+      ['i'] = ' I ',
+      ['ic'] = ' I ',
+      ['ix'] = ' I ',
+      ['R'] = ' R ',
+      ['Rv'] = ' V·Replace ',
+      ['c'] = ' COMMAND ',
+      ['cv'] = ' Vim Ex ',
+      ['ce'] = ' Ex ',
+      ['r'] = ' Prompt ',
+      ['rm'] = ' More ',
+      ['r?'] = ' Confirm ',
+      ['!'] = ' Shell ',
+      ['t'] = ' TERM '
     }, {
       -- fix weird issues
       __index = function(_, _)
@@ -46,38 +46,28 @@ local current_mode = setmetatable({
 
 local RedrawColors = function(mode)
   if mode == 'n' then
-    vim.api.nvim_command('hi Mode guibg='..green..' guifg='..black_fg..' gui=bold')
-    vim.api.nvim_command('hi ModeSeparator guifg='..green)
+    vim.api.nvim_command('hi Mode guibg='..green..' guifg='..fg_color..' gui=bold')
   end
   if mode == 'i' then
-    vim.api.nvim_command('hi Mode guibg='..blue..' guifg='..black_fg..' gui=bold')
-    vim.api.nvim_command('hi ModeSeparator guifg='..blue)
+    vim.api.nvim_command('hi Mode guibg='..blue..' guifg='..fg_color..' gui=bold')
   end
   if mode == 'v' or mode == 'V' or mode == '^V' then
-    vim.api.nvim_command('hi Mode guibg='..purple..' guifg='..black_fg..' gui=bold')
-    vim.api.nvim_command('hi ModeSeparator guifg='..purple)
+    vim.api.nvim_command('hi Mode guibg='..purple..' guifg='..fg_color..' gui=bold')
   end
   if mode == 'c' then
-    vim.api.nvim_command('hi Mode guibg='..yellow..' guifg='..black_fg..' gui=bold')
-    vim.api.nvim_command('hi ModeSeparator guifg='..yellow)
+    vim.api.nvim_command('hi Mode guibg='..yellow..' guifg='..fg_color..' gui=bold')
   end
   if mode == 't' then
-    vim.api.nvim_command('hi Mode guibg='..red..' guifg='..black_fg..' gui=bold')
-    vim.api.nvim_command('hi ModeSeparator guifg='..red)
+    vim.api.nvim_command('hi Mode guibg='..red..' guifg='..fg_color..' gui=bold')
   end
 end
 
-local function file_icon(active)
+local function file_icon()
     local f_name,f_extension = vim.fn.expand('%:t'),vim.fn.expand('%:e')
     local icon, icon_highlight = devicons.get_icon(f_name,f_extension, { default = true })
-    if not active then
-        return icon .. blank
-    else
-        local fg_color = vim.api.nvim_eval("synIDattr(synIDtrans(hlID('" .. icon_highlight .. "')), 'fg', 'gui')")
-        local bg_color = vim.api.nvim_eval("synIDattr(synIDtrans(hlID('StatusLine')), 'bg', 'gui')")
-        vim.cmd('hi! CurrFile guibg=' .. bg_color .. ' guifg=' .. fg_color)
-        return '%#CurrFile#' .. icon .. '%#StatusLine#' .. blank
-    end
+    local fg_color_icon = vim.api.nvim_eval("synIDattr(synIDtrans(hlID('" .. icon_highlight .. "')), 'fg', 'gui')")
+    vim.cmd('hi! CurrFile guibg=' .. bg_color .. ' guifg=' .. fg_color_icon)
+    return '%#CurrFile#' .. icon .. '%#StatusLine#' .. blank
 end
 
 
@@ -172,15 +162,20 @@ local function check_for_new_string(fp)
 end
 
 local function statuslinee(active)
-    local icon = file_icon(active)
+    local icon = file_icon()
     if not active then
-        local line = "%#StatusLineNC#"..blank..icon.."%f"
+        local line = "%#StatusLineNC#"..blank.."%f"
         return line
     else
+        local mode = vim.api.nvim_get_mode()['mode']
+        RedrawColors(mode)
+        local mode_string = "%#Mode#"..current_mode[mode].."%#StatusLine#"
         local fp = vim.api.nvim_buf_get_name(string.format(vim.api.nvim_get_current_buf()))
         local git_string = string.format(check_for_new_string(fp))
-        local test = blank..icon.."%f"..blank..git_string
-        return test
+        local line_numbers = "%#StatusLineNumbers# [%l/%L|%p%%] %#StatusLine#"
+        local left = blank..icon.."%f"..blank..git_string..line_numbers
+        local right = "%=gwbrk "
+        return mode_string..left..right
     end
 end
 
