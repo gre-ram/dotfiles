@@ -1,4 +1,5 @@
 local vim = vim
+local lsp_status = require('lsp-status')
 local devicons = require'nvim-web-devicons'
 local Job = require('plenary.job')
 local curr_files = {}
@@ -174,8 +175,9 @@ local function statuslinee(active)
         local git_string = string.format(check_for_new_string(fp))
         local line_numbers = "%#StatusLineNumbers# [%l/%L|%p%%] %#StatusLine#"
         local left = blank..icon.."%f"..blank..git_string..line_numbers
-        local right = "%=gwbrk "
-        return mode_string..left..right
+        local right = "%="
+        local lsp = lsp_status.status()
+        return mode_string..left..right..lsp
     end
 end
 
@@ -185,3 +187,4 @@ local function exec_autocommands()
     vim.cmd([[autocmd WinLeave,BufLeave * setlocal statusline=%!v:lua.statuslinee()]])
 end
 exec_autocommands()
+
