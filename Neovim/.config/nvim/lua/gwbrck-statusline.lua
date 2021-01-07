@@ -40,7 +40,7 @@ local current_mode = setmetatable({
     }, {
       -- fix weird issues
       __index = function(_, _)
-        return 'V·Block'
+        return ' V·Block '
       end
     }
 )
