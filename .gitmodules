@@ -14,9 +14,6 @@
 [submodule "pandoc-syntax"]
 	path = Neovim/.config/nvim/pack/submodules/opt/vim-pandoc-syntax
     url = https://github.com/vim-pandoc/vim-pandoc-syntax.git
-[submodule "vim-devicons"]
-	path = Neovim/.config/nvim/pack/submodules/opt/vim-devicons
-	url = https://github.com/ryanoasis/vim-devicons.git
 [submodule "zsh-syntax-highlighting"]
 	path = zsh/.zsh/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git

@@ -31,7 +31,6 @@ packadd! completion-nvim
 packadd! completion-buffers
 packadd! completion-treesitter
 packadd! bib-exzerpt.nvim 
-packadd! vim-devicons
 packadd! nvim-colorizer.lua
 packadd! auto-pairs
 packadd! playground
