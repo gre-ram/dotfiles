@@ -19,12 +19,12 @@ end
 
 
 local function git_changes()
-
   local buffer =  string.format(vim.api.nvim_get_current_buf())
+  local wd = vim.api.nvim_buf_get_name(buffer)
   local j = Job:new({
     command = "git",
     args = {"status", "--short"},
-    cwd = vim.fn.fnamemodify(buffer.name, ":h"),
+    cwd = vim.fn.fnamemodify(wd, ":h"),
   })
 
   local ok, _ = pcall(function()
@@ -41,10 +41,11 @@ end
 
 local function get_git_remote()
   local buffer =  string.format(vim.api.nvim_get_current_buf())
+  local wd = vim.api.nvim_buf_get_name(buffer)
   local j = Job:new({
     command = "git",
     args = {"config", "--get", "remote.origin.url"},
-    cwd = vim.fn.fnamemodify(buffer.name, ":h"),
+    cwd = vim.fn.fnamemodify(wd, ":h"),
   })
 
   local ok, result = pcall(function()
@@ -59,10 +60,11 @@ end
 
 local function get_git_branch()
   local buffer =  string.format(vim.api.nvim_get_current_buf())
+  local wd = vim.api.nvim_buf_get_name(buffer)
   local j = Job:new({
     command = "git",
     args = {"branch", "--show-current"},
-    cwd = vim.fn.fnamemodify(buffer.name, ":h"),
+    cwd = vim.fn.fnamemodify(wd, ":h"),
   })
 
   local ok, result = pcall(function()
