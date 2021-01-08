@@ -236,7 +236,7 @@ function -report-start-time() {
       SECS="$((~~$SECS))s"
     fi
     ELAPSED="${ELAPSED}${SECS}"
-    export RPROMPT="%F{cyan} ${ELAPSED}%f $RPROMPT_BASE"
+    export RPROMPT="%F{cyan} ${ELAPSED}%f $RPROMPT_BASE"
     unset ZSH_START_TIME
   else
     export RPROMPT="$RPROMPT_BASE"
