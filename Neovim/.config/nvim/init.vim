@@ -9,35 +9,7 @@ if glob('~/.pyenv/versions/neovim3/bin/python') != ''
 else
     let g:python3_host_prog = systemlist('which python3')[0]
 endif
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Plugins (to get all helpfiles exec :helptags ALL
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 packloadall
-packadd! nvim-r
-packadd! table-mode
-packadd! vim-pandoc-syntax
-packadd! vim-pandoc
-packadd! plenary.nvim
-packadd! popup.nvim
-packadd! telescope.nvim
-packadd! nvim-treesitter
-"packadd! maybe using for snippets in future: snippets.nvim
-packadd! vim-surround
-packadd! nvim-lspconfig
-packadd! lsp-status.nvim
-packadd! nvim-web-devicons
-packadd! completion-nvim
-packadd! completion-buffers
-packadd! completion-treesitter
-packadd! nvim-colorizer.lua
-packadd! auto-pairs
-packadd! playground
-packadd! LanguageTool.nvim
-packadd! edge
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Basic Customization
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set termguicolors
 set shell=/usr/local/bin/zsh
 syntax on
