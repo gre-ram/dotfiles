@@ -86,3 +86,6 @@
 [submodule "edge"]
 	path = Neovim/.config/nvim/pack/submodules/opt/edge
 	url = https://github.com/sainnhe/edge
+[submodule "zsh-autosuggestions"]
+	path = zsh/.zsh/zsh-autosuggestions
+	url = git@github.com:zsh-users/zsh-autosuggestions.git

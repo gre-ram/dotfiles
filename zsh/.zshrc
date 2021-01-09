@@ -18,7 +18,7 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 # source ~/Documents/.ENVS.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
 export CLICOLOR=1
 autoload -U colors && colors
