@@ -1,13 +1,6 @@
 ################################
 ###########  Basic  ############
 ################################
-export LANG="en_US.UTF-8"
-export EDITOR="nvim"
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-export PATH="$PATH:$HOME/.scripts"
-export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-export PATH="/usr/local/sbin:$PATH"
-export PATH="$HOME/bin:/usr/local/bin:$PATH"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 export PIPENV_VENV_IN_PROJECT=1
