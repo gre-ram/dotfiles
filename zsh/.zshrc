@@ -1,6 +1,7 @@
 ################################
 ###########  Basic  ############
 ################################
+export PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 export PIPENV_VENV_IN_PROJECT=1
@@ -56,7 +57,6 @@ alias gsurr='git submodule update --recursive --remote'
 alias vi='nvim'
 alias vim='nvim'
 
-ls -G . &>/dev/null && alias ls='ls -G'
 alias lsa='ls -lah --color=always'
 alias l='ls -lah --color=always'
 alias ll='ls -lh --color=always'
