@@ -9,6 +9,10 @@ if glob('~/.pyenv/versions/neovim3/bin/python') != ''
 else
     let g:python3_host_prog = systemlist('which python3')[0]
 endif
+
+"vim-pandoc needs the Bang... idk why
+packadd! vim-pandoc
+packadd! vim-pandoc-syntax
 packloadall
 set termguicolors
 set shell=/usr/local/bin/zsh

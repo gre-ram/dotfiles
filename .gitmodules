@@ -12,7 +12,7 @@
 	path = Neovim/.config/nvim/pack/submodules/start/table-mode
 	url = git@github.com:dhruvasagar/vim-table-mode.git
 [submodule "pandoc-syntax"]
-	path = Neovim/.config/nvim/pack/submodules/start/vim-pandoc-syntax
+	path = Neovim/.config/nvim/pack/submodules/opt/vim-pandoc-syntax
     url = https://github.com/vim-pandoc/vim-pandoc-syntax.git
 [submodule "zsh-syntax-highlighting"]
 	path = zsh/.zsh/zsh-syntax-highlighting
@@ -69,7 +69,7 @@
 	path = pyenv-plugins/.pyenv/plugins/pyenv-default-packages
 	url = https://github.com/jawshooah/pyenv-default-packages
 [submodule "vim-panodc"]
-	path = Neovim/.config/nvim/pack/submodules/start/vim-pandoc
+	path = Neovim/.config/nvim/pack/submodules/opt/vim-pandoc
 	url = https://github.com/vim-pandoc/vim-pandoc
 [submodule "playground"]
 	path = Neovim/.config/nvim/pack/submodules/start/playground
