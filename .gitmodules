@@ -89,3 +89,6 @@
 [submodule "zsh-autosuggestions"]
 	path = zsh/.zsh/zsh-autosuggestions
 	url = git@github.com:zsh-users/zsh-autosuggestions.git
+[submodule "EurKey-Mac"]
+	path = misc/EurKEY-Mac
+	url = https://github.com/lbschenkel/EurKEY-Mac
