@@ -1,11 +1,7 @@
 ################################
 ###########  Basic  ############
 ################################
-export PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-export PIPENV_VENV_IN_PROJECT=1
-export PIPENV_PYTHON="$PYENV_ROOT/shims/python"
+#export PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
@@ -13,7 +9,7 @@ fi
 # source ~/Documents/.ENVS.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
+test -r ~/.dir_colors && eval $(gdircolors ~/.dir_colors)
 export CLICOLOR=1
 autoload -U colors && colors
 
@@ -57,10 +53,10 @@ alias gsurr='git submodule update --recursive --remote'
 alias vi='nvim'
 alias vim='nvim'
 
-alias lsa='ls -lah --color=always'
-alias l='ls -lah --color=always'
-alias ll='ls -lh --color=always'
-alias la='ls -lAh --color=always'
+alias lsa='gls -lah --color=always'
+alias l='gls -lah --color=always'
+alias ll='gls -lh --color=always'
+alias la='gls -lAh --color=always'
 alias -g ...='../..'
 alias -g ....='../../..'
 alias -g .....='../../../..'
