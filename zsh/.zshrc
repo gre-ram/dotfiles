@@ -1,15 +1,18 @@
-################################
-###########  Basic  ############
-################################
-#export PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-fi
-# source ~/Documents/.ENVS.zsh
+# The following lines were added by compinstall zstyle ':completion:*' verbose true zstyle :compinstall filename '/home/gregor/.zshrc' autoload -Uz compinit compinit End of lines added by compinstall
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+# End of lines configured by zsh-newuser-install
+
+# #export PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
+# if command -v pyenv 1>/dev/null 2>&1; then
+#   eval "$(pyenv init -)"
+#   eval "$(pyenv virtualenv-init -)"
+# fi
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-test -r ~/.dir_colors && eval $(gdircolors ~/.dir_colors)
+test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
 export CLICOLOR=1
 autoload -U colors && colors
 
@@ -30,15 +33,6 @@ setopt no_prompt_bang
 setopt prompt_percent
 setopt NO_CASE_GLOB            # Case Insensitive Globbing
 
-alias g2code="~/Code"
-alias g2vimrc="vim ~/dotfiles/Neovim/.config/nvim/init.vim"
-alias g2zshrc="vim ~/dotfiles/zsh/.zshrc"
-alias g2pdfs="~/Documents/myBib/pdfs"
-alias g2Konspekte="~/Documents/myBib/Konspekte"
-
-alias latex-update="sudo tlmgr update --self --all"
-
-alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
 
 alias g='git'
 alias ga='git add'
@@ -53,10 +47,10 @@ alias gsurr='git submodule update --recursive --remote'
 alias vi='nvim'
 alias vim='nvim'
 
-alias lsa='gls -lah --color=always'
-alias l='gls -lah --color=always'
-alias ll='gls -lh --color=always'
-alias la='gls -lAh --color=always'
+alias lsa='ls -lah --color=always'
+alias l='ls -lah --color=always'
+alias ll='ls -lh --color=always'
+alias la='ls -lAh --color=always'
 alias -g ...='../..'
 alias -g ....='../../..'
 alias -g .....='../../../..'

@@ -1,61 +1,24 @@
 window:
   padding:
-    x: 10
-    y: 10
+    x: 5
+    y: 5
   dynamic_padding: true
-  decorations: buttonless
 
 font:
   normal:
-    family: JetBrainsMono Nerd Font 
+    family: Source Code Pro 
     style: Regular
   bold:
-    family: JetBrainsMono Nerd Font
-    style: Extra Bold
+    family: Source Code Pro 
+    style: Bold
   italic:
-    family: JetBrainsMono Nerd Font
+    family: Source Code Pro 
     style: Italic
-  offset:
-      y: 4
-  glyph_offset:
-      y: 2
   
-shell:
-  #program: /usr/local/bin/zsh
-  #args:
-  #- --login
-  program: /usr/local/bin/tmux
-  args:
-    - -u
-    - new-session
-    - -A
-    - -s
-    - main
 
 selection:
   semantic_escape_chars: ',│`|:"'' ()[]{}<>'
   save_to_clipboard: true
-
-key_bindings:
-  - { key: Key5, mods: Alt, chars: "\x5b" }
-  - { key: Key6, mods: Alt, chars: "\x5d" }
-  - { key: Key7, mods: Alt|Shift, chars: "\x5c" }
-  - { key: Key7, mods: Alt, chars: "\x7c" }
-  - { key: Key8, mods: Alt, chars: "\x7b" }
-  - { key: Key9, mods: Alt, chars: "\x7d" }
-  - { key: L, mods: Alt, chars: "\x40" }
-  - { key: 28, mods: Alt, chars: "{" }
-  - { key: 25, mods: Alt, chars: "}" }
-  - { key: 37, mods: Alt, chars: "@" }
-  - { key: 26, mods: Alt|Shift, chars: "\\" }
-  - { key: 26, mods: Alt, chars: "|" }
-  # - { key: 45,      mods: Alt, chars: "~" }
-  - { key: 23, mods: Alt, chars: "[" }
-  - { key: 22, mods: Alt, chars: "]" }
-  - { key: 36, mods: Command, action: ToggleFullscreen }
-  - { key: N, mods: Command, action: SpawnNewInstance }
-
-
 
 
 schemes:  
