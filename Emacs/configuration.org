@@ -96,7 +96,7 @@ This section configures basic UI settings that remove unneeded elements to make 
     (gwbrck/set-font-faces))
 #+end_src
 
-* Keybinding Configuration
+* Keybinding ConfiguratioN
 
 
 This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil-mode]] for a Vi-like modal editing experience.  [[https://github.com/noctuid/general.el][general.el]] is used for easy keybinding configuration that integrates well with which-key.  [[https://github.com/emacs-evil/evil-collection][evil-collection]] is used to automatically configure various Emacs modes with Vi-like keybindings for evil-mode.
@@ -105,17 +105,33 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 
   ;; Make ESC quit prompts
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
+  (global-set-key (kbd "C-M-u") 'universal-argument)
   (use-package general
     :config
-    (general-create-definer rune/leader-keys
+    (general-create-definer gwbrck/leader-keys
       :keymaps '(normal insert visual emacs)
       :prefix "SPC"
       :global-prefix "C-SPC")
 
-    (rune/leader-keys
+    (gwbrck/leader-keys
+      "b"  '(:ignore t :which-key "buffer")
+      "bk" '(kill-buffer :which-key "kill buffer")
+      "bs" '(switch-to-buffer :which-key "list buffer")
+      "bn" '(next-buffer :which-key "next buffer")
+      "bN" '(previous-buffer :which-key "prev buffer")
       "t"  '(:ignore t :which-key "toggles")
-      "tt" '(counsel-load-theme :which-key "choose theme")))
+      "tw" '(whitespace-mode :which-key "whitespace" )
+      "tt" '(counsel-load-theme :which-key "choose theme"))
+   (gwbrck/leader-keys
+     "f"   '(:ignore t :which-key "files")
+     "fb"  '((lambda () (interactive) (counsel-find-file "~/Documents/MacsBib")) :which-key "Bib")
+     "ff"  '((lambda () (interactive) (counsel-find-file "~/Documents")) :which-key "Documents")
+     "fc"  '((lambda () (interactive) (counsel-find-file "~/Code")) :which-key "Code")
+     "fd"  '(:ignore t :which-key "dotfiles")
+     "fdz" '((lambda () (interactive) (counsel-find-file "~/dotfiles/zsh")) :which-key "zsh")
+     "fdv" '((lambda () (interactive) (counsel-find-file "~/dotfiles/Neovim/.config")) :which-key "Neovim")
+     "fdd" '((lambda () (interactive) (counsel-find-file"~/dotfiles")) :which-key "dotfiles")
+     "fde" '((lambda () (interactive) (find-file "~/dotfiles/Emacs/configuration.org")) :which-key "Emacs")))
 
   (use-package evil
     :init
@@ -266,7 +282,7 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
     ("k" text-scale-decrease "out")
     ("f" nil "finished" :exit t))
 
-  (rune/leader-keys
+  (gwbrck/leader-keys
     "ts" '(hydra-text-scale/body :which-key "scale text"))
 
 #+end_src
@@ -455,7 +471,7 @@ You can add more =src= block templates below by copying one of the lines and cha
 
 #+end_src
 
-** BibRoam
+* BibRoam
 #+begin_src emacs-lisp
 (setq myBib '("~/Documents/TestBib/main.bib"))
 (setq myPdfs  "~/Documents/TestBib/pdfs")
@@ -506,6 +522,51 @@ You can add more =src= block templates below by copying one of the lines and cha
 :NOTER_DOCUMENT: ${file}
 :NOTER_PAGE:
 :END:")))
+
+
+(use-package org-noter
+  :config
+  ;; Your org-noter config ........
+  (require 'org-noter-pdftools))
+
+(use-package org-pdftools
+  :hook (org-mode . org-pdftools-setup-link))
+
+(use-package org-noter-pdftools
+  :after org-noter
+  :config
+  ;; Add a function to ensure precise note is inserted
+  (defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
+    (interactive "P")
+    (org-noter--with-valid-session
+     (let ((org-noter-insert-note-no-questions (if toggle-no-questions
+                                                   (not org-noter-insert-note-no-questions)
+                                                 org-noter-insert-note-no-questions))
+           (org-pdftools-use-isearch-link t)
+           (org-pdftools-use-freestyle-annot t))
+       (org-noter-insert-note (org-noter--get-precise-info)))))
+
+  ;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
+  (defun org-noter-set-start-location (&optional arg)
+    "When opening a session with this document, go to the current location.
+With a prefix ARG, remove start location."
+    (interactive "P")
+    (org-noter--with-valid-session
+     (let ((inhibit-read-only t)
+           (ast (org-noter--parse-root))
+           (location (org-noter--doc-approx-location (when (called-interactively-p 'any) 'interactive))))
+       (with-current-buffer (org-noter--session-notes-buffer session)
+         (org-with-wide-buffer
+          (goto-char (org-element-property :begin ast))
+          (if arg
+              (org-entry-delete nil org-noter-property-note-location)
+            (org-entry-put nil org-noter-property-note-location
+                           (org-noter--pretty-print-location location))))))))
+  (with-eval-after-load 'pdf-annot
+    (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
+
+
+
 #+end_src
 * Development
 
