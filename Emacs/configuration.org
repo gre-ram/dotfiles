@@ -1,6 +1,5 @@
 #+TITLE: Config based on Emacs From Scratch
-#+OPTIONS: toc:nil num:nil
-
+#+STARTUP hideblocks
 * Basic UI Configuration
 This section configures basic UI settings that remove unneeded elements to make Emacs look a lot more minimal and modern.
 #+begin_src emacs-lisp
@@ -437,7 +436,11 @@ This section contains the basic configuration for =org-mode= plus the configurat
     (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
 #+end_src
-
+*** TOC Mode
+#+begin_src emacs-lisp
+(use-package org-make-toc
+  :hook (org-mode . org-make-toc-mode))
+#+end_src 
 *** Center Org Buffers
 
 We use [[https://github.com/joostkremers/visual-fill-column][visual-fill-column]] to center =org-mode= buffers for a more pleasing writing experience as it centers the contents of the buffer horizontally to seem more like you are editing a document.  This is really a matter of personal preference so you can remove the block below if you don't like the behavior.
@@ -472,37 +475,44 @@ You can add more =src= block templates below by copying one of the lines and cha
 #+end_src
 
 * BibRoam
+** Default Bibpath
 #+begin_src emacs-lisp
-(setq myBib '("~/Documents/TestBib/main.bib"))
-(setq myPdfs  "~/Documents/TestBib/pdfs")
-(setq myRoam "~/Documents/TestBib/Roam")
-(use-package ivy-bibtex)
-(setq bibtex-completion-bibliography myBib)
-(setq bibtex-autokey-name-year-separator "_"
-      bibtex-autokey-year-title-separator "_"
-      bibtex-autokey-titlewords 1
-      bibtex-autokey-year-length 4
-      bibtex-autokey-edit-before-use nil
-      bibtex-autokey-additional-names 1
-      bibtex-autokey-titleword-ignore '("A" "An" "On" "The" "Eine" "Ein" "Der" "Die" "Das")
-      bibtex-autokey-titlewords-stretch 0
-      bibtex-autokey-titleword-length "5"
-      bibtex-autokey-names 2
-      bibtex-autokey-additional-names "-etal"
-      biblio-bibtex-use-autokey t
-      bibtex-comma-after-last-field t)
+(setq myBib '("~/Documents/MacsBib/main.bib"))
+(setq myPdfs  "~/Documents/MacsBib/pdfs")
+(setq myRoam "~/Documents/MacsBib/Roam")
+#+end_src
+** Standi Configs
+#+begin_src emacs-lisp
+(use-package ivy-bibtex
+     :config
+     (setq bibtex-completion-bibliography myBib)
+     (setq bibtex-dialect 'biblatex)
+     (setq bibtex-entry-format '(opts-or-alts numerical-fields whitespace realign last-comma delimiters unify-case sort-fields delimiters required-fields))
+     (setq bibtex-autokey-name-year-separator "_"
+           bibtex-autokey-year-title-separator "_"
+           bibtex-autokey-titlewords 1
+           bibtex-autokey-year-length 4
+           bibtex-autokey-edit-before-use nil
+           bibtex-autokey-additional-names 1
+           bibtex-autokey-titleword-ignore '("A" "An" "On" "The" "Eine" "Ein" "Der" "Die" "Das")
+           bibtex-autokey-titlewords-stretch 0
+           bibtex-autokey-titleword-length 5
+           bibtex-autokey-name-separator "-"
+           bibtex-autokey-names 2
+           bibtex-autokey-additional-names "-ea"
+           bibtex-comma-after-last-field t))
 
-(use-package citeproc-org)
+(use-package org-ref
+  :config
+  (setq org-ref-default-bibliography myBib)
+  (setq org-ref-pdf-directory myPdfs)
+  (setf (cdr (assoc 'org-mode bibtex-completion-format-citation-functions))       'org-ref-format-citation)
+  (setq  org-latex-pdf-process
+        '("latexmk -shell-escape -bibtex -pdf %f")))
+
+
 (use-package org-roam)
 (use-package org-roam-bibtex)
-
-(setq bibtex-completion-format-citation-functions
-      '((org-mode      . bibtex-completion-format-citation-pandoc-citeproc)
-        (latex-mode    . bibtex-completion-format-citation-cite)
-        (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
-        (default       . bibtex-completion-format-citation-pandoc-citeproc)))
-
-
 (setq orb-preformat-keywords
       '("citekey" "title" "url" "author-or-editor" "keywords" "file")
       orb-process-file-field t
@@ -567,6 +577,61 @@ With a prefix ARG, remove start location."
 
 
 
+#+end_src
+
+** Custom bibcleanfunction
+#+begin_src emacs-lisp
+  (defun gwbrck/bibtex-dashes ()
+      (let (bounds)
+        (when (looking-at bibtex-entry-maybe-empty-head)
+          (goto-char (match-end 0))
+          (while (setq bounds (bibtex-parse-field))
+            (goto-char (bibtex-start-of-field bounds))
+            (if (and (member (bibtex-name-in-field bounds) '("pages" "Pages"))
+                     (string-match "[0-9]-[0-9]" (bibtex-text-in-field-bounds bounds)))
+                (save-restriction
+                       (narrow-to-region (caar bounds) (nth 3 bounds))
+                       (goto-char (point-min))
+                       (while (search-forward "-" nil t)
+                         (replace-match "--")))
+              (goto-char (bibtex-end-of-field bounds)))))))
+
+  (defun gwbrck/bibtex-journal ()
+      (let (bounds)
+        (when (looking-at bibtex-entry-maybe-empty-head)
+          (goto-char (match-end 0))
+          (while (setq bounds (bibtex-parse-field))
+            (goto-char (bibtex-start-of-field bounds))
+            (if (member (bibtex-name-in-field bounds) '("journal" "Journal"))
+                (save-restriction
+                       (narrow-to-region (caar bounds) (nth 3 bounds))
+                       (goto-char (point-min))
+                       (while (search-forward "journal" nil t)
+                         (replace-match "journaltitle")))
+              (goto-char (bibtex-end-of-field bounds)))))))
+
+  (defun gwbrck/bibtex-abstract  ()
+      (let (bounds)
+        (when (looking-at bibtex-entry-maybe-empty-head)
+          (goto-char (match-end 0))
+          (while (setq bounds (bibtex-parse-field))
+            (goto-char (bibtex-start-of-field bounds))
+            (if (member (bibtex-name-in-field bounds) '("abstract" "Abstract"))
+              (kill-region (caar bounds) (nth 3 bounds))
+              (goto-char (bibtex-end-of-field bounds)))))))
+
+  (defun gwbrck/bibtex-clean-entry ()
+    (interactive)
+    (save-excursion
+      (save-restriction
+       (bibtex-narrow-to-entry)
+       (bibtex-beginning-of-entry)
+       (gwbrck/bibtex-journal)
+       (bibtex-beginning-of-entry)
+       (gwbrck/bibtex-dashes)
+       (bibtex-beginning-of-entry)
+       (gwbrck/bibtex-abstract)))
+       (bibtex-clean-entry 2))
 #+end_src
 * Development
 
@@ -1009,3 +1074,4 @@ This is an example of configuring another non-Emacs application using org-mode. 
   value=<<the-value()>>
 
 #+end_src
+
