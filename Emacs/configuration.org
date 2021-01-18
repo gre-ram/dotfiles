@@ -477,103 +477,105 @@ You can add more =src= block templates below by copying one of the lines and cha
 * BibRoam
 ** Default Bibpath
 #+begin_src emacs-lisp
-(setq myBib '("~/Documents/MacsBib/main.bib"))
-(setq myPdfs  "~/Documents/MacsBib/pdfs")
-(setq myRoam "~/Documents/MacsBib/Roam")
+(setq gwbrck/bib '("~/Documents/MacsBib/main.bib"))
+(setq myPdfs  "~/Documents/MacsBib/pdfs/")
+(setq myRoam "~/Documents/MacsBib/Roam/")
 #+end_src
 ** Standi Configs
 #+begin_src emacs-lisp
-(use-package ivy-bibtex
-     :config
-     (setq bibtex-completion-bibliography myBib)
-     (setq bibtex-dialect 'biblatex)
-     (setq bibtex-entry-format '(opts-or-alts numerical-fields whitespace realign last-comma delimiters unify-case sort-fields delimiters required-fields))
-     (setq bibtex-autokey-name-year-separator "_"
-           bibtex-autokey-year-title-separator "_"
-           bibtex-autokey-titlewords 1
-           bibtex-autokey-year-length 4
-           bibtex-autokey-edit-before-use nil
-           bibtex-autokey-additional-names 1
-           bibtex-autokey-titleword-ignore '("A" "An" "On" "The" "Eine" "Ein" "Der" "Die" "Das")
-           bibtex-autokey-titlewords-stretch 0
-           bibtex-autokey-titleword-length 5
-           bibtex-autokey-name-separator "-"
-           bibtex-autokey-names 2
-           bibtex-autokey-additional-names "-ea"
-           bibtex-comma-after-last-field t))
+    (use-package ivy-bibtex
+         :config
+         (setq bibtex-completion-bibliography gwbrck/bib)
+         (setq bibtex-dialect 'biblatex)
+         (setq bibtex-entry-format '(opts-or-alts numerical-fields whitespace realign last-comma delimiters unify-case sort-fields delimiters required-fields))
+         (setq bibtex-autokey-name-year-separator "_"
+               bibtex-autokey-year-title-separator "_"
+               bibtex-autokey-titlewords 1
+               bibtex-autokey-year-length 4
+               bibtex-autokey-edit-before-use nil
+               bibtex-autokey-additional-names 1
+               bibtex-autokey-titleword-ignore '("A" "An" "On" "The" "Eine" "Ein" "Der" "Die" "Das")
+               bibtex-autokey-titlewords-stretch 0
+               bibtex-autokey-titleword-length 5
+               bibtex-autokey-name-separator "-"
+               bibtex-autokey-names 2
+               bibtex-autokey-additional-names "-ea"
+               bibtex-comma-after-last-field t)
+         (setq biblio-cleanup-bibtex-function 'gwbrck/bibtex-clean-entry))
 
-(use-package org-ref
-  :config
-  (setq org-ref-default-bibliography myBib)
-  (setq org-ref-pdf-directory myPdfs)
-  (setf (cdr (assoc 'org-mode bibtex-completion-format-citation-functions))       'org-ref-format-citation)
-  (setq  org-latex-pdf-process
-        '("latexmk -shell-escape -bibtex -pdf %f")))
-
-
-(use-package org-roam)
-(use-package org-roam-bibtex)
-(setq orb-preformat-keywords
-      '("citekey" "title" "url" "author-or-editor" "keywords" "file")
-      orb-process-file-field t
-      orb-file-field-extensions "pdf")
-
-(setq orb-templates
-      '(("r" "ref" plain (function org-roam-capture--get-point)
-         ""
-         :file-name "Konspekte/${citekey}"
-         :head "#+TITLE: Konspekt von ${citekey}\n#+ROAM_KEY: ${ref}
-
-- tags ::
-- keywords :: ${keywords}\n\n* Konspekt
-:PROPERTIES:
-:Custom_ID: ${citekey}
-:AUTHOR: ${author-or-editor}
-:NOTER_DOCUMENT: ${file}
-:NOTER_PAGE:
-:END:")))
+    (use-package org-ref
+      :config
+      (setq org-ref-default-bibliography gwbrck/bib)
+      (setq org-ref-pdf-directory gwbrck/pdfs)
+      (setf (cdr (assoc 'org-mode bibtex-completion-format-citation-functions))       'org-ref-format-citation)
+      (setq  org-latex-pdf-process
+            '("latexmk -shell-escape -bibtex -pdf %f"))
+      (setq org-ref-clean-bibtex-entry-hook '(gwbrck/bibtex-clean-entry)))
 
 
-(use-package org-noter
-  :config
-  ;; Your org-noter config ........
-  (require 'org-noter-pdftools))
+    (use-package org-roam)
+    (use-package org-roam-bibtex)
+    (setq orb-preformat-keywords
+          '("citekey" "title" "url" "author-or-editor" "keywords" "file")
+          orb-process-file-field t
+          orb-file-field-extensions "pdf")
 
-(use-package org-pdftools
-  :hook (org-mode . org-pdftools-setup-link))
+    (setq orb-templates
+          '(("r" "ref" plain (function org-roam-capture--get-point)
+             ""
+             :file-name "Konspekte/${citekey}"
+             :head "#+TITLE: Konspekt von ${citekey}\n#+ROAM_KEY: ${ref}
 
-(use-package org-noter-pdftools
-  :after org-noter
-  :config
-  ;; Add a function to ensure precise note is inserted
-  (defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
-    (interactive "P")
-    (org-noter--with-valid-session
-     (let ((org-noter-insert-note-no-questions (if toggle-no-questions
-                                                   (not org-noter-insert-note-no-questions)
-                                                 org-noter-insert-note-no-questions))
-           (org-pdftools-use-isearch-link t)
-           (org-pdftools-use-freestyle-annot t))
-       (org-noter-insert-note (org-noter--get-precise-info)))))
+    - tags ::
+    - keywords :: ${keywords}\n\n* Konspekt
+    :PROPERTIES:
+    :Custom_ID: ${citekey}
+    :AUTHOR: ${author-or-editor}
+    :NOTER_DOCUMENT: ${file}
+    :NOTER_PAGE:
+    :END:")))
 
-  ;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
-  (defun org-noter-set-start-location (&optional arg)
-    "When opening a session with this document, go to the current location.
-With a prefix ARG, remove start location."
-    (interactive "P")
-    (org-noter--with-valid-session
-     (let ((inhibit-read-only t)
-           (ast (org-noter--parse-root))
-           (location (org-noter--doc-approx-location (when (called-interactively-p 'any) 'interactive))))
-       (with-current-buffer (org-noter--session-notes-buffer session)
-         (org-with-wide-buffer
-          (goto-char (org-element-property :begin ast))
-          (if arg
-              (org-entry-delete nil org-noter-property-note-location)
-            (org-entry-put nil org-noter-property-note-location
-                           (org-noter--pretty-print-location location))))))))
-  (with-eval-after-load 'pdf-annot
-    (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
+
+    (use-package org-noter
+      :config
+      ;; Your org-noter config ........
+      (require 'org-noter-pdftools))
+
+    (use-package org-pdftools
+      :hook (org-mode . org-pdftools-setup-link))
+
+    (use-package org-noter-pdftools
+      :after org-noter
+      :config
+      ;; Add a function to ensure precise note is inserted
+      (defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
+        (interactive "P")
+        (org-noter--with-valid-session
+         (let ((org-noter-insert-note-no-questions (if toggle-no-questions
+                                                       (not org-noter-insert-note-no-questions)
+                                                     org-noter-insert-note-no-questions))
+               (org-pdftools-use-isearch-link t)
+               (org-pdftools-use-freestyle-annot t))
+           (org-noter-insert-note (org-noter--get-precise-info)))))
+
+      ;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
+      (defun org-noter-set-start-location (&optional arg)
+        "When opening a session with this document, go to the current location.
+    With a prefix ARG, remove start location."
+        (interactive "P")
+        (org-noter--with-valid-session
+         (let ((inhibit-read-only t)
+               (ast (org-noter--parse-root))
+               (location (org-noter--doc-approx-location (when (called-interactively-p 'any) 'interactive))))
+           (with-current-buffer (org-noter--session-notes-buffer session)
+             (org-with-wide-buffer
+              (goto-char (org-element-property :begin ast))
+              (if arg
+                  (org-entry-delete nil org-noter-property-note-location)
+                (org-entry-put nil org-noter-property-note-location
+                               (org-noter--pretty-print-location location))))))))
+      (with-eval-after-load 'pdf-annot
+        (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
 
 
 
@@ -620,7 +622,7 @@ With a prefix ARG, remove start location."
               (kill-region (caar bounds) (nth 3 bounds))
               (goto-char (bibtex-end-of-field bounds)))))))
 
-  (defun gwbrck/bibtex-clean-entry ()
+  (defun gwbrck/bibtex-clean-entry (&optional x)
     (interactive)
     (save-excursion
       (save-restriction
