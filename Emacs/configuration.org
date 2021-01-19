@@ -1,5 +1,6 @@
 #+TITLE: Config based on Emacs From Scratch
 #+STARTUP hideblocks
+This configuration is based on the very helpfull [[https://github.com/daviwil/emacs-from-scratch/blob/master/Emacs.org][Emacs From Scratch]] Projekt by David Wilson. 
 * Basic UI Configuration
 This section configures basic UI settings that remove unneeded elements to make Emacs look a lot more minimal and modern.
 #+begin_src emacs-lisp
@@ -18,7 +19,6 @@ This section configures basic UI settings that remove unneeded elements to make 
 
   (column-number-mode)
   (global-display-line-numbers-mode t)
-  (setq display-line-numbers-type 'relative)
 
   ;; Disable line numbers for some modes
   (dolist (mode '(org-mode-hook
@@ -61,7 +61,7 @@ This section configures basic UI settings that remove unneeded elements to make 
 ** Font Configuration
 #+begin_src emacs-lisp
 (defun gwbrck/set-font-faces ()
-  (set-face-attribute 'default nil :font "Fira Code" :height 160)
+  (set-face-attribute 'default nil :font "Fira Code" :height 150)
   (set-face-attribute 'fixed-pitch nil :font "Fira Code" :height 1.0)
   (set-face-attribute 'variable-pitch nil :font "Cantarell" :weight 'regular :height 1.0)
   (set-fontset-font t 'symbol (font-spec :family "Apple Symbols" :height 1.0) nil 'prepend)
@@ -95,7 +95,7 @@ This section configures basic UI settings that remove unneeded elements to make 
     (gwbrck/set-font-faces))
 #+end_src
 
-* Keybinding ConfiguratioN
+* Keybinding Configuration:
 
 
 This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil-mode]] for a Vi-like modal editing experience.  [[https://github.com/noctuid/general.el][general.el]] is used for easy keybinding configuration that integrates well with which-key.  [[https://github.com/emacs-evil/evil-collection][evil-collection]] is used to automatically configure various Emacs modes with Vi-like keybindings for evil-mode.
@@ -114,7 +114,7 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 
     (gwbrck/leader-keys
       "b"  '(:ignore t :which-key "buffer")
-      "bk" '(kill-buffer :which-key "kill buffer")
+      "bk" '(kill-this-buffer :which-key "kill buffer")
       "bs" '(switch-to-buffer :which-key "list buffer")
       "bn" '(next-buffer :which-key "next buffer")
       "bN" '(previous-buffer :which-key "prev buffer")
@@ -206,7 +206,7 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
   :init (which-key-mode)
   :diminish which-key-mode
   :config
-  (setq which-key-idle-delay 0.5))
+  (setq which-key-idle-delay 0.1))
 
 #+end_src
 
@@ -286,140 +286,156 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 
 #+end_src
 
+* PDF
+#+begin_src emacs-lisp
+  (use-package pdf-tools
+    :config
+    (pdf-tools-install)
+    (setq pdf-view-use-scaling t))
+#+end_src
 * Org Mode
+** Default Bibpath
+#+begin_src emacs-lisp
+  (setq gwbrck/bib '("~/Documents/MacsBib/main.bib"))
+  (setq gwbrck/pdfs  "~/Documents/MacsBib/pdfs/")
+  (setq gwbrck/roam "~/Documents/MacsBib/Roam/")
+  (setq org-directory gwbrck/roam)
+#+end_src
+
 ** Basic Config
 
 This section contains the basic configuration for =org-mode= plus the configuration for Org agendas and capture templates.  There's a lot to unpack in here so I'd recommend watching the videos for [[https://youtu.be/VcgjTEa0kU4][Part 5]] and [[https://youtu.be/PNE-mgkZ6HM][Part 6]] for a full explanation.
 
 #+begin_src emacs-lisp
 
-  (defun efs/org-mode-setup ()
-    (org-indent-mode)
-    (variable-pitch-mode 1)
-    (visual-line-mode 1))
+    (defun efs/org-mode-setup ()
+      (org-indent-mode)
+      (variable-pitch-mode 1)
+      (visual-line-mode 1)
+      (gwbrck/set-font-faces))
 
-  (use-package org
-    :hook (org-mode . efs/org-mode-setup)
-    :config
-    (setq org-ellipsis " ▾")
+    (use-package org
+      :hook (org-mode . efs/org-mode-setup)
+      :config
+      (setq org-ellipsis " ▾")
 
-    (setq org-agenda-start-with-log-mode t)
-    (setq org-log-done 'time)
-    (setq org-log-into-drawer t)
+      (setq org-agenda-start-with-log-mode t)
+      (setq org-log-done 'time)
+      (setq org-log-into-drawer t)
 
-   ;; (setq org-agenda-files
-   ;;       '("~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org"
-   ;;         "~/Projects/Code/emacs-from-scratch/OrgFiles/Habits.org"
-   ;;         "~/Projects/Code/emacs-from-scratch/OrgFiles/Birthdays.org"))
+     ;; (setq org-agenda-files
+     ;;       '("~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org"
+     ;;         "~/Projects/Code/emacs-from-scratch/OrgFiles/Habits.org"
+     ;;         "~/Projects/Code/emacs-from-scratch/OrgFiles/Birthdays.org"))
 
-    (require 'org-habit)
-    (add-to-list 'org-modules 'org-habit)
-    (setq org-habit-graph-column 60)
+      (require 'org-habit)
+      (add-to-list 'org-modules 'org-habit)
+      (setq org-habit-graph-column 60)
 
-    (setq org-todo-keywords
-      '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
-        (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
+      (setq org-todo-keywords
+        '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
+          (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
 
-    (setq org-refile-targets
-      '(("Archive.org" :maxlevel . 1)
-        ("Tasks.org" :maxlevel . 1)))
+      (setq org-refile-targets
+        '(("Archive.org" :maxlevel . 1)
+          ("Tasks.org" :maxlevel . 1)))
 
-    ;; Save Org buffers after refiling!
-    (advice-add 'org-refile :after 'org-save-all-org-buffers)
+      ;; Save Org buffers after refiling!
+      (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
-    (setq org-tag-alist
-      '((:startgroup)
-         ; Put mutually exclusive tags here
-         (:endgroup)
-         ("@errand" . ?E)
-         ("@home" . ?H)
-         ("@work" . ?W)
-         ("agenda" . ?a)
-         ("planning" . ?p)
-         ("publish" . ?P)
-         ("batch" . ?b)
-         ("note" . ?n)
-         ("idea" . ?i)))
+      (setq org-tag-alist
+        '((:startgroup)
+           ; Put mutually exclusive tags here
+           (:endgroup)
+           ("@errand" . ?E)
+           ("@home" . ?H)
+           ("@work" . ?W)
+           ("agenda" . ?a)
+           ("planning" . ?p)
+           ("publish" . ?P)
+           ("batch" . ?b)
+           ("note" . ?n)
+           ("idea" . ?i)))
 
-    ;; Configure custom agenda views
-    (setq org-agenda-custom-commands
-     '(("d" "Dashboard"
-       ((agenda "" ((org-deadline-warning-days 7)))
-        (todo "NEXT"
-          ((org-agenda-overriding-header "Next Tasks")))
-        (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
+      ;; Configure custom agenda views
+      (setq org-agenda-custom-commands
+       '(("d" "Dashboard"
+         ((agenda "" ((org-deadline-warning-days 7)))
+          (todo "NEXT"
+            ((org-agenda-overriding-header "Next Tasks")))
+          (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
 
-      ("n" "Next Tasks"
-       ((todo "NEXT"
-          ((org-agenda-overriding-header "Next Tasks")))))
+        ("n" "Next Tasks"
+         ((todo "NEXT"
+            ((org-agenda-overriding-header "Next Tasks")))))
 
-      ("W" "Work Tasks" tags-todo "+work-email")
+        ("W" "Work Tasks" tags-todo "+work-email")
 
-      ;; Low-effort next actions
-      ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
-       ((org-agenda-overriding-header "Low Effort Tasks")
-        (org-agenda-max-todos 20)
-        (org-agenda-files org-agenda-files)))
+        ;; Low-effort next actions
+        ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
+         ((org-agenda-overriding-header "Low Effort Tasks")
+          (org-agenda-max-todos 20)
+          (org-agenda-files org-agenda-files)))
 
-      ("w" "Workflow Status"
-       ((todo "WAIT"
-              ((org-agenda-overriding-header "Waiting on External")
-               (org-agenda-files org-agenda-files)))
-        (todo "REVIEW"
-              ((org-agenda-overriding-header "In Review")
-               (org-agenda-files org-agenda-files)))
-        (todo "PLAN"
-              ((org-agenda-overriding-header "In Planning")
-               (org-agenda-todo-list-sublevels nil)
-               (org-agenda-files org-agenda-files)))
-        (todo "BACKLOG"
-              ((org-agenda-overriding-header "Project Backlog")
-               (org-agenda-todo-list-sublevels nil)
-               (org-agenda-files org-agenda-files)))
-        (todo "READY"
-              ((org-agenda-overriding-header "Ready for Work")
-               (org-agenda-files org-agenda-files)))
-        (todo "ACTIVE"
-              ((org-agenda-overriding-header "Active Projects")
-               (org-agenda-files org-agenda-files)))
-        (todo "COMPLETED"
-              ((org-agenda-overriding-header "Completed Projects")
-               (org-agenda-files org-agenda-files)))
-        (todo "CANC"
-              ((org-agenda-overriding-header "Cancelled Projects")
-               (org-agenda-files org-agenda-files)))))))
+        ("w" "Workflow Status"
+         ((todo "WAIT"
+                ((org-agenda-overriding-header "Waiting on External")
+                 (org-agenda-files org-agenda-files)))
+          (todo "REVIEW"
+                ((org-agenda-overriding-header "In Review")
+                 (org-agenda-files org-agenda-files)))
+          (todo "PLAN"
+                ((org-agenda-overriding-header "In Planning")
+                 (org-agenda-todo-list-sublevels nil)
+                 (org-agenda-files org-agenda-files)))
+          (todo "BACKLOG"
+                ((org-agenda-overriding-header "Project Backlog")
+                 (org-agenda-todo-list-sublevels nil)
+                 (org-agenda-files org-agenda-files)))
+          (todo "READY"
+                ((org-agenda-overriding-header "Ready for Work")
+                 (org-agenda-files org-agenda-files)))
+          (todo "ACTIVE"
+                ((org-agenda-overriding-header "Active Projects")
+                 (org-agenda-files org-agenda-files)))
+          (todo "COMPLETED"
+                ((org-agenda-overriding-header "Completed Projects")
+                 (org-agenda-files org-agenda-files)))
+          (todo "CANC"
+                ((org-agenda-overriding-header "Cancelled Projects")
+                 (org-agenda-files org-agenda-files)))))))
 
-    (setq org-capture-templates
-      `(("t" "Tasks / Projects")
-        ("tt" "Task" entry (file+olp "~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org" "Inbox")
-             "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+      (setq org-capture-templates
+        `(("t" "Tasks / Projects")
+          ("tt" "Task" entry (file+olp "~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org" "Inbox")
+               "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
 
-        ("j" "Journal Entries")
-        ("jj" "Journal" entry
-             (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
-             "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
-             ;; ,(dw/read-file-as-string "~/Notes/Templates/Daily.org")
-             :clock-in :clock-resume
-             :empty-lines 1)
-        ("jm" "Meeting" entry
-             (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
-             "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
-             :clock-in :clock-resume
-             :empty-lines 1)
+          ("j" "Journal Entries")
+          ("jj" "Journal" entry
+               (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
+               "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
+               ;; ,(dw/read-file-as-string "~/Notes/Templates/Daily.org")
+               :clock-in :clock-resume
+               :empty-lines 1)
+          ("jm" "Meeting" entry
+               (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
+               "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
+               :clock-in :clock-resume
+               :empty-lines 1)
 
-        ("w" "Workflows")
-        ("we" "Checking Email" entry (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
-             "* Checking Email :email:\n\n%?" :clock-in :clock-resume :empty-lines 1)
+          ("w" "Workflows")
+          ("we" "Checking Email" entry (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
+               "* Checking Email :email:\n\n%?" :clock-in :clock-resume :empty-lines 1)
 
-        ("m" "Metrics Capture")
-        ("mw" "Weight" table-line (file+headline "~/Projects/Code/emacs-from-scratch/OrgFiles/Metrics.org" "Weight")
-         "| %U | %^{Weight} | %^{Notes} |" :kill-buffer t)))
+          ("m" "Metrics Capture")
+          ("mw" "Weight" table-line (file+headline "~/Projects/Code/emacs-from-scratch/OrgFiles/Metrics.org" "Weight")
+           "| %U | %^{Weight} | %^{Notes} |" :kill-buffer t)))
 
-    (define-key global-map (kbd "C-c j")
-      (lambda () (interactive) (org-capture nil "jj")))
+      (define-key global-map (kbd "C-c j")
+        (lambda () (interactive) (org-capture nil "jj")))
 
-   ;; (gwbrck/set-font-faces)
-)
+      ;;(gwbrck/set-font-faces)
+  )
 
 #+end_src
 
@@ -474,114 +490,121 @@ You can add more =src= block templates below by copying one of the lines and cha
 
 #+end_src
 
-* BibRoam
-** Default Bibpath
+** Bib & Roam
+*** Standi Configs
 #+begin_src emacs-lisp
-(setq gwbrck/bib '("~/Documents/MacsBib/main.bib"))
-(setq myPdfs  "~/Documents/MacsBib/pdfs/")
-(setq myRoam "~/Documents/MacsBib/Roam/")
+  (use-package ivy-bibtex
+       :init
+       (setq bibtex-completion-bibliography gwbrck/bib)
+       (setq bibtex-completion-notes-path gwbrck/roam)
+       (setq bibtex-completion-library-path gwbrck/pdfs)
+       (setq bibtex-dialect 'biblatex)
+       (setq bibtex-entry-format '(opts-or-alts numerical-fields whitespace realign last-comma delimiters unify-case sort-fields delimiters required-fields))
+       (setq bibtex-autokey-name-year-separator "_"
+             bibtex-autokey-year-title-separator "_"
+             bibtex-autokey-titlewords 1
+             bibtex-autokey-year-length 4
+             bibtex-autokey-edit-before-use nil
+             bibtex-autokey-additional-names 1
+             bibtex-autokey-titleword-ignore '("A" "An" "On" "The" "Eine" "Ein" "Der" "Die" "Das")
+             bibtex-autokey-titlewords-stretch 0
+             bibtex-autokey-titleword-length 5
+             bibtex-autokey-name-separator "-"
+             bibtex-autokey-names 2
+             bibtex-autokey-additional-names "-ea"
+             bibtex-comma-after-last-field t)
+       (setq biblio-cleanup-bibtex-function 'gwbrck/bibtex-clean-entry))
+
+  (use-package org-ref
+    :after ivy-bibtex
+    :config
+    (setq
+         org-ref-completion-library 'org-ref-ivy-cite
+         org-ref-default-bibliography gwbrck/bib
+         org-ref-pdf-directory gwbrck/pdfs
+         org-ref-bibliography-notes gwbrck/roam
+         org-latex-pdf-process '("latexmk -shell-escape -bibtex -pdf %f")
+         org-ref-notes-function 'orb-edit-notes)
+    (setf (cdr (assoc 'org-mode bibtex-completion-format-citation-functions))       'org-ref-format-citation)
+     (setq org-ref-clean-bibtex-entry-hook '(gwbrck/bibtex-clean-entry)))
+
+  (use-package org-roam
+    :hook (org-load .org-roam-mode))
+
+  (use-package org-roam-bibtex
+    after: (org-roam)
+    hook: (org-roam-mode . org-roam-bibtex-mode)
+    config:
+
+  (setq orb-preformat-keywords
+        '("citekey" "title" "url" "author-or-editor" "keywords" "file")
+        orb-process-file-field t
+        orb-file-field-extensions "pdf")
+
+  (setq orb-templates
+        '(("r" "ref" plain (function org-roam-capture--get-point)
+           ""
+           :file-name "Konspekte/${citekey}"
+           :head "#+TITLE: Konspekt von ${citekey}\n#+ROAM_KEY: ${ref}
+
+  - tags ::
+  - keywords :: ${keywords}\n\n* Konspekt
+  :PROPERTIES:
+  :Custom_ID: ${citekey}
+  :AUTHOR: ${author-or-editor}
+  :NOTER_DOCUMENT: ${file}
+  :NOTER_PAGE:
+  :END:"))))
+
+
+  (use-package org-noter
+    :after (:any org pdf-view)
+    :config
+    (setq org-noter-notes-search-path (list gwbrck/roam)
+    ;; Your org-noter config ........
+    (require 'org-noter-pdftools))
+
+  (use-package org-pdftools
+    :hook (org-mode . org-pdftools-setup-link))
+
+  (use-package org-noter-pdftools
+    :after org-noter
+    :config
+    ;; Add a function to ensure precise note is inserted
+    (defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
+      (interactive "P")
+      (org-noter--with-valid-session
+       (let ((org-noter-insert-note-no-questions (if toggle-no-questions
+                                                     (not org-noter-insert-note-no-questions)
+                                                   org-noter-insert-note-no-questions))
+             (org-pdftools-use-isearch-link t)
+             (org-pdftools-use-freestyle-annot t))
+         (org-noter-insert-note (org-noter--get-precise-info)))))
+
+    ;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
+    (defun org-noter-set-start-location (&optional arg)
+      "When opening a session with this document, go to the current location.
+  With a prefix ARG, remove start location."
+      (interactive "P")
+      (org-noter--with-valid-session
+       (let ((inhibit-read-only t)
+             (ast (org-noter--parse-root))
+             (location (org-noter--doc-approx-location (when (called-interactively-p 'any) 'interactive))))
+         (with-current-buffer (org-noter--session-notes-buffer session)
+           (org-with-wide-buffer
+            (goto-char (org-element-property :begin ast))
+            (if arg
+                (org-entry-delete nil org-noter-property-note-location)
+              (org-entry-put nil org-noter-property-note-location
+                             (org-noter--pretty-print-location location))))))))
+    (with-eval-after-load 'pdf-annot
+      (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
+
+
+
 #+end_src
-** Standi Configs
-#+begin_src emacs-lisp
-    (use-package ivy-bibtex
-         :config
-         (setq bibtex-completion-bibliography gwbrck/bib)
-         (setq bibtex-dialect 'biblatex)
-         (setq bibtex-entry-format '(opts-or-alts numerical-fields whitespace realign last-comma delimiters unify-case sort-fields delimiters required-fields))
-         (setq bibtex-autokey-name-year-separator "_"
-               bibtex-autokey-year-title-separator "_"
-               bibtex-autokey-titlewords 1
-               bibtex-autokey-year-length 4
-               bibtex-autokey-edit-before-use nil
-               bibtex-autokey-additional-names 1
-               bibtex-autokey-titleword-ignore '("A" "An" "On" "The" "Eine" "Ein" "Der" "Die" "Das")
-               bibtex-autokey-titlewords-stretch 0
-               bibtex-autokey-titleword-length 5
-               bibtex-autokey-name-separator "-"
-               bibtex-autokey-names 2
-               bibtex-autokey-additional-names "-ea"
-               bibtex-comma-after-last-field t)
-         (setq biblio-cleanup-bibtex-function 'gwbrck/bibtex-clean-entry))
 
-    (use-package org-ref
-      :config
-      (setq org-ref-default-bibliography gwbrck/bib)
-      (setq org-ref-pdf-directory gwbrck/pdfs)
-      (setf (cdr (assoc 'org-mode bibtex-completion-format-citation-functions))       'org-ref-format-citation)
-      (setq  org-latex-pdf-process
-            '("latexmk -shell-escape -bibtex -pdf %f"))
-      (setq org-ref-clean-bibtex-entry-hook '(gwbrck/bibtex-clean-entry)))
-
-
-    (use-package org-roam)
-    (use-package org-roam-bibtex)
-    (setq orb-preformat-keywords
-          '("citekey" "title" "url" "author-or-editor" "keywords" "file")
-          orb-process-file-field t
-          orb-file-field-extensions "pdf")
-
-    (setq orb-templates
-          '(("r" "ref" plain (function org-roam-capture--get-point)
-             ""
-             :file-name "Konspekte/${citekey}"
-             :head "#+TITLE: Konspekt von ${citekey}\n#+ROAM_KEY: ${ref}
-
-    - tags ::
-    - keywords :: ${keywords}\n\n* Konspekt
-    :PROPERTIES:
-    :Custom_ID: ${citekey}
-    :AUTHOR: ${author-or-editor}
-    :NOTER_DOCUMENT: ${file}
-    :NOTER_PAGE:
-    :END:")))
-
-
-    (use-package org-noter
-      :config
-      ;; Your org-noter config ........
-      (require 'org-noter-pdftools))
-
-    (use-package org-pdftools
-      :hook (org-mode . org-pdftools-setup-link))
-
-    (use-package org-noter-pdftools
-      :after org-noter
-      :config
-      ;; Add a function to ensure precise note is inserted
-      (defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
-        (interactive "P")
-        (org-noter--with-valid-session
-         (let ((org-noter-insert-note-no-questions (if toggle-no-questions
-                                                       (not org-noter-insert-note-no-questions)
-                                                     org-noter-insert-note-no-questions))
-               (org-pdftools-use-isearch-link t)
-               (org-pdftools-use-freestyle-annot t))
-           (org-noter-insert-note (org-noter--get-precise-info)))))
-
-      ;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
-      (defun org-noter-set-start-location (&optional arg)
-        "When opening a session with this document, go to the current location.
-    With a prefix ARG, remove start location."
-        (interactive "P")
-        (org-noter--with-valid-session
-         (let ((inhibit-read-only t)
-               (ast (org-noter--parse-root))
-               (location (org-noter--doc-approx-location (when (called-interactively-p 'any) 'interactive))))
-           (with-current-buffer (org-noter--session-notes-buffer session)
-             (org-with-wide-buffer
-              (goto-char (org-element-property :begin ast))
-              (if arg
-                  (org-entry-delete nil org-noter-property-note-location)
-                (org-entry-put nil org-noter-property-note-location
-                               (org-noter--pretty-print-location location))))))))
-      (with-eval-after-load 'pdf-annot
-        (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
-
-
-
-#+end_src
-
-** Custom bibcleanfunction
+*** Custom bibcleanfunction
 #+begin_src emacs-lisp
   (defun gwbrck/bibtex-dashes ()
       (let (bounds)
@@ -634,7 +657,9 @@ You can add more =src= block templates below by copying one of the lines and cha
        (bibtex-beginning-of-entry)
        (gwbrck/bibtex-abstract)))
        (bibtex-clean-entry 2))
+
 #+end_src
+
 * Development
 
 ** Languages
