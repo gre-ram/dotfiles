@@ -1,6 +1,69 @@
 #+TITLE: Config based on Emacs From Scratch
-#+STARTUP hideblocks
+#+STARTUP: hideblocks
 This configuration is based on the very helpfull [[https://github.com/daviwil/emacs-from-scratch/blob/master/Emacs.org][Emacs From Scratch]] Projekt by David Wilson. 
+* TOC
+:PROPERTIES:
+:TOC:      :include all :ignore (this)
+:END:
+:CONTENTS:
+- [[#basic-ui-configuration][Basic UI Configuration]]
+  - [[#mac-specific-config][Mac specific Config]]
+  - [[#font-configuration][Font Configuration]]
+- [[#keybinding-configuration][Keybinding Configuration:]]
+- [[#ui-configuration][UI Configuration]]
+  - [[#command-log-mode][Command Log Mode]]
+  - [[#color-theme][Color Theme]]
+  - [[#better-modeline][Better Modeline]]
+  - [[#which-key][Which Key]]
+  - [[#ivy-and-counsel][Ivy and Counsel]]
+  - [[#helpful-help-commands][Helpful Help Commands]]
+  - [[#text-scaling][Text Scaling]]
+- [[#pdf-tools][PDF-Tools]]
+- [[#org-mode][Org Mode]]
+  - [[#default-paths][Default Paths]]
+  - [[#basic-config][Basic Config]]
+    - [[#nicer-heading-bullets][Nicer Heading Bullets]]
+    - [[#toc-mode][TOC Mode]]
+    - [[#center-org-buffers][Center Org Buffers]]
+  - [[#structure-templates][Structure Templates]]
+  - [[#bib--roam][Bib & Roam]]
+    - [[#standi-configs][Standi Configs]]
+    - [[#custom-bibcleanfunction][Custom bibcleanfunction]]
+  - [[#latex-export][Latex Export]]
+- [[#development][Development]]
+  - [[#languages][Languages]]
+    - [[#ide-features-with-lsp-mode][IDE Features with lsp-mode]]
+      - [[#lsp-mode][lsp-mode]]
+      - [[#lsp-ui][lsp-ui]]
+      - [[#lsp-treemacs][lsp-treemacs]]
+      - [[#lsp-ivy][lsp-ivy]]
+    - [[#typescript][TypeScript]]
+  - [[#company-mode][Company Mode]]
+  - [[#projectile][Projectile]]
+  - [[#magit][Magit]]
+  - [[#commenting][Commenting]]
+  - [[#rainbow-delimiters][Rainbow Delimiters]]
+- [[#terminals][Terminals]]
+  - [[#term-mode][term-mode]]
+    - [[#better-term-mode-colors][Better term-mode colors]]
+  - [[#vterm][vterm]]
+  - [[#shell-mode][shell-mode]]
+  - [[#eshell][Eshell]]
+- [[#file-management][File Management]]
+  - [[#custom][Custom]]
+  - [[#dired][Dired]]
+    - [[#key-bindings][Key Bindings]]
+      - [[#navigation][Navigation]]
+      - [[#marking-files][Marking files]]
+      - [[#copying-and-renaming-files][Copying and Renaming files]]
+      - [[#deleting-files][Deleting files]]
+      - [[#creating-and-extracting-archives][Creating and extracting archives]]
+      - [[#other-common-operations][Other common operations]]
+    - [[#configuration][Configuration]]
+- [[#applications][Applications]]
+  - [[#some-app][Some App]]
+:END:
+
 * Basic UI Configuration
 This section configures basic UI settings that remove unneeded elements to make Emacs look a lot more minimal and modern.
 #+begin_src emacs-lisp
@@ -108,11 +171,11 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
   (use-package general
     :config
     (general-create-definer gwbrck/leader-keys
-      :keymaps '(normal insert visual emacs)
       :prefix "SPC"
       :global-prefix "C-SPC")
 
     (gwbrck/leader-keys
+      :keymaps '(normal insert visual emacs)
       "b"  '(:ignore t :which-key "buffer")
       "bk" '(kill-this-buffer :which-key "kill buffer")
       "bs" '(switch-to-buffer :which-key "list buffer")
@@ -122,6 +185,7 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
       "tw" '(whitespace-mode :which-key "whitespace" )
       "tt" '(counsel-load-theme :which-key "choose theme"))
    (gwbrck/leader-keys
+      :keymaps '(normal insert visual emacs)
      "f"   '(:ignore t :which-key "files")
      "fb"  '((lambda () (interactive) (counsel-find-file "~/Documents/MacsBib")) :which-key "Bib")
      "ff"  '((lambda () (interactive) (counsel-find-file "~/Documents")) :which-key "Documents")
@@ -282,19 +346,21 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
     ("f" nil "finished" :exit t))
 
   (gwbrck/leader-keys
+    :keymaps '(normal insert visual emacs)
     "ts" '(hydra-text-scale/body :which-key "scale text"))
 
 #+end_src
 
-* PDF
+* PDF-Tools
 #+begin_src emacs-lisp
   (use-package pdf-tools
     :config
     (pdf-tools-install)
     (setq pdf-view-use-scaling t))
 #+end_src
+
 * Org Mode
-** Default Bibpath
+** Default Paths
 #+begin_src emacs-lisp
   (setq gwbrck/bib '("~/Documents/MacsBib/main.bib"))
   (setq gwbrck/pdfs  "~/Documents/MacsBib/pdfs/")
@@ -311,8 +377,8 @@ This section contains the basic configuration for =org-mode= plus the configurat
     (defun efs/org-mode-setup ()
       (org-indent-mode)
       (variable-pitch-mode 1)
-      (visual-line-mode 1)
-      (gwbrck/set-font-faces))
+      (gwbrck/set-font-faces)
+      (visual-line-mode 1))
 
     (use-package org
       :hook (org-mode . efs/org-mode-setup)
@@ -515,6 +581,18 @@ You can add more =src= block templates below by copying one of the lines and cha
              bibtex-comma-after-last-field t)
        (setq biblio-cleanup-bibtex-function 'gwbrck/bibtex-clean-entry))
 
+  (gwbrck/leader-keys
+    :keymaps 'bibtex-mode-map
+    :states 'normal
+    "m"  '(:ignore t :which-key "bibtex mode")
+    "mP" '(org-ref-bibtex-assoc-pdf-with-entry :which-key "new pdf for entry")
+    "mp" '(org-ref-open-bibtex-pdf :which-key "open pdf for entry")
+    "md" '(doi-utils-get-bibtex-entry-pdf :which-key "get bibtex via doi")
+    "mu" '(doi-utils-update-bibtex-entry-from-doi :which-key "update bibtex via doi")
+    "ms" '(bibtex-sort-buffer :which-key "sort entries")
+    "mc" '(org-ref-clean-bibtex-entry :which-key "clean entry"))
+
+
   (use-package org-ref
     :after ivy-bibtex
     :config
@@ -523,7 +601,6 @@ You can add more =src= block templates below by copying one of the lines and cha
          org-ref-default-bibliography gwbrck/bib
          org-ref-pdf-directory gwbrck/pdfs
          org-ref-bibliography-notes gwbrck/roam
-         org-latex-pdf-process '("latexmk -shell-escape -bibtex -pdf %f")
          org-ref-notes-function 'orb-edit-notes)
     (setf (cdr (assoc 'org-mode bibtex-completion-format-citation-functions))       'org-ref-format-citation)
      (setq org-ref-clean-bibtex-entry-hook '(gwbrck/bibtex-clean-entry)))
@@ -532,9 +609,9 @@ You can add more =src= block templates below by copying one of the lines and cha
     :hook (org-load .org-roam-mode))
 
   (use-package org-roam-bibtex
-    after: (org-roam)
-    hook: (org-roam-mode . org-roam-bibtex-mode)
-    config:
+    :after (org-roam)
+    :hook (org-roam-mode . org-roam-bibtex-mode)
+    :config
 
   (setq orb-preformat-keywords
         '("citekey" "title" "url" "author-or-editor" "keywords" "file")
@@ -560,8 +637,7 @@ You can add more =src= block templates below by copying one of the lines and cha
   (use-package org-noter
     :after (:any org pdf-view)
     :config
-    (setq org-noter-notes-search-path (list gwbrck/roam)
-    ;; Your org-noter config ........
+    (setq org-noter-notes-search-path (list gwbrck/roam))
     (require 'org-noter-pdftools))
 
   (use-package org-pdftools
@@ -657,6 +733,40 @@ You can add more =src= block templates below by copying one of the lines and cha
        (bibtex-beginning-of-entry)
        (gwbrck/bibtex-abstract)))
        (bibtex-clean-entry 2))
+
+#+end_src
+
+** Latex Export
+#+begin_src emacs-lisp
+(add-to-list 'org-export-smart-quotes-alist 
+            '("de-de"
+              (primary-opening   :utf-8 "\"" :html "&ldquo;" :latex "\\enquote{"  :texinfo "``")
+              (primary-closing   :utf-8 "\"" :html "&rdquo;" :latex "}"           :texinfo "''")
+              (secondary-opening :utf-8 "'" :html "&lsquo;" :latex "\\enquote*{" :texinfo "`")
+              (secondary-closing :utf-8 "'" :html "&rsquo;" :latex "}"           :texinfo "'")
+              (apostrophe        :utf-8 "’" :html "&rsquo;")))
+       (setq org-export-default-language "de-de")
+       (setq org-export-with-smart-quotes t)
+       (setq org-latex-pdf-process '("latexmk -shell-escape -bibtex -pdf %f"))
+       (setq org-latex-default-class "article")
+       (setq org-latex-default-packages-alist
+        '(("AUTO" "inputenc" t ("pdflatex"))
+          ("T1" "fontenc" t ("pdflatex"))
+          ("" "graphicx" t nil)
+          ("" "grffile" t nil)
+          ("" "longtable" nil nil)
+          ("" "wrapfig" nil nil)
+          ("" "rotating" nil nil)
+          ("normalem" "ulem" t nil)
+          ("" "amsmath" t nil)
+          ("" "textcomp" t nil)
+          ("" "amssymb" t nil)
+          ("" "capt-of" nil nil)
+          ("" "hyperref" nil nil)
+          ("shorthands=off, ngerman" "babel" nil nil)
+          ("" "csquotes" nil nil)
+          ("style=apa, backend=biber, natbib=true" "biblatex" nil nil)
+          "\\addbibresource{~/Documents/MacsBib/main.bib}"))
 
 #+end_src
 
