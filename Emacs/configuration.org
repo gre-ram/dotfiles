@@ -1,69 +1,5 @@
 #+TITLE: Config based on Emacs From Scratch
-#+STARTUP: hideblocks
-This configuration is based on the very helpfull [[https://github.com/daviwil/emacs-from-scratch/blob/master/Emacs.org][Emacs From Scratch]] Projekt by David Wilson. 
-* TOC
-:PROPERTIES:
-:TOC:      :include all :ignore (this)
-:END:
-:CONTENTS:
-- [[#basic-ui-configuration][Basic UI Configuration]]
-  - [[#mac-specific-config][Mac specific Config]]
-  - [[#font-configuration][Font Configuration]]
-- [[#keybinding-configuration][Keybinding Configuration:]]
-- [[#ui-configuration][UI Configuration]]
-  - [[#command-log-mode][Command Log Mode]]
-  - [[#color-theme][Color Theme]]
-  - [[#better-modeline][Better Modeline]]
-  - [[#which-key][Which Key]]
-  - [[#ivy-and-counsel][Ivy and Counsel]]
-  - [[#helpful-help-commands][Helpful Help Commands]]
-  - [[#text-scaling][Text Scaling]]
-- [[#pdf-tools][PDF-Tools]]
-- [[#org-mode][Org Mode]]
-  - [[#default-paths][Default Paths]]
-  - [[#basic-config][Basic Config]]
-    - [[#nicer-heading-bullets][Nicer Heading Bullets]]
-    - [[#toc-mode][TOC Mode]]
-    - [[#center-org-buffers][Center Org Buffers]]
-  - [[#structure-templates][Structure Templates]]
-  - [[#bib--roam][Bib & Roam]]
-    - [[#standi-configs][Standi Configs]]
-    - [[#custom-bibcleanfunction][Custom bibcleanfunction]]
-  - [[#latex-export][Latex Export]]
-- [[#development][Development]]
-  - [[#languages][Languages]]
-    - [[#ide-features-with-lsp-mode][IDE Features with lsp-mode]]
-      - [[#lsp-mode][lsp-mode]]
-      - [[#lsp-ui][lsp-ui]]
-      - [[#lsp-treemacs][lsp-treemacs]]
-      - [[#lsp-ivy][lsp-ivy]]
-    - [[#typescript][TypeScript]]
-  - [[#company-mode][Company Mode]]
-  - [[#projectile][Projectile]]
-  - [[#magit][Magit]]
-  - [[#commenting][Commenting]]
-  - [[#rainbow-delimiters][Rainbow Delimiters]]
-- [[#terminals][Terminals]]
-  - [[#term-mode][term-mode]]
-    - [[#better-term-mode-colors][Better term-mode colors]]
-  - [[#vterm][vterm]]
-  - [[#shell-mode][shell-mode]]
-  - [[#eshell][Eshell]]
-- [[#file-management][File Management]]
-  - [[#custom][Custom]]
-  - [[#dired][Dired]]
-    - [[#key-bindings][Key Bindings]]
-      - [[#navigation][Navigation]]
-      - [[#marking-files][Marking files]]
-      - [[#copying-and-renaming-files][Copying and Renaming files]]
-      - [[#deleting-files][Deleting files]]
-      - [[#creating-and-extracting-archives][Creating and extracting archives]]
-      - [[#other-common-operations][Other common operations]]
-    - [[#configuration][Configuration]]
-- [[#applications][Applications]]
-  - [[#some-app][Some App]]
-:END:
-
+This configuration is based on the very helefull [[https://github.com/daviwil/emacs-from-scratch/blob/master/Emacs.org][Emacs From Scratch]] Projekt by David Wilson. 
 * Basic UI Configuration
 This section configures basic UI settings that remove unneeded elements to make Emacs look a lot more minimal and modern.
 #+begin_src emacs-lisp
@@ -165,64 +101,76 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 
 #+begin_src emacs-lisp
 
-  ;; Make ESC quit prompts
-  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-  (global-set-key (kbd "C-M-u") 'universal-argument)
-  (use-package general
-    :config
-    (general-create-definer gwbrck/leader-keys
-      :prefix "SPC"
-      :global-prefix "C-SPC")
+    ;; Make ESC quit prompts
+    (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+    (global-set-key (kbd "C-M-u") 'universal-argument)
+    (use-package general
+      :config
+      (general-create-definer gwbrck/leader-keys
+        :prefix "SPC"
+        :global-prefix "C-SPC")
 
-    (gwbrck/leader-keys
-      :keymaps '(normal insert visual emacs)
-      "b"  '(:ignore t :which-key "buffer")
-      "bk" '(kill-this-buffer :which-key "kill buffer")
-      "bs" '(switch-to-buffer :which-key "list buffer")
-      "bn" '(next-buffer :which-key "next buffer")
-      "bN" '(previous-buffer :which-key "prev buffer")
-      "t"  '(:ignore t :which-key "toggles")
-      "tw" '(whitespace-mode :which-key "whitespace" )
-      "tt" '(counsel-load-theme :which-key "choose theme"))
-   (gwbrck/leader-keys
-      :keymaps '(normal insert visual emacs)
-     "f"   '(:ignore t :which-key "files")
-     "fb"  '((lambda () (interactive) (counsel-find-file "~/Documents/MacsBib")) :which-key "Bib")
-     "ff"  '((lambda () (interactive) (counsel-find-file "~/Documents")) :which-key "Documents")
-     "fc"  '((lambda () (interactive) (counsel-find-file "~/Code")) :which-key "Code")
-     "fd"  '(:ignore t :which-key "dotfiles")
-     "fdz" '((lambda () (interactive) (counsel-find-file "~/dotfiles/zsh")) :which-key "zsh")
-     "fdv" '((lambda () (interactive) (counsel-find-file "~/dotfiles/Neovim/.config")) :which-key "Neovim")
-     "fdd" '((lambda () (interactive) (counsel-find-file"~/dotfiles")) :which-key "dotfiles")
-     "fde" '((lambda () (interactive) (find-file "~/dotfiles/Emacs/configuration.org")) :which-key "Emacs")))
+      (gwbrck/leader-keys
+        :keymaps '(normal insert visual emacs)
+        "b"  '(:ignore t :which-key "buffer")
+        "bk" '(kill-this-buffer :which-key "kill buffer")
+        "bs" '(switch-to-buffer :which-key "list buffer")
+        "bn" '(next-buffer :which-key "next buffer")
+        "bN" '(previous-buffer :which-key "prev buffer")
+        "t"  '(:ignore t :which-key "toggles")
+        "tw" '(whitespace-mode :which-key "whitespace" )
+        "tt" '(counsel-load-theme :which-key "choose theme"))
+     (gwbrck/leader-keys
+        :keymaps '(normal insert visual emacs)
+       "f"   '(:ignore t :which-key "files")
+       "fb"  '((lambda () (interactive) (counsel-find-file "~/Documents/MacsBib")) :which-key "Bib")
+       "ff"  '((lambda () (interactive) (counsel-find-file "~/Documents")) :which-key "Documents")
+       "fc"  '((lambda () (interactive) (counsel-find-file "~/Code")) :which-key "Code")
+       "fd"  '(:ignore t :which-key "dotfiles")
+       "fdz" '((lambda () (interactive) (counsel-find-file "~/dotfiles/zsh")) :which-key "zsh")
+       "fdv" '((lambda () (interactive) (counsel-find-file "~/dotfiles/Neovim/.config")) :which-key "Neovim")
+       "fdd" '((lambda () (interactive) (counsel-find-file"~/dotfiles")) :which-key "dotfiles")
+       "fde" '((lambda () (interactive) (find-file "~/dotfiles/Emacs/configuration.org")) :which-key "Emacs")))
 
-  (use-package evil
-    :init
-    (setq evil-want-integration t)
-    (setq evil-want-keybinding nil)
-    (setq evil-want-C-u-scroll t)
-    (setq evil-want-C-i-jump nil)
-    :config
-    (evil-mode 1)
-    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-    (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+    (use-package evil
+      :init
+      (setq evil-want-integration t)
+      (setq evil-want-keybinding nil)
+      (setq evil-want-C-u-scroll t)
+      (setq evil-want-C-i-jump nil)
+      :config
+      (evil-mode 1)
+      (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+      (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
 
-    ;; Use visual line motions even outside of visual-line-mode buffers
-    (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-    (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+      ;; Use visual line motions even outside of visual-line-mode buffers
+      (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+      (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
 
-    (evil-set-initial-state 'messages-buffer-mode 'normal)
-    (evil-set-initial-state 'dashboard-mode 'normal))
+      (evil-set-initial-state 'messages-buffer-mode 'normal)
+      (evil-set-initial-state 'dashboard-mode 'normal)
 
-  (use-package evil-collection
-    :after evil
-    :config
-    (evil-collection-init))
+      (defun gwbrck/evil-yank-advice (orig-fn beg end &rest args)
+        (pulse-momentary-highlight-region beg end 'highlight)
+        (apply orig-fn beg end args))
+      (advice-add 'evil-yank :around 'gwbrck/evil-yank-advice))
+
+    (use-package evil-collection
+      :after evil
+      :config
+      (evil-collection-init))
+
+    (use-package evil-snipe
+      :after evil-collection
+      :config
+      (evil-snipe-mode +1)
+      (evil-snipe-override-mode +1)
+      (setq evil-snipe-scope 'buffer))
+
 
 #+end_src
 
 * UI Configuration
-
 ** Command Log Mode
 
 [[https://github.com/lewang/command-log-mode][command-log-mode]] is useful for displaying a panel showing each key binding you use in a panel on the right side of the frame.  Great for live streams and screencasts!
