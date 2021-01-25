@@ -326,6 +326,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
       (org-indent-mode)
       (variable-pitch-mode 1)
       (gwbrck/set-font-faces)
+      (org-ref-ivy-cite-completion)
       (visual-line-mode 1))
 
     (use-package org
@@ -541,14 +542,23 @@ You can add more =src= block templates below by copying one of the lines and cha
     "mc" '(org-ref-clean-bibtex-entry :which-key "clean entry"))
 
 
+  (gwbrck/leader-keys
+    :keymaps 'org-mode-map
+    :states 'normal
+    "m"  '(:ignore t :which-key "org mode")
+    "mo" '(org-ref-cite-hydra/body :which-key "org-ref")
+    "mi" '(org-ref-insert-link :which-key "insert citation"))
+
+
   (use-package org-ref
-    :after ivy-bibtex
+    :after org
     :config
     (setq
          org-ref-completion-library 'org-ref-ivy-cite
          org-ref-default-bibliography gwbrck/bib
          org-ref-pdf-directory gwbrck/pdfs
          org-ref-bibliography-notes gwbrck/roam
+         org-ref-nonascii-latex-replacements '()
          org-ref-notes-function 'orb-edit-notes)
     (setf (cdr (assoc 'org-mode bibtex-completion-format-citation-functions))       'org-ref-format-citation)
      (setq org-ref-clean-bibtex-entry-hook '(gwbrck/bibtex-clean-entry)))
@@ -698,7 +708,7 @@ You can add more =src= block templates below by copying one of the lines and cha
        (setq org-latex-pdf-process '("latexmk -shell-escape -bibtex -pdf %f"))
        (setq org-latex-default-class "article")
        (setq org-latex-default-packages-alist
-        '(("AUTO" "inputenc" t ("pdflatex"))
+        '(("utf8" "inputenc" t ("pdflatex"))
           ("T1" "fontenc" t ("pdflatex"))
           ("" "graphicx" t nil)
           ("" "grffile" t nil)
