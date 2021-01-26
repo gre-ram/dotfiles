@@ -22,6 +22,7 @@ This section configures basic UI settings that remove unneeded elements to make 
   ;; Disable line numbers for some modes
   (dolist (mode '(org-mode-hook
                   term-mode-hook
+		   pdf-view-mode-hook
                   shell-mode-hook
                   treemacs-mode-hook
                   eshell-mode-hook))
@@ -123,7 +124,8 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
      (gwbrck/leader-keys
         :keymaps '(normal insert visual emacs)
        "f"   '(:ignore t :which-key "files")
-       "fb"  '((lambda () (interactive) (counsel-find-file "~/Documents/MacsBib")) :which-key "Bib")
+       "fB"  '((lambda () (interactive) (counsel-find-file "~/Documents/MacsBib")) :which-key "Bib Folder")
+       "fb"  '(ivy-bibtex :which-key "Bib")
        "ff"  '((lambda () (interactive) (counsel-find-file "~/Documents")) :which-key "Documents")
        "fc"  '((lambda () (interactive) (counsel-find-file "~/Code")) :which-key "Code")
        "fd"  '(:ignore t :which-key "dotfiles")
