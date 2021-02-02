@@ -303,10 +303,11 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 
 * PDF-Tools
 #+begin_src emacs-lisp
-  (use-package pdf-tools
-    :config
-    (pdf-tools-install)
-    (setq pdf-view-use-scaling t))
+    (use-package pdf-tools
+      :config
+      (pdf-tools-install)
+      (setq pdf-view-use-scaling t)
+      (setq pdf-view-use-imagekick nil))
 #+end_src
 
 * Org Mode
