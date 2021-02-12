@@ -1,5 +1,5 @@
 #+TITLE: Config based on Emacs From Scratch
-This configuration is based on the very helefull [[https://github.com/daviwil/emacs-from-scratch/blob/master/Emacs.org][Emacs From Scratch]] Projekt by David Wilson. 
+This configuration is based on the very helpfull [[https://github.com/daviwil/emacs-from-scratch/blob/master/Emacs.org][Emacs From Scratch]] Projekt by David Wilson. 
 * Basic UI Configuration
 This section configures basic UI settings that remove unneeded elements to make Emacs look a lot more minimal and modern.
 #+begin_src emacs-lisp
@@ -22,7 +22,7 @@ This section configures basic UI settings that remove unneeded elements to make 
   ;; Disable line numbers for some modes
   (dolist (mode '(org-mode-hook
                   term-mode-hook
-		   pdf-view-mode-hook
+		    pdf-view-mode-hook
                   shell-mode-hook
                   treemacs-mode-hook
                   eshell-mode-hook))
@@ -44,7 +44,7 @@ This section configures basic UI settings that remove unneeded elements to make 
  (let ((auth-sources '(macos-keychain-internet))) (auth-source-search :max 1))
  (let ((auth-sources '(macos-keychain-generic))) (auth-source-search :max 1))
 
-(when (featurep 'ns)
+(when (equal system-type 'darwin)
   (defun ns-raise-emacs ()
     "Raise Emacs."
     (ns-do-applescript "tell application \"Emacs\" to activate"))
@@ -60,39 +60,38 @@ This section configures basic UI settings that remove unneeded elements to make 
 
 ** Font Configuration
 #+begin_src emacs-lisp
-(defun gwbrck/set-font-faces ()
-  (set-face-attribute 'default nil :font "Fira Code" :height 150)
-  (set-face-attribute 'fixed-pitch nil :font "Fira Code" :height 1.0)
-  (set-face-attribute 'variable-pitch nil :font "Cantarell" :weight 'regular :height 1.0)
-  (set-fontset-font t 'symbol (font-spec :family "Apple Symbols" :height 1.0) nil 'prepend)
-  (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji" :height 1.0) nil 'prepend)
+  (defun gwbrck/set-font-faces ()
+    (set-face-attribute 'default nil :font "Fira Code" :height 150)
+    (set-face-attribute 'fixed-pitch nil :font "Fira Code" :height 1.0)
+    (set-face-attribute 'variable-pitch nil :font "Cantarell" :weight 'regular :height 1.0)
 
-    (dolist (face '((org-level-1 . 1.2)
-                    (org-level-2 . 1.1)
-                    (org-level-3 . 1.1)
-                    (org-level-4 . 1.0)
-                    (org-level-5 . 1.0)
-                    (org-level-6 . 1.0)
-                    (org-level-7 . 1.0)
-                    (org-level-8 . 1.0)))
-      (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
+      (dolist (face '((org-level-1 . 1.2)
+                      (org-level-2 . 1.1)
+                      (org-level-3 . 1.1)
+                      (org-level-4 . 1.0)
+                      (org-level-5 . 1.0)
+                      (org-level-6 . 1.0)
+                      (org-level-7 . 1.0)
+                      (org-level-8 . 1.0)))
+        (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
 
- (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
- (set-face-attribute 'org-code nil   :inherit 'fixed-pitch)
- (set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
- (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
- (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
- (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
- (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
- (set-face-attribute 'org-block-begin-line nil :height 0.8))
+   (set-face-attribute 'org-block nil :inherit 'fixed-pitch)
+   (set-face-attribute 'org-code nil   :inherit 'fixed-pitch)
+   (set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
+   (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+   (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+   (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+   (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+   (set-face-attribute 'org-hide nil :inherit 'fixed-pitch)
+   (set-face-attribute 'org-block-begin-line nil :height 0.8))
 
-(if (daemonp)
-    (add-hook 'after-make-frame-functions
-              (lambda (frame)
-                (setq doom-modeline-icon t)
-                (with-selected-frame frame
-                  (gwbrck/set-font-faces))))
-    (gwbrck/set-font-faces))
+  (if (daemonp)
+      (add-hook 'after-make-frame-functions
+                (lambda (frame)
+                  (setq doom-modeline-icon t)
+                  (with-selected-frame frame
+                    (gwbrck/set-font-faces))))
+      (gwbrck/set-font-faces))
 #+end_src
 
 * Keybinding Configuration:
