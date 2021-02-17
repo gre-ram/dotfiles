@@ -689,6 +689,8 @@ You can add more =src= block templates below by copying one of the lines and cha
     (save-excursion
       (save-restriction
        (bibtex-narrow-to-entry)
+       ;;(bibtex-mark-entry)
+       ;;(ucs-normalize-NFC-region)
        (bibtex-beginning-of-entry)
        (gwbrck/bibtex-journal)
        (bibtex-beginning-of-entry)
