@@ -549,7 +549,7 @@ You can add more =src= block templates below by copying one of the lines and cha
     :states 'normal
     "m"  '(:ignore t :which-key "org mode")
     "mo" '(org-ref-cite-hydra/body :which-key "org-ref")
-    "mi" '(org-ref-insert-link :which-key "insert citation"))
+    "mi" '(org-ref-insert-cite-with-completion :which-key "insert citation"))
 
 
   (use-package org-ref
