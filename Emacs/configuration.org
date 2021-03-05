@@ -510,155 +510,158 @@ You can add more =src= block templates below by copying one of the lines and cha
 ** Bib & Roam
 *** Standi Configs
 #+begin_src emacs-lisp
-    (use-package ivy-bibtex
-         :init
-         (setq bibtex-completion-bibliography gwbrck/bib)
-         (setq bibtex-completion-notes-path (concat gwbrck/roam "Konspekte/"))
-         (setq bibtex-completion-library-path gwbrck/pdfs)
-         (setq bibtex-completion-edit-notes-function 'orb-edit-notes-ad)
-         (setq bibtex-dialect 'biblatex)
-         (setq bibtex-entry-format '(opts-or-alts numerical-fields whitespace realign last-comma delimiters unify-case sort-fields delimiters required-fields))
-         (setq bibtex-autokey-name-year-separator "_"
-               bibtex-autokey-year-title-separator "_"
-               bibtex-autokey-titlewords 1
-               bibtex-autokey-year-length 4
-               bibtex-autokey-edit-before-use nil
-               bibtex-autokey-additional-names 1
-               bibtex-autokey-titleword-ignore '("A" "An" "On" "The" "Eine" "Ein" "Der" "Die" "Das")
-               bibtex-autokey-titlewords-stretch 0
-               bibtex-autokey-titleword-length 5
-               bibtex-autokey-name-separator "-"
-               bibtex-autokey-names 2
-               bibtex-autokey-additional-names "-ea"
-               bibtex-comma-after-last-field t)
-         (setq biblio-cleanup-bibtex-function 'gwbrck/bibtex-clean-entry))
+      (use-package ivy-bibtex
+           :init
+           (setq bibtex-completion-bibliography gwbrck/bib)
+           (setq bibtex-completion-notes-path (concat gwbrck/roam "Konspekte/"))
+           (setq bibtex-completion-library-path gwbrck/pdfs)
+           (setq bibtex-completion-edit-notes-function 'orb-edit-notes-ad)
+           (setq bibtex-dialect 'biblatex)
+           (setq bibtex-entry-format '(opts-or-alts numerical-fields whitespace realign last-comma delimiters unify-case sort-fields delimiters required-fields))
+           (setq bibtex-autokey-name-year-separator "_"
+                 bibtex-autokey-year-title-separator "_"
+                 bibtex-autokey-titlewords 1
+                 bibtex-autokey-year-length 4
+                 bibtex-autokey-edit-before-use nil
+                 bibtex-autokey-additional-names 1
+                 bibtex-autokey-titleword-ignore '("A" "An" "On" "The" "Eine" "Ein" "Der" "Die" "Das")
+                 bibtex-autokey-titlewords-stretch 0
+                 bibtex-autokey-titleword-length 5
+                 bibtex-autokey-name-separator "-"
+                 bibtex-autokey-names 2
+                 bibtex-autokey-additional-names "-ea"
+                 bibtex-comma-after-last-field t)
+           (setq biblio-cleanup-bibtex-function 'gwbrck/bibtex-clean-entry)
+           (setq bibtex-completion-pdf-open-function
+                 (lambda (fpath)
+                   (call-process "open" nil 0 nil fpath))))
 
-         (add-to-list 'bibtex-autokey-name-change-strings '("ß" . "ss"))
-         (add-to-list 'bibtex-autokey-name-change-strings '("å" . "a"))
-         (add-to-list 'bibtex-autokey-name-change-strings '("Å" . "A"))
-         (add-to-list 'bibtex-autokey-name-change-strings '("ö" . "oe"))
-         (add-to-list 'bibtex-autokey-name-change-strings '("Ö" . "Oe"))
-         (add-to-list 'bibtex-autokey-name-change-strings '("ä" . "ae"))
-         (add-to-list 'bibtex-autokey-name-change-strings '("Ä" . "Ae"))
-         (add-to-list 'bibtex-autokey-name-change-strings '("Ü" . "Ue"))
-         (add-to-list 'bibtex-autokey-name-change-strings '("ü" . "ue"))
-         (add-to-list 'bibtex-autokey-titleword-change-strings '("ß" . "ss"))
-         (add-to-list 'bibtex-autokey-titleword-change-strings '("å" . "a"))
-         (add-to-list 'bibtex-autokey-titleword-change-strings '("Å" . "A"))
-         (add-to-list 'bibtex-autokey-titleword-change-strings '("ö" . "oe"))
-         (add-to-list 'bibtex-autokey-titleword-change-strings '("Ö" . "Oe"))
-         (add-to-list 'bibtex-autokey-titleword-change-strings '("ä" . "ae"))
-         (add-to-list 'bibtex-autokey-titleword-change-strings '("Ä" . "Ae"))
-         (add-to-list 'bibtex-autokey-titleword-change-strings '("Ü" . "Ue"))
-         (add-to-list 'bibtex-autokey-titleword-change-strings '("ü" . "ue"))
-
-
-    (gwbrck/leader-keys
-      :keymaps 'bibtex-mode-map
-      :states 'normal
-      "m"  '(:ignore t :which-key "bibtex mode")
-      "mP" '(org-ref-bibtex-assoc-pdf-with-entry :which-key "new pdf for entry")
-      "mp" '(org-ref-open-bibtex-pdf :which-key "open pdf for entry")
-      "md" '(doi-utils-add-bibtex-entry-from-doi :which-key "get bibtex via doi")
-      "mu" '(doi-utils-update-bibtex-entry-from-doi :which-key "update bibtex via doi")
-      "ms" '(bibtex-sort-buffer :which-key "sort entries")
-      "mc" '(org-ref-clean-bibtex-entry :which-key "clean entry"))
+           (add-to-list 'bibtex-autokey-name-change-strings '("ß" . "ss"))
+           (add-to-list 'bibtex-autokey-name-change-strings '("å" . "a"))
+           (add-to-list 'bibtex-autokey-name-change-strings '("Å" . "A"))
+           (add-to-list 'bibtex-autokey-name-change-strings '("ö" . "oe"))
+           (add-to-list 'bibtex-autokey-name-change-strings '("Ö" . "Oe"))
+           (add-to-list 'bibtex-autokey-name-change-strings '("ä" . "ae"))
+           (add-to-list 'bibtex-autokey-name-change-strings '("Ä" . "Ae"))
+           (add-to-list 'bibtex-autokey-name-change-strings '("Ü" . "Ue"))
+           (add-to-list 'bibtex-autokey-name-change-strings '("ü" . "ue"))
+           (add-to-list 'bibtex-autokey-titleword-change-strings '("ß" . "ss"))
+           (add-to-list 'bibtex-autokey-titleword-change-strings '("å" . "a"))
+           (add-to-list 'bibtex-autokey-titleword-change-strings '("Å" . "A"))
+           (add-to-list 'bibtex-autokey-titleword-change-strings '("ö" . "oe"))
+           (add-to-list 'bibtex-autokey-titleword-change-strings '("Ö" . "Oe"))
+           (add-to-list 'bibtex-autokey-titleword-change-strings '("ä" . "ae"))
+           (add-to-list 'bibtex-autokey-titleword-change-strings '("Ä" . "Ae"))
+           (add-to-list 'bibtex-autokey-titleword-change-strings '("Ü" . "Ue"))
+           (add-to-list 'bibtex-autokey-titleword-change-strings '("ü" . "ue"))
 
 
-    (gwbrck/leader-keys
-      :keymaps 'org-mode-map
-      :states 'normal
-      "m"  '(:ignore t :which-key "org mode")
-      "mo" '(org-ref-cite-hydra/body :which-key "org-ref")
-      "mi" '(org-ref-insert-cite-with-completion :which-key "insert citation"))
+      (gwbrck/leader-keys
+        :keymaps 'bibtex-mode-map
+        :states 'normal
+        "m"  '(:ignore t :which-key "bibtex mode")
+        "mP" '(org-ref-bibtex-assoc-pdf-with-entry :which-key "new pdf for entry")
+        "mp" '(org-ref-open-bibtex-pdf :which-key "open pdf for entry")
+        "md" '(doi-utils-add-bibtex-entry-from-doi :which-key "get bibtex via doi")
+        "mu" '(doi-utils-update-bibtex-entry-from-doi :which-key "update bibtex via doi")
+        "ms" '(bibtex-sort-buffer :which-key "sort entries")
+        "mc" '(org-ref-clean-bibtex-entry :which-key "clean entry"))
 
 
-    (use-package org-ref
-      :after org
-      :config
-      (setq
-           org-ref-completion-library 'org-ref-ivy-cite
-           org-ref-default-bibliography gwbrck/bib
-  ;;       org-ref-pdf-directory (concatenate 'string gwbrck/roam "Konspekte/")
-           org-ref-pdf-directory gwbrck/pdfs
-           org-ref-bibliography-notes gwbrck/roam
-           org-ref-nonascii-latex-replacements '()
-           org-ref-notes-function 'orb-edit-notes)
-      (setf (cdr (assoc 'org-mode bibtex-completion-format-citation-functions))       'org-ref-format-citation)
-       (setq org-ref-clean-bibtex-entry-hook '(gwbrck/bibtex-clean-entry)))
-
-    (use-package org-roam
-      :hook (org-load .org-roam-mode)
-      :config
-      (setq org-roam-directory gwbrck/roam))
-
-    (use-package org-roam-bibtex
-      :after (org-roam)
-      :hook (org-roam-mode . org-roam-bibtex-mode)
-      :config
-
-    (setq orb-preformat-keywords
-          '("citekey" "title" "url" "author-or-editor" "keywords" "file")
-          orb-process-file-field t
-          orb-file-field-extensions "pdf")
-
-    (setq orb-templates
-          '(("r" "ref" plain (function org-roam-capture--get-point)
-             ""
-             :file-name "Konspekte/${citekey}"
-             :head "#+TITLE: Konspekt von ${citekey}\n#+ROAM_KEY: ${ref}
-
-    - tags ::
-    - keywords :: ${keywords}\n\n* Konspekt
-    :PROPERTIES:
-    :Custom_ID: ${citekey}
-    :AUTHOR: ${author-or-editor}
-    :NOTER_DOCUMENT: ${file}
-    :NOTER_PAGE:
-    :END:"))))
+      (gwbrck/leader-keys
+        :keymaps 'org-mode-map
+        :states 'normal
+        "m"  '(:ignore t :which-key "org mode")
+        "mo" '(org-ref-cite-hydra/body :which-key "org-ref")
+        "mi" '(org-ref-insert-cite-with-completion :which-key "insert citation"))
 
 
-    (use-package org-noter
-      :after (:any org pdf-view)
-      :config
-      (setq org-noter-notes-search-path (list gwbrck/roam))
-      (require 'org-noter-pdftools))
+      (use-package org-ref
+        :after org
+        :config
+        (setq
+             org-ref-completion-library 'org-ref-ivy-cite
+             org-ref-default-bibliography gwbrck/bib
+    ;;       org-ref-pdf-directory (concatenate 'string gwbrck/roam "Konspekte/")
+             org-ref-pdf-directory gwbrck/pdfs
+             org-ref-bibliography-notes gwbrck/roam
+             org-ref-nonascii-latex-replacements '()
+             org-ref-notes-function 'orb-edit-notes)
+        (setf (cdr (assoc 'org-mode bibtex-completion-format-citation-functions))       'org-ref-format-citation)
+         (setq org-ref-clean-bibtex-entry-hook '(gwbrck/bibtex-clean-entry)))
 
-    (use-package org-pdftools
-      :hook (org-mode . org-pdftools-setup-link))
+      (use-package org-roam
+        :hook (org-load .org-roam-mode)
+        :config
+        (setq org-roam-directory gwbrck/roam))
 
-    (use-package org-noter-pdftools
-      :after org-noter
-      :config
-      ;; Add a function to ensure precise note is inserted
-      (defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
-        (interactive "P")
-        (org-noter--with-valid-session
-         (let ((org-noter-insert-note-no-questions (if toggle-no-questions
-                                                       (not org-noter-insert-note-no-questions)
-                                                     org-noter-insert-note-no-questions))
-               (org-pdftools-use-isearch-link t)
-               (org-pdftools-use-freestyle-annot t))
-           (org-noter-insert-note (org-noter--get-precise-info)))))
+      (use-package org-roam-bibtex
+        :after (org-roam)
+        :hook (org-roam-mode . org-roam-bibtex-mode)
+        :config
 
-      ;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
-      (defun org-noter-set-start-location (&optional arg)
-        "When opening a session with this document, go to the current location.
-    With a prefix ARG, remove start location."
-        (interactive "P")
-        (org-noter--with-valid-session
-         (let ((inhibit-read-only t)
-               (ast (org-noter--parse-root))
-               (location (org-noter--doc-approx-location (when (called-interactively-p 'any) 'interactive))))
-           (with-current-buffer (org-noter--session-notes-buffer session)
-             (org-with-wide-buffer
-              (goto-char (org-element-property :begin ast))
-              (if arg
-                  (org-entry-delete nil org-noter-property-note-location)
-                (org-entry-put nil org-noter-property-note-location
-                               (org-noter--pretty-print-location location))))))))
-      (with-eval-after-load 'pdf-annot
-        (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
+      (setq orb-preformat-keywords
+            '("citekey" "title" "url" "author-or-editor" "keywords" "file")
+            orb-process-file-field t
+            orb-file-field-extensions "pdf")
+
+      (setq orb-templates
+            '(("r" "ref" plain (function org-roam-capture--get-point)
+               ""
+               :file-name "Konspekte/${citekey}"
+               :head "#+TITLE: Konspekt von ${citekey}\n#+ROAM_KEY: ${ref}
+
+      - tags ::
+      - keywords :: ${keywords}\n\n* Konspekt
+      :PROPERTIES:
+      :Custom_ID: ${citekey}
+      :AUTHOR: ${author-or-editor}
+      :NOTER_DOCUMENT: ${file}
+      :NOTER_PAGE:
+      :END:"))))
+
+
+      (use-package org-noter
+        :after (:any org pdf-view)
+        :config
+        (setq org-noter-notes-search-path (list gwbrck/roam))
+        (require 'org-noter-pdftools))
+
+      (use-package org-pdftools
+        :hook (org-mode . org-pdftools-setup-link))
+
+      (use-package org-noter-pdftools
+        :after org-noter
+        :config
+        ;; Add a function to ensure precise note is inserted
+        (defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
+          (interactive "P")
+          (org-noter--with-valid-session
+           (let ((org-noter-insert-note-no-questions (if toggle-no-questions
+                                                         (not org-noter-insert-note-no-questions)
+                                                       org-noter-insert-note-no-questions))
+                 (org-pdftools-use-isearch-link t)
+                 (org-pdftools-use-freestyle-annot t))
+             (org-noter-insert-note (org-noter--get-precise-info)))))
+
+        ;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
+        (defun org-noter-set-start-location (&optional arg)
+          "When opening a session with this document, go to the current location.
+      With a prefix ARG, remove start location."
+          (interactive "P")
+          (org-noter--with-valid-session
+           (let ((inhibit-read-only t)
+                 (ast (org-noter--parse-root))
+                 (location (org-noter--doc-approx-location (when (called-interactively-p 'any) 'interactive))))
+             (with-current-buffer (org-noter--session-notes-buffer session)
+               (org-with-wide-buffer
+                (goto-char (org-element-property :begin ast))
+                (if arg
+                    (org-entry-delete nil org-noter-property-note-location)
+                  (org-entry-put nil org-noter-property-note-location
+                                 (org-noter--pretty-print-location location))))))))
+        (with-eval-after-load 'pdf-annot
+          (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
 
 
 
