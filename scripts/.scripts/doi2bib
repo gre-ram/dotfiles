@@ -1,2 +1,0 @@
-#!/bin/bash
-curl -s "https://api.crossref.org/works/$1/transform/application/x-bibtex" -w "\\n" | grep -v '= ,\|\"-\"\|url' | bibtool -R -r biblatex
