@@ -123,7 +123,7 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
      (gwbrck/leader-keys
         :keymaps '(normal insert visual emacs)
        "f"   '(:ignore t :which-key "files")
-       "fB"  '((lambda () (interactive) (counsel-find-file "~/Documents/MacsBib")) :which-key "Bib Folder")
+       "fB"  '((lambda () (interactive) (counsel-find-file "~/Documents/myBib")) :which-key "Bib Folder")
        "fb"  '(ivy-bibtex :which-key "Bib")
        "ff"  '((lambda () (interactive) (counsel-find-file "~/Documents")) :which-key "Documents")
        "fc"  '((lambda () (interactive) (counsel-find-file "~/Code")) :which-key "Code")
@@ -305,16 +305,16 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
     (use-package pdf-tools
       :config
       (pdf-tools-install)
-      (setq pdf-view-use-scaling t)
+      (setq pdf-view-use-scaling 2)
       (setq pdf-view-use-imagekick nil))
 #+end_src
 
 * Org Mode
 ** Default Paths
 #+begin_src emacs-lisp
-  (setq gwbrck/bib '("~/Documents/MacsBib/main.bib"))
-  (setq gwbrck/pdfs  "~/Documents/MacsBib/pdfs/")
-  (setq gwbrck/roam "~/Documents/MacsBib/Roam/")
+  (setq gwbrck/bib '("~/Documents/myBib/main.bib"))
+  (setq gwbrck/pdfs  "~/Documents/myBib/pdfs/")
+  (setq gwbrck/roam "~/Documents/myBib/Roam/")
   (setq org-directory gwbrck/roam)
 #+end_src
 
@@ -755,7 +755,7 @@ You can add more =src= block templates below by copying one of the lines and cha
           ("shorthands=off, ngerman" "babel" nil nil)
           ("" "csquotes" nil nil)
           ("style=apa, backend=biber, natbib=true" "biblatex" nil nil)
-          "\\addbibresource{~/Documents/MacsBib/main.bib}"))
+          "\\addbibresource{~/Documents/myBib/main.bib}"))
 
 #+end_src
 
