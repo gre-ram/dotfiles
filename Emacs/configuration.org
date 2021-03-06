@@ -125,6 +125,8 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
        "f"   '(:ignore t :which-key "files")
        "fB"  '((lambda () (interactive) (counsel-find-file "~/Documents/myBib")) :which-key "Bib Folder")
        "fb"  '(ivy-bibtex :which-key "Bib")
+       "fR"  '(org-roam-find-file :which-key "roam find file+")
+       "fr"  '(orb-find-non-ref-file :which-key "roam find file")
        "ff"  '((lambda () (interactive) (counsel-find-file "~/Documents")) :which-key "Documents")
        "fc"  '((lambda () (interactive) (counsel-find-file "~/Code")) :which-key "Code")
        "fd"  '(:ignore t :which-key "dotfiles")
@@ -510,7 +512,7 @@ You can add more =src= block templates below by copying one of the lines and cha
 ** Bib & Roam
 *** Standi Configs
 #+begin_src emacs-lisp
-      (use-package ivy-bibtex
+    (use-package ivy-bibtex
            :init
            (setq bibtex-completion-bibliography gwbrck/bib)
            (setq bibtex-completion-notes-path (concat gwbrck/roam "Konspekte/"))
@@ -573,6 +575,8 @@ You can add more =src= block templates below by copying one of the lines and cha
         :states 'normal
         "m"  '(:ignore t :which-key "org mode")
         "mo" '(org-ref-cite-hydra/body :which-key "org-ref")
+        "mR" '(org-roam-insert :which-key "roam insert+")
+        "mr"  '(orb-insert-non-ref :which-key "roam insert")
         "mi" '(org-ref-insert-cite-with-completion :which-key "insert citation"))
 
 
@@ -591,7 +595,8 @@ You can add more =src= block templates below by copying one of the lines and cha
          (setq org-ref-clean-bibtex-entry-hook '(gwbrck/bibtex-clean-entry)))
 
       (use-package org-roam
-        :hook (org-load .org-roam-mode)
+        :after org
+        ;; default from github :hook (org-load .org-roam-mode)
         :config
         (setq org-roam-directory gwbrck/roam))
 
