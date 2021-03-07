@@ -101,74 +101,81 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 
 #+begin_src emacs-lisp
 
-    ;; Make ESC quit prompts
-    (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-    (global-set-key (kbd "C-M-u") 'universal-argument)
-    (use-package general
-      :config
-      (general-create-definer gwbrck/leader-keys
-        :prefix "SPC"
-        :global-prefix "C-SPC")
+  ;; Make ESC quit prompts
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+  (global-set-key (kbd "C-M-u") 'universal-argument)
+  (use-package general
+    :config
+    (general-create-definer gwbrck/leader-keys
+      :prefix "SPC"
+      :global-prefix "C-SPC")
 
-      (gwbrck/leader-keys
-        :keymaps '(normal insert visual emacs)
-        "b"  '(:ignore t :which-key "buffer")
-        "bk" '(kill-this-buffer :which-key "kill buffer")
-        "bs" '(switch-to-buffer :which-key "list buffer")
-        "bn" '(next-buffer :which-key "next buffer")
-        "bN" '(previous-buffer :which-key "prev buffer")
-        "t"  '(:ignore t :which-key "toggles")
-        "tw" '(whitespace-mode :which-key "whitespace" )
-        "tt" '(counsel-load-theme :which-key "choose theme"))
-     (gwbrck/leader-keys
-        :keymaps '(normal insert visual emacs)
-       "f"   '(:ignore t :which-key "files")
-       "fB"  '((lambda () (interactive) (counsel-find-file "~/Documents/myBib")) :which-key "Bib Folder")
-       "fb"  '(ivy-bibtex :which-key "Bib")
-       "fR"  '(org-roam-find-file :which-key "roam find file+")
-       "fr"  '(orb-find-non-ref-file :which-key "roam find file")
-       "ff"  '((lambda () (interactive) (counsel-find-file "~/Documents")) :which-key "Documents")
-       "fc"  '((lambda () (interactive) (counsel-find-file "~/Code")) :which-key "Code")
-       "fd"  '(:ignore t :which-key "dotfiles")
-       "fdz" '((lambda () (interactive) (counsel-find-file "~/dotfiles/zsh")) :which-key "zsh")
-       "fdv" '((lambda () (interactive) (counsel-find-file "~/dotfiles/Neovim/.config")) :which-key "Neovim")
-       "fdd" '((lambda () (interactive) (counsel-find-file"~/dotfiles")) :which-key "dotfiles")
-       "fde" '((lambda () (interactive) (find-file "~/dotfiles/Emacs/configuration.org")) :which-key "Emacs")))
+    (gwbrck/leader-keys
+      :keymaps '(normal insert visual emacs)
+      "b"  '(:ignore t :which-key "buffer")
+      "bk" '(kill-this-buffer :which-key "kill buffer")
+      "bs" '(switch-to-buffer :which-key "list buffer")
+      "bn" '(next-buffer :which-key "next buffer")
+      "bN" '(previous-buffer :which-key "prev buffer")
+      "t"  '(:ignore t :which-key "toggles")
+      "tw" '(whitespace-mode :which-key "whitespace" )
+      "tt" '(counsel-load-theme :which-key "choose theme"))
+   (gwbrck/leader-keys
+      :keymaps '(normal insert visual emacs)
+     "f"   '(:ignore t :which-key "files")
+     "fB"  '((lambda () (interactive) (counsel-find-file "~/Documents/myBib")) :which-key "Bib Folder")
+     "fb"  '(ivy-bibtex :which-key "Bib")
+     "fr" '(:ignore t :which-key "roam")
+     "frR"  '(org-roam-find-file :which-key "roam find file+")
+     "frr"  '(orb-find-non-ref-file :which-key "roam find file")
+     "frd" '(:ignore t :which-key "dailies")
+     "frdf" '(org-roam-dailies-find-today :which-key "open today")
+     "frdF" '(org-roam-dailies-find-date :which-key "open date")
+     "frdc" '(org-roam-dailies-capture-today :which-key "capture today")
+     "frdC" '(org-roam-dailies-capture-date :which-key "capture date")
+     "ff"  '((lambda () (interactive) (counsel-find-file "~/Documents")) :which-key "Documents")
+     "fc"  '((lambda () (interactive) (counsel-find-file "~/Code")) :which-key "Code")
+     "fd"  '(:ignore t :which-key "dotfiles")
+     "fdz" '((lambda () (interactive) (counsel-find-file "~/dotfiles/zsh")) :which-key "zsh")
+     "fdv" '((lambda () (interactive) (counsel-find-file "~/dotfiles/Neovim/.config")) :which-key "Neovim")
+     "fdd" '((lambda () (interactive) (counsel-find-file"~/dotfiles")) :which-key "dotfiles")
+     "fde" '((lambda () (interactive) (find-file "~/dotfiles/Emacs/configuration.org")) :which-key "Emacs")))
 
-    (use-package evil
-      :init
-      (setq evil-want-integration t)
-      (setq evil-want-keybinding nil)
-      (setq evil-want-C-u-scroll t)
-      (setq evil-want-C-i-jump nil)
-      :config
-      (evil-mode 1)
-      (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-      (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
 
-      ;; Use visual line motions even outside of visual-line-mode buffers
-      (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-      (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+  (use-package evil
+    :init
+    (setq evil-want-integration t)
+    (setq evil-want-keybinding nil)
+    (setq evil-want-C-u-scroll t)
+    (setq evil-want-C-i-jump nil)
+    :config
+    (evil-mode 1)
+    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+    (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
 
-      (evil-set-initial-state 'messages-buffer-mode 'normal)
-      (evil-set-initial-state 'dashboard-mode 'normal)
+    ;; Use visual line motions even outside of visual-line-mode buffers
+    (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+    (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
 
-      (defun gwbrck/evil-yank-advice (orig-fn beg end &rest args)
-        (pulse-momentary-highlight-region beg end 'highlight)
-        (apply orig-fn beg end args))
-      (advice-add 'evil-yank :around 'gwbrck/evil-yank-advice))
+    (evil-set-initial-state 'messages-buffer-mode 'normal)
+    (evil-set-initial-state 'dashboard-mode 'normal)
 
-    (use-package evil-collection
-      :after evil
-      :config
-      (evil-collection-init))
+    (defun gwbrck/evil-yank-advice (orig-fn beg end &rest args)
+      (pulse-momentary-highlight-region beg end 'highlight)
+      (apply orig-fn beg end args))
+    (advice-add 'evil-yank :around 'gwbrck/evil-yank-advice))
 
-    (use-package evil-snipe
-      :after evil-collection
-      :config
-      (evil-snipe-mode +1)
-      (evil-snipe-override-mode +1)
-      (setq evil-snipe-scope 'buffer))
+  (use-package evil-collection
+    :after evil
+    :config
+    (evil-collection-init))
+
+  (use-package evil-snipe
+    :after evil-collection
+    :config
+    (evil-snipe-mode +1)
+    (evil-snipe-override-mode +1)
+    (setq evil-snipe-scope 'buffer))
 
 
 #+end_src
@@ -424,32 +431,6 @@ This section contains the basic configuration for =org-mode= plus the configurat
                 ((org-agenda-overriding-header "Cancelled Projects")
                  (org-agenda-files org-agenda-files)))))))
 
-      (setq org-capture-templates
-        `(("t" "Tasks / Projects")
-          ("tt" "Task" entry (file+olp "~/Projects/Code/emacs-from-scratch/OrgFiles/Tasks.org" "Inbox")
-               "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
-
-          ("j" "Journal Entries")
-          ("jj" "Journal" entry
-               (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
-               "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
-               ;; ,(dw/read-file-as-string "~/Notes/Templates/Daily.org")
-               :clock-in :clock-resume
-               :empty-lines 1)
-          ("jm" "Meeting" entry
-               (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
-               "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
-               :clock-in :clock-resume
-               :empty-lines 1)
-
-          ("w" "Workflows")
-          ("we" "Checking Email" entry (file+olp+datetree "~/Projects/Code/emacs-from-scratch/OrgFiles/Journal.org")
-               "* Checking Email :email:\n\n%?" :clock-in :clock-resume :empty-lines 1)
-
-          ("m" "Metrics Capture")
-          ("mw" "Weight" table-line (file+headline "~/Projects/Code/emacs-from-scratch/OrgFiles/Metrics.org" "Weight")
-           "| %U | %^{Weight} | %^{Notes} |" :kill-buffer t)))
-
       (define-key global-map (kbd "C-c j")
         (lambda () (interactive) (org-capture nil "jj")))
 
@@ -512,161 +493,190 @@ You can add more =src= block templates below by copying one of the lines and cha
 ** Bib & Roam
 *** Standi Configs
 #+begin_src emacs-lisp
-    (use-package ivy-bibtex
-           :init
-           (setq bibtex-completion-bibliography gwbrck/bib)
-           (setq bibtex-completion-notes-path (concat gwbrck/roam "Konspekte/"))
-           (setq bibtex-completion-library-path gwbrck/pdfs)
-           (setq bibtex-completion-edit-notes-function 'orb-edit-notes-ad)
-           (setq bibtex-dialect 'biblatex)
-           (setq bibtex-entry-format '(opts-or-alts numerical-fields whitespace realign last-comma delimiters unify-case sort-fields delimiters required-fields))
-           (setq bibtex-autokey-name-year-separator "_"
-                 bibtex-autokey-year-title-separator "_"
-                 bibtex-autokey-titlewords 1
-                 bibtex-autokey-year-length 4
-                 bibtex-autokey-edit-before-use nil
-                 bibtex-autokey-additional-names 1
-                 bibtex-autokey-titleword-ignore '("A" "An" "On" "The" "Eine" "Ein" "Der" "Die" "Das")
-                 bibtex-autokey-titlewords-stretch 0
-                 bibtex-autokey-titleword-length 5
-                 bibtex-autokey-name-separator "-"
-                 bibtex-autokey-names 2
-                 bibtex-autokey-additional-names "-ea"
-                 bibtex-comma-after-last-field t)
-           (setq biblio-cleanup-bibtex-function 'gwbrck/bibtex-clean-entry)
-           (setq bibtex-completion-pdf-open-function
-                 (lambda (fpath)
-                   (call-process "open" nil 0 nil fpath))))
+  (use-package ivy-bibtex
+         :init
+         (setq bibtex-completion-bibliography gwbrck/bib)
+         (setq bibtex-completion-notes-path (concat gwbrck/roam "Konspekte/"))
+         (setq bibtex-completion-library-path gwbrck/pdfs)
+         (setq bibtex-completion-edit-notes-function 'orb-edit-notes-ad)
+         (setq bibtex-dialect 'biblatex)
+         (setq bibtex-entry-format '(opts-or-alts numerical-fields whitespace realign last-comma delimiters unify-case sort-fields delimiters required-fields))
+         (setq bibtex-autokey-name-year-separator "_"
+               bibtex-autokey-year-title-separator "_"
+               bibtex-autokey-titlewords 1
+               bibtex-autokey-year-length 4
+               bibtex-autokey-edit-before-use nil
+               bibtex-autokey-additional-names 1
+               bibtex-autokey-titleword-ignore '("A" "An" "On" "The" "Eine" "Ein" "Der" "Die" "Das")
+               bibtex-autokey-titlewords-stretch 0
+               bibtex-autokey-titleword-length 5
+               bibtex-autokey-name-separator "-"
+               bibtex-autokey-names 2
+               bibtex-autokey-additional-names "-ea"
+               bibtex-comma-after-last-field t)
+         (setq biblio-cleanup-bibtex-function 'gwbrck/bibtex-clean-entry)
+         (setq bibtex-completion-pdf-open-function
+               (lambda (fpath)
+                 (call-process "open" nil 0 nil fpath))))
 
-           (add-to-list 'bibtex-autokey-name-change-strings '("ß" . "ss"))
-           (add-to-list 'bibtex-autokey-name-change-strings '("å" . "a"))
-           (add-to-list 'bibtex-autokey-name-change-strings '("Å" . "A"))
-           (add-to-list 'bibtex-autokey-name-change-strings '("ö" . "oe"))
-           (add-to-list 'bibtex-autokey-name-change-strings '("Ö" . "Oe"))
-           (add-to-list 'bibtex-autokey-name-change-strings '("ä" . "ae"))
-           (add-to-list 'bibtex-autokey-name-change-strings '("Ä" . "Ae"))
-           (add-to-list 'bibtex-autokey-name-change-strings '("Ü" . "Ue"))
-           (add-to-list 'bibtex-autokey-name-change-strings '("ü" . "ue"))
-           (add-to-list 'bibtex-autokey-titleword-change-strings '("ß" . "ss"))
-           (add-to-list 'bibtex-autokey-titleword-change-strings '("å" . "a"))
-           (add-to-list 'bibtex-autokey-titleword-change-strings '("Å" . "A"))
-           (add-to-list 'bibtex-autokey-titleword-change-strings '("ö" . "oe"))
-           (add-to-list 'bibtex-autokey-titleword-change-strings '("Ö" . "Oe"))
-           (add-to-list 'bibtex-autokey-titleword-change-strings '("ä" . "ae"))
-           (add-to-list 'bibtex-autokey-titleword-change-strings '("Ä" . "Ae"))
-           (add-to-list 'bibtex-autokey-titleword-change-strings '("Ü" . "Ue"))
-           (add-to-list 'bibtex-autokey-titleword-change-strings '("ü" . "ue"))
-
-
-      (gwbrck/leader-keys
-        :keymaps 'bibtex-mode-map
-        :states 'normal
-        "m"  '(:ignore t :which-key "bibtex mode")
-        "mP" '(org-ref-bibtex-assoc-pdf-with-entry :which-key "new pdf for entry")
-        "mp" '(org-ref-open-bibtex-pdf :which-key "open pdf for entry")
-        "md" '(doi-utils-add-bibtex-entry-from-doi :which-key "get bibtex via doi")
-        "mu" '(doi-utils-update-bibtex-entry-from-doi :which-key "update bibtex via doi")
-        "ms" '(bibtex-sort-buffer :which-key "sort entries")
-        "mc" '(org-ref-clean-bibtex-entry :which-key "clean entry"))
+         (add-to-list 'bibtex-autokey-name-change-strings '("ß" . "ss"))
+         (add-to-list 'bibtex-autokey-name-change-strings '("å" . "a"))
+         (add-to-list 'bibtex-autokey-name-change-strings '("Å" . "A"))
+         (add-to-list 'bibtex-autokey-name-change-strings '("ö" . "oe"))
+         (add-to-list 'bibtex-autokey-name-change-strings '("Ö" . "Oe"))
+         (add-to-list 'bibtex-autokey-name-change-strings '("ä" . "ae"))
+         (add-to-list 'bibtex-autokey-name-change-strings '("Ä" . "Ae"))
+         (add-to-list 'bibtex-autokey-name-change-strings '("Ü" . "Ue"))
+         (add-to-list 'bibtex-autokey-name-change-strings '("ü" . "ue"))
+         (add-to-list 'bibtex-autokey-titleword-change-strings '("ß" . "ss"))
+         (add-to-list 'bibtex-autokey-titleword-change-strings '("å" . "a"))
+         (add-to-list 'bibtex-autokey-titleword-change-strings '("Å" . "A"))
+         (add-to-list 'bibtex-autokey-titleword-change-strings '("ö" . "oe"))
+         (add-to-list 'bibtex-autokey-titleword-change-strings '("Ö" . "Oe"))
+         (add-to-list 'bibtex-autokey-titleword-change-strings '("ä" . "ae"))
+         (add-to-list 'bibtex-autokey-titleword-change-strings '("Ä" . "Ae"))
+         (add-to-list 'bibtex-autokey-titleword-change-strings '("Ü" . "Ue"))
+         (add-to-list 'bibtex-autokey-titleword-change-strings '("ü" . "ue"))
 
 
-      (gwbrck/leader-keys
-        :keymaps 'org-mode-map
-        :states 'normal
-        "m"  '(:ignore t :which-key "org mode")
-        "mo" '(org-ref-cite-hydra/body :which-key "org-ref")
-        "mR" '(org-roam-insert :which-key "roam insert+")
-        "mr"  '(orb-insert-non-ref :which-key "roam insert")
-        "mi" '(org-ref-insert-cite-with-completion :which-key "insert citation"))
+    (gwbrck/leader-keys
+      :keymaps 'bibtex-mode-map
+      :states 'normal
+      "m"  '(:ignore t :which-key "bibtex mode")
+      "mP" '(org-ref-bibtex-assoc-pdf-with-entry :which-key "new pdf for entry")
+      "mp" '(org-ref-open-bibtex-pdf :which-key "open pdf for entry")
+      "md" '(doi-utils-add-bibtex-entry-from-doi :which-key "get bibtex via doi")
+      "mu" '(doi-utils-update-bibtex-entry-from-doi :which-key "update bibtex via doi")
+      "ms" '(bibtex-sort-buffer :which-key "sort entries")
+      "mc" '(org-ref-clean-bibtex-entry :which-key "clean entry"))
 
 
-      (use-package org-ref
-        :after org
-        :config
-        (setq
-             org-ref-completion-library 'org-ref-ivy-cite
-             org-ref-default-bibliography gwbrck/bib
-    ;;       org-ref-pdf-directory (concatenate 'string gwbrck/roam "Konspekte/")
-             org-ref-pdf-directory gwbrck/pdfs
-             org-ref-bibliography-notes gwbrck/roam
-             org-ref-nonascii-latex-replacements '()
-             org-ref-notes-function 'orb-edit-notes)
-        (setf (cdr (assoc 'org-mode bibtex-completion-format-citation-functions))       'org-ref-format-citation)
-         (setq org-ref-clean-bibtex-entry-hook '(gwbrck/bibtex-clean-entry)))
-
-      (use-package org-roam
-        :after org
-        ;; default from github :hook (org-load .org-roam-mode)
-        :config
-        (setq org-roam-directory gwbrck/roam))
-
-      (use-package org-roam-bibtex
-        :after (org-roam)
-        :hook (org-roam-mode . org-roam-bibtex-mode)
-        :config
-
-      (setq orb-preformat-keywords
-            '("citekey" "title" "url" "author-or-editor" "keywords" "file")
-            orb-process-file-field t
-            orb-file-field-extensions "pdf")
-
-      (setq orb-templates
-            '(("r" "ref" plain (function org-roam-capture--get-point)
-               ""
-               :file-name "Konspekte/${citekey}"
-               :head "#+TITLE: Konspekt von ${citekey}\n#+ROAM_KEY: ${ref}
-
-      - tags ::
-      - keywords :: ${keywords}\n\n* Konspekt
-      :PROPERTIES:
-      :Custom_ID: ${citekey}
-      :AUTHOR: ${author-or-editor}
-      :NOTER_DOCUMENT: ${file}
-      :NOTER_PAGE:
-      :END:"))))
+    (gwbrck/leader-keys
+      :keymaps 'org-mode-map
+      :states 'normal
+      "m"  '(:ignore t :which-key "org mode")
+      "mo" '(org-ref-cite-hydra/body :which-key "org-ref")
+      "mR" '(org-roam-insert :which-key "roam insert+")
+      "mr"  '(orb-insert-non-ref :which-key "roam insert")
+      "mi" '(org-ref-insert-cite-with-completion :which-key "insert citation"))
 
 
-      (use-package org-noter
-        :after (:any org pdf-view)
-        :config
-        (setq org-noter-notes-search-path (list gwbrck/roam))
-        (require 'org-noter-pdftools))
+    (use-package org-ref
+      :after org
+      :config
+      (setq
+           org-ref-completion-library 'org-ref-ivy-cite
+           org-ref-default-bibliography gwbrck/bib
+  ;;       org-ref-pdf-directory (concatenate 'string gwbrck/roam "Konspekte/")
+           org-ref-pdf-directory gwbrck/pdfs
+           org-ref-bibliography-notes gwbrck/roam
+           org-ref-nonascii-latex-replacements '()
+           org-ref-notes-function 'orb-edit-notes)
+      (setf (cdr (assoc 'org-mode bibtex-completion-format-citation-functions))       'org-ref-format-citation)
+       (setq org-ref-clean-bibtex-entry-hook '(gwbrck/bibtex-clean-entry)))
 
-      (use-package org-pdftools
-        :hook (org-mode . org-pdftools-setup-link))
+    (use-package org-roam
+      :after org
+      ;; default from github :hook (org-load .org-roam-mode)
+      :config
+      (setq org-roam-directory gwbrck/roam)
+      (setq org-roam-title-sources '((alias title headline)))
+      (setq org-roam-dailies-capture-templates
+            '(("i" "Idee" entry
+               #'org-roam-capture--get-point
+               "* %?"
+               :file-name "daily/%<%Y-%m-%d>"
+               :head "#+title: %<%Y-%m-%d>\n"
+               :olp ("Idee"))
+              ("m" "Meeting" entry
+               #'org-roam-capture--get-point
+               "* %?"
+               :file-name "daily/%<%Y-%m-%d>-Meeting-%^{Thema (short)}"
+               :head "#+title: Meeting Notes vom %<%d.%m.%Y> zu %^{Thema (long)}\n#+date:  %<%d.%m.%Y>\n")
+              ("j" "journal" entry
+               #'org-roam-capture--get-point
+               "* %?"
+               :file-name "daily/%<%Y-%m-%d>"
+               :head "#+title: %<%Y-%m-%d>\n"
+               :olp ("Journal"))))
+      (setq org-roam-capture-templates
+            '(("d" "default" plain (function org-roam--capture-get-point)
+               "%?"
+               :file-name "%(format-time-string \"%Y-%m-%d--%H-%M-%SZ--${slug}\" (current-time) t)"
+               :head "#+title: ${title}\n"
+               :unnarrowed t)
+              ("p" "projekte" plain (function org-roam-capture--get-point)
+               :file-name "Projekte/${slug}"
+               :head "#+title: ${title}\n#+created: %(format-time-string \"[%Y-%m-%d %H:%M]\")\n\n%?"
+               :unnarrowed t))))
 
-      (use-package org-noter-pdftools
-        :after org-noter
-        :config
-        ;; Add a function to ensure precise note is inserted
-        (defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
-          (interactive "P")
-          (org-noter--with-valid-session
-           (let ((org-noter-insert-note-no-questions (if toggle-no-questions
-                                                         (not org-noter-insert-note-no-questions)
-                                                       org-noter-insert-note-no-questions))
-                 (org-pdftools-use-isearch-link t)
-                 (org-pdftools-use-freestyle-annot t))
-             (org-noter-insert-note (org-noter--get-precise-info)))))
+    (use-package org-roam-bibtex
+      :after (org-roam)
+      :hook (org-roam-mode . org-roam-bibtex-mode)
+      :config
 
-        ;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
-        (defun org-noter-set-start-location (&optional arg)
-          "When opening a session with this document, go to the current location.
-      With a prefix ARG, remove start location."
-          (interactive "P")
-          (org-noter--with-valid-session
-           (let ((inhibit-read-only t)
-                 (ast (org-noter--parse-root))
-                 (location (org-noter--doc-approx-location (when (called-interactively-p 'any) 'interactive))))
-             (with-current-buffer (org-noter--session-notes-buffer session)
-               (org-with-wide-buffer
-                (goto-char (org-element-property :begin ast))
-                (if arg
-                    (org-entry-delete nil org-noter-property-note-location)
-                  (org-entry-put nil org-noter-property-note-location
-                                 (org-noter--pretty-print-location location))))))))
-        (with-eval-after-load 'pdf-annot
-          (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
+    (setq orb-preformat-keywords
+          '("citekey" "title" "url" "author-or-editor" "keywords" "file")
+          orb-process-file-field t
+          orb-file-field-extensions "pdf")
+
+    (setq orb-templates
+          '(("r" "ref" plain (function org-roam-capture--get-point)
+             ""
+             :file-name "Konspekte/${citekey}"
+             :head "#+TITLE: Konspekt von ${citekey}\n#+ROAM_KEY: ${ref}
+
+    - tags ::
+    - keywords :: ${keywords}\n\n* Konspekt
+    :PROPERTIES:
+    :Custom_ID: ${citekey}
+    :AUTHOR: ${author-or-editor}
+    :NOTER_DOCUMENT: ${file}
+    :NOTER_PAGE:
+    :END:"))))
+
+
+    (use-package org-noter
+      :after (:any org pdf-view)
+      :config
+      (setq org-noter-notes-search-path (list gwbrck/roam))
+      (require 'org-noter-pdftools))
+
+    (use-package org-pdftools
+      :hook (org-mode . org-pdftools-setup-link))
+
+    (use-package org-noter-pdftools
+      :after org-noter
+      :config
+      ;; Add a function to ensure precise note is inserted
+      (defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
+        (interactive "P")
+        (org-noter--with-valid-session
+         (let ((org-noter-insert-note-no-questions (if toggle-no-questions
+                                                       (not org-noter-insert-note-no-questions)
+                                                     org-noter-insert-note-no-questions))
+               (org-pdftools-use-isearch-link t)
+               (org-pdftools-use-freestyle-annot t))
+           (org-noter-insert-note (org-noter--get-precise-info)))))
+
+      ;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
+      (defun org-noter-set-start-location (&optional arg)
+        "When opening a session with this document, go to the current location.
+    With a prefix ARG, remove start location."
+        (interactive "P")
+        (org-noter--with-valid-session
+         (let ((inhibit-read-only t)
+               (ast (org-noter--parse-root))
+               (location (org-noter--doc-approx-location (when (called-interactively-p 'any) 'interactive))))
+           (with-current-buffer (org-noter--session-notes-buffer session)
+             (org-with-wide-buffer
+              (goto-char (org-element-property :begin ast))
+              (if arg
+                  (org-entry-delete nil org-noter-property-note-location)
+                (org-entry-put nil org-noter-property-note-location
+                               (org-noter--pretty-print-location location))))))))
+      (with-eval-after-load 'pdf-annot
+        (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
 
 
 
