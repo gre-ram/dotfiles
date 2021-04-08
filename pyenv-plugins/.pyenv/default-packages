@@ -5,6 +5,7 @@ neovim-remote
 # Get python language server up & running
 python-language-server[all]
 pyls-mypy
+visidata
 
 # Upgrade pip while we're at it.
 pip
