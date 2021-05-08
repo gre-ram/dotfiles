@@ -196,7 +196,7 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 #+begin_src emacs-lisp
 
 (use-package doom-themes
-  :init (load-theme 'doom-nord t))
+  :init (load-theme 'doom-dracula t))
 
 #+end_src
 
@@ -783,7 +783,6 @@ You can add more =src= block templates below by copying one of the lines and cha
 : switch-dictionary-de-en
 
 * Development
-
 ** Languages
 
 *** IDE Features with lsp-mode
