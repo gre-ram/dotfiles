@@ -1,12 +1,6 @@
 ################################
 ###########  Basic  ############
 ################################
-#export PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-fi
-# source ~/Documents/.ENVS.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 test -r ~/.dir_colors && eval $(gdircolors ~/.dir_colors)

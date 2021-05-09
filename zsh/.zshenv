@@ -15,3 +15,9 @@ local pathstring="/usr/local/bin:$pathstring"
 export PATH="$pathstring"
 export PIPENV_VENV_IN_PROJECT=1
 export PIPENV_PYTHON="$PYENV_ROOT/shims/python"
+
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+
