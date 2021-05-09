@@ -1,6 +1,11 @@
 ################################
 ###########  Basic  ############
 ################################
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
+
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 test -r ~/.dir_colors && eval $(gdircolors ~/.dir_colors)
@@ -201,6 +206,4 @@ function -report-start-time() {
   fi
 }
 add-zsh-hook precmd -report-start-time
-
-
 
