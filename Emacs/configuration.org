@@ -760,28 +760,9 @@ You can add more =src= block templates below by copying one of the lines and cha
 
 * Word Stuff
 #+begin_src emacs-lisp
-    (use-package flyspell)
-    (use-package flyspell-correct
-      :after flyspell
-      :bind (:map flyspell-mode-map ("C-;" . flyspell-correct-wrapper)))
-
-    (use-package flyspell-correct-popup
-      :after flyspell-correct)
-
-  (setq ispell-program-name "hunspell"          ; Use hunspell to correct mistakes
-        ispell-dictionary   "de_DE_frami") ; Default dictionary to use
-
-    (use-package langtool
-    :config
-    (setq langtool-language-tool-server-jar
-          (substring (shell-command-to-string
-                                          "echo /usr/local/Cellar/languagetool/*/libexec/languagetool-server.jar") 0 -1))
-    (setq langtool-default-language "de-DE"))
+  (setq ispell-program-name "aspell"
+        ispell-dictionary   "deutsch") 
 #+End_src
-
-#+RESULTS:
-: switch-dictionary-de-en
-
 * Development
 ** Languages
 
