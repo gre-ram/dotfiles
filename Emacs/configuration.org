@@ -1,40 +1,39 @@
-#+TITLE: Config based on Emacs From Scratch
-This configuration is based on the very helpfull [[https://github.com/daviwil/emacs-from-scratch/blob/master/Emacs.org][Emacs From Scratch]] Projekt by David Wilson. 
 * Basic UI Configuration
 This section configures basic UI settings that remove unneeded elements to make Emacs look a lot more minimal and modern.
 #+begin_src emacs-lisp
-  (setq inhibit-startup-message t)
-  (setq frame-resize-pixelwise t)
+    (setq inhibit-startup-message t)
+    (setq frame-resize-pixelwise t)
 
-  (scroll-bar-mode -1)        ; Disable visible scrollbar
-  (tool-bar-mode -1)          ; Disable the toolbar
-  (tooltip-mode -1)           ; Disable tooltips
-  (set-fringe-mode 10)        ; Give some breathing room
+    (scroll-bar-mode -1)        ; Disable visible scrollbar
+    (tool-bar-mode -1)          ; Disable the toolbar
+    (tooltip-mode -1)           ; Disable tooltips
+    (set-fringe-mode 10)        ; Give some breathing room
 
-  (menu-bar-mode -1)            ; Disable the menu bar
+    (menu-bar-mode -1)            ; Disable the menu bar
 
-  ;; Set up the visible bell
-  (setq visible-bell t)
+    ;; Set up the visible bell
+    (setq visible-bell t)
 
-  (column-number-mode)
-  (global-display-line-numbers-mode t)
+    (column-number-mode)
+    (global-display-line-numbers-mode t)
 
-  ;; Disable line numbers for some modes
-  (dolist (mode '(org-mode-hook
-                  term-mode-hook
-                    pdf-view-mode-hook
-                  shell-mode-hook
-                  treemacs-mode-hook
-                  eshell-mode-hook))
-    (add-hook mode (lambda () (display-line-numbers-mode 0))))
+    ;; Disable line numbers for some modes
+    (dolist (mode '(org-mode-hook
+                    term-mode-hook
+                      pdf-view-mode-hook
+                    shell-mode-hook
+                    treemacs-mode-hook
+                    eshell-mode-hook))
+      (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-(setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
-  backup-by-copying t    ; Don't delink hardlinks
-  version-control t      ; Use version numbers on backups
-  delete-old-versions t  ; Automatically delete excess backups
-  kept-new-versions 20   ; how many of the newest versions to keep
-  kept-old-versions 5    ; and how many of the old
-  )
+  (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
+    backup-by-copying t    ; Don't delink hardlinks
+    version-control t      ; Use version numbers on backups
+    delete-old-versions t  ; Automatically delete excess backups
+    kept-new-versions 20   ; how many of the newest versions to keep
+    kept-old-versions 5    ; and how many of the old
+    )
+
 #+end_src
 
 ** Mac specific Config
@@ -48,9 +47,7 @@ This section configures basic UI settings that remove unneeded elements to make 
     :init (ns-auto-titlebar-mode +1))
   (set-terminal-coding-system 'utf-8)
   (set-keyboard-coding-system 'utf-8)
-  (prefer-coding-system 'utf-8)
- (let ((auth-sources '(macos-keychain-internet))) (auth-source-search :max 1))
- (let ((auth-sources '(macos-keychain-generic))) (auth-source-search :max 1)))
+  (prefer-coding-system 'utf-8))
 
 (when (equal system-type 'darwin)
   (defun ns-raise-emacs ()
@@ -108,7 +105,7 @@ This section configures basic UI settings that remove unneeded elements to make 
 This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil-mode]] for a Vi-like modal editing experience.  [[https://github.com/noctuid/general.el][general.el]] is used for easy keybinding configuration that integrates well with which-key.  [[https://github.com/emacs-evil/evil-collection][evil-collection]] is used to automatically configure various Emacs modes with Vi-like keybindings for evil-mode.
 
 #+begin_src emacs-lisp
-
+  
   ;; Make ESC quit prompts
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
   (global-set-key (kbd "C-M-u") 'universal-argument)
@@ -117,7 +114,7 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
     (general-create-definer gwbrck/leader-keys
       :prefix "SPC"
       :global-prefix "C-SPC")
-
+  
     (gwbrck/leader-keys
       :keymaps '(normal insert visual emacs)
       "b"  '(:ignore t :which-key "buffer")
@@ -148,8 +145,8 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
      "fdv" '((lambda () (interactive) (counsel-find-file "~/dotfiles/Neovim/.config")) :which-key "Neovim")
      "fdd" '((lambda () (interactive) (counsel-find-file"~/dotfiles")) :which-key "dotfiles")
      "fde" '((lambda () (interactive) (find-file "~/dotfiles/Emacs/configuration.org")) :which-key "Emacs")))
-
-
+  
+  
   (use-package evil
     :init
     (setq evil-want-integration t)
@@ -160,32 +157,32 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
     (evil-mode 1)
     (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
     (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
-
+  
     ;; Use visual line motions even outside of visual-line-mode buffers
     (evil-global-set-key 'motion "j" 'evil-next-visual-line)
     (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-
+  
     (evil-set-initial-state 'messages-buffer-mode 'normal)
     (evil-set-initial-state 'dashboard-mode 'normal)
-
+  
     (defun gwbrck/evil-yank-advice (orig-fn beg end &rest args)
       (pulse-momentary-highlight-region beg end 'highlight)
       (apply orig-fn beg end args))
     (advice-add 'evil-yank :around 'gwbrck/evil-yank-advice))
-
+  
   (use-package evil-collection
     :after evil
     :config
     (evil-collection-init))
-
+  
   (use-package evil-snipe
     :after evil-collection
     :config
     (evil-snipe-mode +1)
     (evil-snipe-override-mode +1)
     (setq evil-snipe-scope 'buffer))
-
-
+  
+  
 #+end_src
 
 * UI Configuration
@@ -238,35 +235,34 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 
 #+begin_src emacs-lisp
 
-    (use-package ivy
-      :diminish
-      :bind (("C-s" . swiper)
-             :map ivy-minibuffer-map
-             ("TAB" . ivy-alt-done)
-             ("C-l" . ivy-alt-done)
-             ("C-j" . ivy-next-line)
-             ("C-k" . ivy-previous-line)
-             :map ivy-switch-buffer-map
-             ("C-k" . ivy-previous-line)
-             ("C-l" . ivy-done)
-             ("C-d" . ivy-switch-buffer-kill)
-             :map ivy-reverse-i-search-map
-             ("C-k" . ivy-previous-line)
-             ("C-d" . ivy-reverse-i-search-kill))
-      :config
-      (ivy-mode 1))
+  (use-package ivy
+    :diminish
+    :bind (("C-s" . swiper)
+           :map ivy-minibuffer-map
+           ("TAB" . ivy-alt-done)
+           ("C-l" . ivy-alt-done)
+           ("C-j" . ivy-next-line)
+           ("C-k" . ivy-previous-line)
+           :map ivy-switch-buffer-map
+           ("C-k" . ivy-previous-line)
+           ("C-l" . ivy-done)
+           ("C-d" . ivy-switch-buffer-kill)
+           :map ivy-reverse-i-search-map
+           ("C-k" . ivy-previous-line)
+           ("C-d" . ivy-reverse-i-search-kill))
+    :config
+    (ivy-mode 1))
 
-    (use-package ivy-rich
-      :init
-      (ivy-rich-mode 1))
+  (use-package counsel
+    :bind (("C-M-j" . 'counsel-switch-buffer)
+           :map minibuffer-local-map
+           ("C-r" . 'counsel-minibuffer-history))
+    :config
+    (counsel-mode 1))
 
-    (use-package counsel
-      :bind (("C-M-j" . 'counsel-switch-buffer)
-             :map minibuffer-local-map
-             ("C-r" . 'counsel-minibuffer-history))
-      :config
-      (counsel-mode 1))
-
+  (use-package ivy-rich
+    :init
+    (ivy-rich-mode 1))
 #+end_src
 
 ** Bufler
@@ -314,11 +310,15 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 
 * PDF-Tools
 #+begin_src emacs-lisp
-    (use-package pdf-tools
-      :config
-      (pdf-tools-install)
-      (setq pdf-view-use-scaling 2)
-      (setq pdf-view-use-imagekick nil))
+  (use-package pdf-tools
+    :config
+    (pdf-tools-install)
+    (setq pdf-view-use-scaling 2)
+    (setq pdf-view-use-imagekick nil))
+
+
+  (use-package org-noter)
+
 #+end_src
 
 * Org Mode
@@ -335,92 +335,85 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 This section contains the basic configuration for =org-mode= plus the configuration for Org agendas and capture templates.  There's a lot to unpack in here so I'd recommend watching the videos for [[https://youtu.be/VcgjTEa0kU4][Part 5]] and [[https://youtu.be/PNE-mgkZ6HM][Part 6]] for a full explanation.
 
 #+begin_src emacs-lisp
-
-    (defun efs/org-mode-setup ()
-      (org-indent-mode)
-      (variable-pitch-mode 1)
-      (gwbrck/set-font-faces)
-      (org-ref-ivy-cite-completion)
-      (visual-line-mode 1))
-
-    (use-package org
-      :hook (org-mode . efs/org-mode-setup)
-      :config
-      (setq org-ellipsis " ▾")
-
-      (setq org-agenda-start-with-log-mode t)
-      (setq org-log-done 'time)
-      (setq org-log-into-drawer t)
-
-     (setq org-agenda-files (directory-files-recursively gwbrck/roam "\\.org$"))
-
-      (require 'org-habit)
-      (add-to-list 'org-modules 'org-habit)
-      (setq org-habit-graph-column 60)
-
-      (setq org-todo-keywords
+  
+  (defun efs/org-mode-setup ()
+    (org-indent-mode)
+    (variable-pitch-mode 1)
+    (gwbrck/set-font-faces)
+    (org-ref-ivy-cite-completion)
+    (visual-line-mode 1))
+  
+  (setq org-ellipsis " ▾")
+  
+  (setq org-agenda-start-with-log-mode t)
+  (setq org-log-done 'time)
+  (setq org-log-into-drawer t)
+  
+  (setq org-agenda-files (directory-files-recursively gwbrck/roam "\\.org$"))
+  
+  (setq org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
           (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
-
-
-      ;; Save Org buffers after refiling!
-      (advice-add 'org-refile :after 'org-save-all-org-buffers)
-
-
-      ;; Configure custom agenda views
-      (setq org-agenda-custom-commands
-       '(("d" "Dashboard"
-         ((agenda "" ((org-deadline-warning-days 7)))
-          (todo "NEXT"
-            ((org-agenda-overriding-header "Next Tasks")))
-          (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
-
-        ("n" "Next Tasks"
-         ((todo "NEXT"
-            ((org-agenda-overriding-header "Next Tasks")))))
-
-        ("W" "Work Tasks" tags-todo "+work-email")
-
-        ;; Low-effort next actions
-        ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
-         ((org-agenda-overriding-header "Low Effort Tasks")
-          (org-agenda-max-todos 20)
-          (org-agenda-files org-agenda-files)))
-
-        ("w" "Workflow Status"
-         ((todo "WAIT"
-                ((org-agenda-overriding-header "Waiting on External")
-                 (org-agenda-files org-agenda-files)))
-          (todo "REVIEW"
-                ((org-agenda-overriding-header "In Review")
-                 (org-agenda-files org-agenda-files)))
-          (todo "PLAN"
-                ((org-agenda-overriding-header "In Planning")
-                 (org-agenda-todo-list-sublevels nil)
-                 (org-agenda-files org-agenda-files)))
-          (todo "BACKLOG"
-                ((org-agenda-overriding-header "Project Backlog")
-                 (org-agenda-todo-list-sublevels nil)
-                 (org-agenda-files org-agenda-files)))
-          (todo "READY"
-                ((org-agenda-overriding-header "Ready for Work")
-                 (org-agenda-files org-agenda-files)))
-          (todo "ACTIVE"
-                ((org-agenda-overriding-header "Active Projects")
-                 (org-agenda-files org-agenda-files)))
-          (todo "COMPLETED"
-                ((org-agenda-overriding-header "Completed Projects")
-                 (org-agenda-files org-agenda-files)))
-          (todo "CANC"
-                ((org-agenda-overriding-header "Cancelled Projects")
-                 (org-agenda-files org-agenda-files)))))))
-
-      (define-key global-map (kbd "C-c j")
-        (lambda () (interactive) (org-capture nil "jj")))
-
-      ;;(gwbrck/set-font-faces)
-  )
-
+  
+  
+  ;; Save Org buffers after refiling!
+  (advice-add 'org-refile :after 'org-save-all-org-buffers)
+  
+  
+  ;; Configure custom agenda views
+  (setq org-agenda-custom-commands
+        '(("d" "Dashboard"
+           ((agenda "" ((org-deadline-warning-days 7)))
+            (todo "NEXT"
+                  ((org-agenda-overriding-header "Next Tasks")))
+            (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
+  
+          ("n" "Next Tasks"
+           ((todo "NEXT"
+                  ((org-agenda-overriding-header "Next Tasks")))))
+  
+          ("W" "Work Tasks" tags-todo "+work-email")
+  
+          ;; Low-effort next actions
+          ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
+           ((org-agenda-overriding-header "Low Effort Tasks")
+            (org-agenda-max-todos 20)
+            (org-agenda-files org-agenda-files)))
+  
+          ("w" "Workflow Status"
+           ((todo "WAIT"
+                  ((org-agenda-overriding-header "Waiting on External")
+                   (org-agenda-files org-agenda-files)))
+            (todo "REVIEW"
+                  ((org-agenda-overriding-header "In Review")
+                   (org-agenda-files org-agenda-files)))
+            (todo "PLAN"
+                  ((org-agenda-overriding-header "In Planning")
+                   (org-agenda-todo-list-sublevels nil)
+                   (org-agenda-files org-agenda-files)))
+            (todo "BACKLOG"
+                  ((org-agenda-overriding-header "Project Backlog")
+                   (org-agenda-todo-list-sublevels nil)
+                   (org-agenda-files org-agenda-files)))
+            (todo "READY"
+                  ((org-agenda-overriding-header "Ready for Work")
+                   (org-agenda-files org-agenda-files)))
+            (todo "ACTIVE"
+                  ((org-agenda-overriding-header "Active Projects")
+                   (org-agenda-files org-agenda-files)))
+            (todo "COMPLETED"
+                  ((org-agenda-overriding-header "Completed Projects")
+                   (org-agenda-files org-agenda-files)))
+            (todo "CANC"
+                  ((org-agenda-overriding-header "Cancelled Projects")
+             (org-agenda-files org-agenda-files)))))))
+  
+  (define-key global-map (kbd "C-c j")
+    (lambda () (interactive) (org-capture nil "jj")))
+  
+  ;;(gwbrck/set-font-faces)
+  
+  
 #+end_src
 
 *** Nicer Heading Bullets
@@ -448,7 +441,7 @@ We use [[https://github.com/joostkremers/visual-fill-column][visual-fill-column]
 #+begin_src emacs-lisp
 
   (defun efs/org-mode-visual-fill ()
-    (setq visual-fill-column-width 100
+    (setq visual-fill-column-width 110
           visual-fill-column-center-text t)
     (visual-fill-column-mode 1))
 
@@ -620,50 +613,6 @@ You can add more =src= block templates below by copying one of the lines and cha
     :END:"))))
 
 
-    (use-package org-noter
-      :after (:any org pdf-view)
-      :config
-      (setq org-noter-notes-search-path (list gwbrck/roam))
-      (require 'org-noter-pdftools))
-
-    (use-package org-pdftools
-      :hook (org-mode . org-pdftools-setup-link))
-
-    (use-package org-noter-pdftools
-      :after org-noter
-      :config
-      ;; Add a function to ensure precise note is inserted
-      (defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
-        (interactive "P")
-        (org-noter--with-valid-session
-         (let ((org-noter-insert-note-no-questions (if toggle-no-questions
-                                                       (not org-noter-insert-note-no-questions)
-                                                     org-noter-insert-note-no-questions))
-               (org-pdftools-use-isearch-link t)
-               (org-pdftools-use-freestyle-annot t))
-           (org-noter-insert-note (org-noter--get-precise-info)))))
-
-      ;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
-      (defun org-noter-set-start-location (&optional arg)
-        "When opening a session with this document, go to the current location.
-    With a prefix ARG, remove start location."
-        (interactive "P")
-        (org-noter--with-valid-session
-         (let ((inhibit-read-only t)
-               (ast (org-noter--parse-root))
-               (location (org-noter--doc-approx-location (when (called-interactively-p 'any) 'interactive))))
-           (with-current-buffer (org-noter--session-notes-buffer session)
-             (org-with-wide-buffer
-              (goto-char (org-element-property :begin ast))
-              (if arg
-                  (org-entry-delete nil org-noter-property-note-location)
-                (org-entry-put nil org-noter-property-note-location
-                               (org-noter--pretty-print-location location))))))))
-      (with-eval-after-load 'pdf-annot
-        (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
-
-
-
 #+end_src
 
 *** Custom bibcleanfunction
@@ -763,6 +712,7 @@ You can add more =src= block templates below by copying one of the lines and cha
   (setq ispell-program-name "aspell"
         ispell-dictionary   "deutsch") 
 #+End_src
+
 * Development
 ** Languages
 
@@ -884,29 +834,6 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
 
   (use-package company-box
     :hook (company-mode . company-box-mode))
-
-#+end_src
-
-** Projectile
-
-[[https://projectile.mx/][Projectile]] is a project management library for Emacs which makes it a lot easier to navigate around code projects for various languages.  Many packages integrate with Projectile so it's a good idea to have it installed even if you don't use its commands directly.
-
-#+begin_src emacs-lisp
-
-  (use-package projectile
-    :diminish projectile-mode
-    :config (projectile-mode)
-    :custom ((projectile-completion-system 'ivy))
-    :bind-keymap
-    ("C-c p" . projectile-command-map)
-    :init
-    ;; NOTE: Set this to the folder where you keep your Git repos!
-    (when (file-directory-p "~/Code")
-      (setq projectile-project-search-path '("~/Code")))
-    (setq projectile-switch-project-action #'projectile-dired))
-
-  (use-package counsel-projectile
-    :config (counsel-projectile-mode))
 
 #+end_src
 
@@ -1091,72 +1018,12 @@ For more thoughts on Eshell, check out these articles by Pierre Neidhardt:
 #+end_src
 ** Dired
 
-Dired is a built-in file manager for Emacs that does some pretty amazing things!  Here are some key bindings you should try out:
-
-*** Key Bindings
-
-**** Navigation
-
-*Emacs* / *Evil*
-- =n= / =j= - next line
-- =p= / =k= - previous line
-- =j= / =J= - jump to file in buffer
-- =RET= - select file or directory
-- =^= - go to parent directory
-- =S-RET= / =g O= - Open file in "other" window
-- =M-RET= - Show file in other window without focusing (previewing files)
-- =g o= (=dired-view-file=) - Open file but in a "preview" mode, close with =q=
-- =g= / =g r= Refresh the buffer with =revert-buffer= after changing configuration (and after filesystem changes!)
-
-**** Marking files
-
-- =m= - Marks a file
-- =u= - Unmarks a file
-- =U= - Unmarks all files in buffer
-- =* t= / =t= - Inverts marked files in buffer
-- =% m= - Mark files in buffer using regular expression
-- =*= - Lots of other auto-marking functions
-- =k= / =K= - "Kill" marked items (refresh buffer with =g= / =g r= to get them back)
-- Many operations can be done on a single file if there are no active marks!
- 
-**** Copying and Renaming files
-
-- =C= - Copy marked files (or if no files are marked, the current file)
-- Copying single and multiple files
-- =U= - Unmark all files in buffer
-- =R= - Rename marked files, renaming multiple is a move!
-- =% R= - Rename based on regular expression: =^test= , =old-\&=
-
-*Power command*: =C-x C-q= (=dired-toggle-read-only=) - Makes all file names in the buffer editable directly to rename them!  Press =Z Z= to confirm renaming or =Z Q= to abort.
-
-**** Deleting files
-
-- =D= - Delete marked file
-- =d= - Mark file for deletion
-- =x= - Execute deletion for marks
-- =delete-by-moving-to-trash= - Move to trash instead of deleting permanently
-
-**** Creating and extracting archives
-
-- =Z= - Compress or uncompress a file or folder to (=.tar.gz=)
-- =c= - Compress selection to a specific file
-- =dired-compress-files-alist= - Bind compression commands to file extension
-
-**** Other common operations
-
-- =T= - Touch (change timestamp)
-- =M= - Change file mode
-- =O= - Change file owner
-- =G= - Change file group
-- =S= - Create a symbolic link to this file
-- =L= - Load an Emacs Lisp file into Emacs
-
 *** Configuration
 
 #+begin_src emacs-lisp
 
   (use-package dired
-    :ensure nil
+    :straight nil
     :commands (dired dired-jump)
     :bind (("C-x C-j" . dired-jump))
     :custom ((dired-listing-switches "-agho --group-directories-first"))
