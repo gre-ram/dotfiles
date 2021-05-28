@@ -119,17 +119,17 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
       :keymaps '(normal insert visual emacs)
       "b"  '(:ignore t :which-key "buffer")
       "bk" '(kill-this-buffer :which-key "kill buffer")
-      "bs" '(bufler-switch-buffer :which-key "list buffer")
+      "bs" '(consult-buffer :which-key "list buffer")
       "bn" '(next-buffer :which-key "next buffer")
       "bN" '(previous-buffer :which-key "prev buffer")
       "t"  '(:ignore t :which-key "toggles")
       "tw" '(whitespace-mode :which-key "whitespace" )
-      "tt" '(counsel-load-theme :which-key "choose theme"))
+      "tt" '(load-theme :which-key "choose theme"))
    (gwbrck/leader-keys
       :keymaps '(normal insert visual emacs)
      "f"   '(:ignore t :which-key "files")
-     "fB"  '((lambda () (interactive) (counsel-find-file "~/Documents/myBib")) :which-key "Bib Folder")
-     "fb"  '(ivy-bibtex :which-key "Bib")
+     "fB"  '((lambda () (interactive) (find-file "~/Documents/myBib")) :which-key "Bib Folder")
+     "fb"  '(bibtex-actions-open :which-key "Bib")
      "fr" '(:ignore t :which-key "roam")
      "frR"  '(org-roam-find-file :which-key "roam find file+")
      "frr"  '(orb-find-non-ref-file :which-key "roam find file")
@@ -138,12 +138,12 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
      "frdF" '(org-roam-dailies-find-date :which-key "open date")
      "frdc" '(org-roam-dailies-capture-today :which-key "capture today")
      "frdC" '(org-roam-dailies-capture-date :which-key "capture date")
-     "ff"  '((lambda () (interactive) (counsel-find-file "~/Documents")) :which-key "Documents")
-     "fc"  '((lambda () (interactive) (counsel-find-file "~/Code")) :which-key "Code")
+     "ff"  '((lambda () (interactive) (find-file "~/Documents")) :which-key "Documents")
+     "fc"  '((lambda () (interactive) (find-file "~/Code")) :which-key "Code")
      "fd"  '(:ignore t :which-key "dotfiles")
-     "fdz" '((lambda () (interactive) (counsel-find-file "~/dotfiles/zsh")) :which-key "zsh")
-     "fdv" '((lambda () (interactive) (counsel-find-file "~/dotfiles/Neovim/.config")) :which-key "Neovim")
-     "fdd" '((lambda () (interactive) (counsel-find-file"~/dotfiles")) :which-key "dotfiles")
+     "fdz" '((lambda () (interactive) (find-file "~/dotfiles/zsh")) :which-key "zsh")
+     "fdv" '((lambda () (interactive) (find-file "~/dotfiles/Neovim/.config")) :which-key "Neovim")
+     "fdd" '((lambda () (interactive) (find-file"~/dotfiles")) :which-key "dotfiles")
      "fde" '((lambda () (interactive) (find-file "~/dotfiles/Emacs/configuration.org")) :which-key "Emacs")))
   
   
@@ -164,7 +164,7 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
   
     (evil-set-initial-state 'messages-buffer-mode 'normal)
     (evil-set-initial-state 'dashboard-mode 'normal)
-  
+ 
     (defun gwbrck/evil-yank-advice (orig-fn beg end &rest args)
       (pulse-momentary-highlight-region beg end 'highlight)
       (apply orig-fn beg end args))
@@ -188,7 +188,6 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 * UI Configuration
 ** Color Theme
 
-[[https://github.com/hlissner/emacs-doom-themes][doom-themes]] is a great set of themes with a lot of variety and support for many different Emacs modes.  Taking a look at the [[https://github.com/hlissner/emacs-doom-themes/tree/screenshots][screenshots]] might help you decide which one you like best.  You can also run =M-x counsel-load-theme= to choose between them easily.
 
 #+begin_src emacs-lisp
 
@@ -227,47 +226,151 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 
 #+end_src
 
-** Ivy and Counsel
-
-[[https://oremacs.com/swiper/][Ivy]] is an excellent completion framework for Emacs.  It provides a minimal yet powerful selection menu that appears when you open files, switch buffers, and for many other tasks in Emacs.  Counsel is a customized set of commands to replace `find-file` with `counsel-find-file`, etc which provide useful commands for each of the default completion commands.
-
-[[https://github.com/Yevgnen/ivy-rich][ivy-rich]] adds extra columns to a few of the Counsel commands to provide more information about each item.
+** Selectrum, Consult, Orderlerss, Embark & Marginalia
 
 #+begin_src emacs-lisp
-
-  (use-package ivy
-    :diminish
-    :bind (("C-s" . swiper)
-           :map ivy-minibuffer-map
-           ("TAB" . ivy-alt-done)
-           ("C-l" . ivy-alt-done)
-           ("C-j" . ivy-next-line)
-           ("C-k" . ivy-previous-line)
-           :map ivy-switch-buffer-map
-           ("C-k" . ivy-previous-line)
-           ("C-l" . ivy-done)
-           ("C-d" . ivy-switch-buffer-kill)
-           :map ivy-reverse-i-search-map
-           ("C-k" . ivy-previous-line)
-           ("C-d" . ivy-reverse-i-search-kill))
+  
+  (use-package orderless
+    :ensure t
+    :custom (completion-styles '(orderless)))
+  
+  (use-package selectrum
     :config
-    (ivy-mode 1))
+    (selectrum-mode +1)
+    (savehist-mode))
 
-  (use-package counsel
-    :bind (("C-M-j" . 'counsel-switch-buffer)
-           :map minibuffer-local-map
-           ("C-r" . 'counsel-minibuffer-history))
+  (use-package marginalia
+    :ensure t
     :config
-    (counsel-mode 1))
-
-  (use-package ivy-rich
+    (marginalia-mode))
+  
+  
+  (use-package embark
+    :ensure t
+    :bind
+    (("M-o" . embark-act)       ;; pick some comfortable binding
+     ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
     :init
-    (ivy-rich-mode 1))
-#+end_src
-
-** Bufler
-#+begin_src emacs-lisp
-(use-package bufler)
+    ;; Optionally replace the key help with a completing-read interface
+    (setq prefix-help-command #'embark-prefix-help-command)
+    :config
+    ;; Hide the mode line of the Embark live/completions buffers
+    (add-to-list 'display-buffer-alist
+                 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                   nil
+                   (window-parameters (mode-line-format . none)))))
+  
+  ;; Consult users will also want the embark-consult package.
+  (use-package embark-consult
+    :ensure t
+    :after (embark consult)
+    :demand t ; only necessary if you have the hook below
+    ;; if you want to have consult previews as you move around an
+    ;; auto-updating embark collect buffer
+    :hook
+    (embark-collect-mode . consult-preview-at-point-mode))
+  
+  
+  ;; Example configuration for Consult
+  (use-package consult
+     :bind (;; C-c bindings (mode-specific-map)
+            ("C-c h" . consult-history)
+            ("C-c m" . consult-mode-command)
+            ("C-c b" . consult-bookmark)
+            ("C-c k" . consult-kmacro)
+            ;; C-x bindings (ctl-x-map)
+            ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
+            ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
+            ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
+            ;; Custom M-# bindings for fast register access
+            ("M-#" . consult-register-load)
+            ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
+            ("C-M-#" . consult-register)
+            ;; Other custom bindings
+            ("M-y" . consult-yank-pop)                ;; orig. yank-pop
+            ("<help> a" . consult-apropos)            ;; orig. apropos-command
+            ;; M-g bindings (goto-map)
+            ("M-g e" . consult-compile-error)
+            ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
+            ("M-g g" . consult-goto-line)             ;; orig. goto-line
+            ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
+            ("M-g o" . consult-outline)
+            ("M-g m" . consult-mark)
+            ("M-g k" . consult-global-mark)
+            ("M-g i" . consult-imenu)
+            ("M-g I" . consult-project-imenu)
+            ;; M-s bindings (search-map)
+            ("M-s f" . consult-find)
+            ("M-s L" . consult-locate)
+            ("M-s g" . consult-grep)
+            ("M-s G" . consult-git-grep)
+            ("M-s r" . consult-ripgrep)
+            ("C-s" . consult-line)
+            ("M-s m" . consult-multi-occur)
+            ("M-s k" . consult-keep-lines)
+            ("M-s u" . consult-focus-lines)
+            ;; Isearch integration
+            ("M-s e" . consult-isearch)
+            :map isearch-mode-map
+            ("M-e" . consult-isearch)                 ;; orig. isearch-edit-string
+            ("M-s e" . consult-isearch)               ;; orig. isearch-edit-string
+            ("M-s l" . consult-line))                 ;; required by consult-line to detect isearch
+     :init
+  
+     ;; Optionally configure the register formatting. This improves the register
+     ;; preview for `consult-register', `consult-register-load',
+     ;; `consult-register-store' and the Emacs built-ins.
+     (setq register-preview-delay 0
+           register-preview-function #'consult-register-format)
+  
+     ;; Optionally tweak the register preview window.
+     ;; This adds thin lines, sorting and hides the mode line of the window.
+     (advice-add #'register-preview :override #'consult-register-window)
+  
+     ;; Use Consult to select xref locations with preview
+     (setq xref-show-xrefs-function #'consult-xref
+           xref-show-definitions-function #'consult-xref)
+  
+     ;; Configure other variables and modes in the :config section,
+     ;; after lazily loading the package.
+     :config
+  
+     ;; Optionally configure preview. The default value
+     ;; is 'any, such that any key triggers the preview.
+     ;; (setq consult-preview-key 'any)
+     ;; (setq consult-preview-key (kbd "M-."))
+     ;; (setq consult-preview-key (list (kbd "<S-down>") (kbd "<S-up>")))
+     ;; For some commands and buffer sources it is useful to configure the
+     ;; :preview-key on a per-command basis using the `consult-customize' macro.
+     (consult-customize
+      consult-ripgrep consult-git-grep consult-grep consult-bookmark consult-recent-file
+      consult--source-file consult--source-project-file consult--source-bookmark
+      :preview-key (kbd "M-."))
+  
+     ;; Optionally configure the narrowing key.
+     ;; Both < and C-+ work reasonably well.
+     (setq consult-narrow-key "<") ;; (kbd "C-+")
+  
+     ;; Optionally make narrowing help available in the minibuffer.
+     ;; You may want to use `embark-prefix-help-command' or which-key instead.
+     ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
+  
+     ;; Optionally configure a function which returns the project root directory.
+     ;; There are multiple reasonable alternatives to chose from.
+     ;;;; 1. project.el (project-roots)
+     (setq consult-project-root-function
+           (lambda ()
+             (when-let (project (project-current))
+               (car (project-roots project)))))
+     ;;;; 2. projectile.el (projectile-project-root)
+     ;; (autoload 'projectile-project-root "projectile")
+     ;; (setq consult-project-root-function #'projectile-project-root)
+     ;;;; 3. vc.el (vc-root-dir)
+     ;; (setq consult-project-root-function #'vc-root-dir)
+     ;;;; 4. locate-dominating-file
+     ;; (setq consult-project-root-function (lambda () (locate-dominating-file "." ".git")))
+   )
+  
 #+end_src
 
 ** Helpful Help Commands
@@ -275,17 +378,13 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 [[https://github.com/Wilfred/helpful][Helpful]] adds a lot of very helpful (get it?) information to Emacs' =describe-= command buffers.  For example, if you use =describe-function=, you will not only get the documentation about the function, you will also see the source code of the function and where it gets used in other places in the Emacs configuration.  It is very useful for figuring out how things work in Emacs.
 
 #+begin_src emacs-lisp
-
   (use-package helpful
-    :custom
-    (counsel-describe-function-function #'helpful-callable)
-    (counsel-describe-variable-function #'helpful-variable)
+    :commands (helpful-callable helpful-variable helpful-command helpful-key)
     :bind
-    ([remap describe-function] . counsel-describe-function)
+    ([remap describe-function] . helpful-function)
     ([remap describe-command] . helpful-command)
-    ([remap describe-variable] . counsel-describe-variable)
+    ([remap describe-variable] . helpful-variable)
     ([remap describe-key] . helpful-key))
-
 #+end_src
 
 ** Text Scaling
@@ -340,7 +439,6 @@ This section contains the basic configuration for =org-mode= plus the configurat
     (org-indent-mode)
     (variable-pitch-mode 1)
     (gwbrck/set-font-faces)
-    (org-ref-ivy-cite-completion)
     (visual-line-mode 1))
   
   (setq org-ellipsis " ▾")
@@ -470,52 +568,94 @@ You can add more =src= block templates below by copying one of the lines and cha
 ** Bib & Roam
 *** Standi Configs
 #+begin_src emacs-lisp
-  (use-package ivy-bibtex
-         :init
-         (setq bibtex-completion-bibliography gwbrck/bib)
-         (setq bibtex-completion-notes-path (concat gwbrck/roam "Konspekte/"))
-         (setq bibtex-completion-library-path gwbrck/pdfs)
-         (setq bibtex-completion-edit-notes-function 'orb-edit-notes-ad)
-         (setq bibtex-dialect 'biblatex)
-         (setq bibtex-entry-format '(opts-or-alts numerical-fields whitespace realign last-comma delimiters unify-case sort-fields delimiters required-fields))
-         (setq bibtex-autokey-name-year-separator "_"
-               bibtex-autokey-year-title-separator "_"
-               bibtex-autokey-titlewords 1
-               bibtex-autokey-year-length 4
-               bibtex-autokey-edit-before-use nil
-               bibtex-autokey-additional-names 1
-               bibtex-autokey-titleword-ignore '("A" "An" "On" "The" "Eine" "Ein" "Der" "Die" "Das")
-               bibtex-autokey-titlewords-stretch 0
-               bibtex-autokey-titleword-length 5
-               bibtex-autokey-name-separator "-"
-               bibtex-autokey-names 2
-               bibtex-autokey-additional-names "-ea"
-               bibtex-comma-after-last-field t)
-         (setq biblio-cleanup-bibtex-function 'gwbrck/bibtex-clean-entry)
-         (setq bibtex-completion-pdf-open-function
-               (lambda (fpath)
-                 (call-process "open" nil 0 nil fpath))))
-
-         (add-to-list 'bibtex-autokey-name-change-strings '("ß" . "ss"))
-         (add-to-list 'bibtex-autokey-name-change-strings '("å" . "a"))
-         (add-to-list 'bibtex-autokey-name-change-strings '("Å" . "A"))
-         (add-to-list 'bibtex-autokey-name-change-strings '("ö" . "oe"))
-         (add-to-list 'bibtex-autokey-name-change-strings '("Ö" . "Oe"))
-         (add-to-list 'bibtex-autokey-name-change-strings '("ä" . "ae"))
-         (add-to-list 'bibtex-autokey-name-change-strings '("Ä" . "Ae"))
-         (add-to-list 'bibtex-autokey-name-change-strings '("Ü" . "Ue"))
-         (add-to-list 'bibtex-autokey-name-change-strings '("ü" . "ue"))
-         (add-to-list 'bibtex-autokey-titleword-change-strings '("ß" . "ss"))
-         (add-to-list 'bibtex-autokey-titleword-change-strings '("å" . "a"))
-         (add-to-list 'bibtex-autokey-titleword-change-strings '("Å" . "A"))
-         (add-to-list 'bibtex-autokey-titleword-change-strings '("ö" . "oe"))
-         (add-to-list 'bibtex-autokey-titleword-change-strings '("Ö" . "Oe"))
-         (add-to-list 'bibtex-autokey-titleword-change-strings '("ä" . "ae"))
-         (add-to-list 'bibtex-autokey-titleword-change-strings '("Ä" . "Ae"))
-         (add-to-list 'bibtex-autokey-titleword-change-strings '("Ü" . "Ue"))
-         (add-to-list 'bibtex-autokey-titleword-change-strings '("ü" . "ue"))
-
-
+  (require 'bibtex)
+  (setq bibtex-dialect 'biblatex)
+  (setq bibtex-entry-format '(opts-or-alts
+                              numerical-fields
+                              whitespace
+                              realign
+                              last-comma
+                              delimiters
+                              unify-case
+                              sort-fields
+                              delimiters
+                              required-fields))
+  (setq bibtex-autokey-name-year-separator "_"
+        bibtex-autokey-year-title-separator "_"
+        bibtex-autokey-titlewords 1
+        bibtex-autokey-year-length 4
+        bibtex-autokey-edit-before-use nil
+        bibtex-autokey-additional-names 1
+        bibtex-autokey-titleword-ignore '("A" "An" "On" "The" "Eine" "Ein" "Der" "Die" "Das")
+        bibtex-autokey-titlewords-stretch 0
+        bibtex-autokey-titleword-length 5
+        bibtex-autokey-name-separator "-"
+        bibtex-autokey-names 2
+        bibtex-autokey-additional-names "-ea"
+        bibtex-comma-after-last-field t)
+  (add-to-list 'bibtex-autokey-name-change-strings '("ß" . "ss"))
+  (add-to-list 'bibtex-autokey-name-change-strings '("å" . "a"))
+  (add-to-list 'bibtex-autokey-name-change-strings '("Å" . "A"))
+  (add-to-list 'bibtex-autokey-name-change-strings '("ö" . "oe"))
+  (add-to-list 'bibtex-autokey-name-change-strings '("Ö" . "Oe"))
+  (add-to-list 'bibtex-autokey-name-change-strings '("ä" . "ae"))
+  (add-to-list 'bibtex-autokey-name-change-strings '("Ä" . "Ae"))
+  (add-to-list 'bibtex-autokey-name-change-strings '("Ü" . "Ue"))
+  (add-to-list 'bibtex-autokey-name-change-strings '("ü" . "ue"))
+  (add-to-list 'bibtex-autokey-titleword-change-strings '("ß" . "ss"))
+  (add-to-list 'bibtex-autokey-titleword-change-strings '("å" . "a"))
+  (add-to-list 'bibtex-autokey-titleword-change-strings '("Å" . "A"))
+  (add-to-list 'bibtex-autokey-titleword-change-strings '("ö" . "oe"))
+  (add-to-list 'bibtex-autokey-titleword-change-strings '("Ö" . "Oe"))
+  (add-to-list 'bibtex-autokey-titleword-change-strings '("ä" . "ae"))
+  (add-to-list 'bibtex-autokey-titleword-change-strings '("Ä" . "Ae"))
+  (add-to-list 'bibtex-autokey-titleword-change-strings '("Ü" . "Ue"))
+  (add-to-list 'bibtex-autokey-titleword-change-strings '("ü" . "ue"))
+  
+  (use-package biblio
+    :init
+    (setq biblio-cleanup-bibtex-function 'gwbrck/bibtex-clean-entry))
+  
+  (use-package bibtex-completion
+    :after biblio
+    :init
+    (setq bibtex-completion-bibliography gwbrck/bib)
+    (setq bibtex-completion-notes-path (concat gwbrck/roam "Konspekte/"))
+    (setq bibtex-completion-library-path gwbrck/pdfs)
+    (setq bibtex-completion-edit-notes-function 'orb-edit-notes-ad)
+    (setq bibtex-completion-pdf-open-function
+          (lambda (fpath)
+            (call-process "open" nil 0 nil fpath))))
+  
+  
+  (use-package bibtex-actions
+    :bind (("C-c b" . bibtex-actions-refresh))
+    :after embark
+    :config
+    ;; Make the 'bibtex-actions' bindings available from `embark-act'.
+    (add-to-list 'embark-keymap-alist '(bibtex . bibtex-actions-map))
+    (setq bibtex-actions-symbols
+          `((pdf . (,(all-the-icons-icon-for-file "foo.pdf"
+                                                  :face 'all-the-icons-dred) .
+                    ,(all-the-icons-icon-for-file "foo.pdf"
+                                                  :face 'bibtex-actions-icon-dim)))
+            (note . (,(all-the-icons-icon-for-file "foo.txt") .
+                     ,(all-the-icons-icon-for-file "foo.txt"
+                                                  :face 'bibtex-actions-icon-dim)))        
+            (link . 
+                  (,(all-the-icons-faicon "external-link-square"
+                                          :v-adjust 0.02
+                                          :face 'all-the-icons-dpurple) .
+                   ,(all-the-icons-faicon "external-link-square"
+                                          :v-adjust 0.02
+                                          :face 'bibtex-actions-icon-dim)))))
+    (defface bibtex-actions-icon-dim
+      '((((background dark)) :foreground "#282c34")
+        (((background light)) :foreground "#fafafa"))
+      "Face for obscuring/dimming icons"
+      :group 'all-the-icons-faces))
+  
+  
     (gwbrck/leader-keys
       :keymaps 'bibtex-mode-map
       :states 'normal
@@ -525,33 +665,19 @@ You can add more =src= block templates below by copying one of the lines and cha
       "md" '(doi-utils-add-bibtex-entry-from-doi :which-key "get bibtex via doi")
       "mu" '(doi-utils-update-bibtex-entry-from-doi :which-key "update bibtex via doi")
       "ms" '(bibtex-sort-buffer :which-key "sort entries")
-      "mc" '(org-ref-clean-bibtex-entry :which-key "clean entry"))
-
-
+      "mc" '(gwbrck/bibtex-clean-entry :which-key "clean entry"))
+  
+  
     (gwbrck/leader-keys
       :keymaps 'org-mode-map
       :states 'normal
       "m"  '(:ignore t :which-key "org mode")
       "mo" '(org-ref-cite-hydra/body :which-key "org-ref")
       "mR" '(org-roam-insert :which-key "roam insert+")
-      "mr"  '(orb-insert-non-ref :which-key "roam insert")
-      "mi" '(org-ref-insert-cite-with-completion :which-key "insert citation"))
-
-
-    (use-package org-ref
-      :after org
-      :config
-      (setq
-           org-ref-completion-library 'org-ref-ivy-cite
-           org-ref-default-bibliography gwbrck/bib
-  ;;       org-ref-pdf-directory (concatenate 'string gwbrck/roam "Konspekte/")
-           org-ref-pdf-directory gwbrck/pdfs
-           org-ref-bibliography-notes gwbrck/roam
-           org-ref-nonascii-latex-replacements '()
-           org-ref-notes-function 'orb-edit-notes)
-      (setf (cdr (assoc 'org-mode bibtex-completion-format-citation-functions))       'org-ref-format-citation)
-       (setq org-ref-clean-bibtex-entry-hook '(gwbrck/bibtex-clean-entry)))
-
+      "mr" '(orb-insert-non-ref :which-key "roam insert")
+      "mi" '(bibtex-actions-insert-citation :which-key "insert citation"))
+  
+  
     (use-package org-roam
       :after org
       ;; default from github :hook (org-load .org-roam-mode)
@@ -586,23 +712,23 @@ You can add more =src= block templates below by copying one of the lines and cha
                :file-name "Projekte/${slug}"
                :head "#+title: ${title}\n#+created: %(format-time-string \"[%Y-%m-%d %H:%M]\")\n\n%?"
                :unnarrowed t))))
-
+  
     (use-package org-roam-bibtex
       :after (org-roam)
       :hook (org-roam-mode . org-roam-bibtex-mode)
       :config
-
+  
     (setq orb-preformat-keywords
           '("citekey" "title" "url" "author-or-editor" "keywords" "file")
           orb-process-file-field t
           orb-file-field-extensions "pdf")
-
+  
     (setq orb-templates
           '(("r" "ref" plain (function org-roam-capture--get-point)
              ""
              :file-name "Konspekte/${citekey}"
              :head "#+TITLE: Konspekt von ${citekey}\n#+ROAM_KEY: ${ref}
-
+  
     - tags ::
     - keywords :: ${keywords}\n\n* Konspekt
     :PROPERTIES:
@@ -611,8 +737,8 @@ You can add more =src= block templates below by copying one of the lines and cha
     :NOTER_DOCUMENT: ${file}
     :NOTER_PAGE:
     :END:"))))
-
-
+  
+  
 #+end_src
 
 *** Custom bibcleanfunction
@@ -642,7 +768,7 @@ You can add more =src= block templates below by copying one of the lines and cha
                 (save-restriction
                        (narrow-to-region (caar bounds) (nth 3 bounds))
                        (goto-char (point-min))
-                       (while (search-forward "journal" nil t)
+                       (while (re-search-forward "^\s*journal" nil t)
                          (replace-match "journaltitle")))
               (goto-char (bibtex-end-of-field bounds)))))))
 
@@ -661,8 +787,6 @@ You can add more =src= block templates below by copying one of the lines and cha
     (save-excursion
       (save-restriction
        (bibtex-narrow-to-entry)
-       ;;(bibtex-mark-entry)
-       ;;(ucs-normalize-NFC-region)
        (bibtex-beginning-of-entry)
        (gwbrck/bibtex-journal)
        (bibtex-beginning-of-entry)
@@ -771,21 +895,6 @@ This package is built on the [[https://github.com/Alexander-Miller/treemacs][tre
 
   (use-package lsp-treemacs
     :after lsp)
-
-#+end_src
-
-**** lsp-ivy
-
-[[https://github.com/emacs-lsp/lsp-ivy][lsp-ivy]] integrates Ivy with =lsp-mode= to make it easy to search for things by name in your code.  When you run these commands, a prompt will appear in the minibuffer allowing you to type part of the name of a symbol in your code.  Results will be populated in the minibuffer so that you can find what you're looking for and jump to that location in the code upon selecting the result.
-
-Try these commands with =M-x=:
-
-- =lsp-ivy-workspace-symbol= - Search for a symbol name in the current project workspace
-- =lsp-ivy-global-workspace-symbol= - Search for a symbol name in all active project workspaces
-
-#+begin_src emacs-lisp
-
-  (use-package lsp-ivy)
 
 #+end_src
 
@@ -987,7 +1096,6 @@ For more thoughts on Eshell, check out these articles by Pierre Neidhardt:
     (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
 
     ;; Bind some useful keys for evil-mode
-    (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-r") 'counsel-esh-history)
     (evil-define-key '(normal insert visual) eshell-mode-map (kbd "<home>") 'eshell-bol)
     (evil-normalize-keymaps)
 
