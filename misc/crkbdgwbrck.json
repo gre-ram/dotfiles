@@ -66,7 +66,7 @@
       "ANY(DE_QUOT)",
       "ANY(DE_AT)",
       "ANY(MT(MOD_LALT, DE_HASH))",
-      "ANY(MT(MOD_LCTL, DE_STIL))",
+      "ANY(MT(MOD_LCTL, DE_TILD))",
       "ANY(MT(MOD_LGUI, DE_LPRN))",
       "ANY(DE_RPRN)",
       "KC_P4",
