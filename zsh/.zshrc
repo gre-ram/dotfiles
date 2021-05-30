@@ -35,6 +35,8 @@ alias g2zshrc="vim ~/dotfiles/zsh/.zshrc"
 alias g2pdfs="~/Documents/myBib/pdfs"
 alias g2Konspekte="~/Documents/myBib/Konspekte"
 
+alias emacs="emacsclient -n"
+
 alias latex-update="sudo tlmgr update --self --all"
 
 alias ynab="Rscript ~/code/dkb-ynab/myaccounts.R"
