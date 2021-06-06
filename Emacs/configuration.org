@@ -660,8 +660,7 @@ You can add more =src= block templates below by copying one of the lines and cha
       :keymaps 'bibtex-mode-map
       :states 'normal
       "m"  '(:ignore t :which-key "bibtex mode")
-      "mP" '(org-ref-bibtex-assoc-pdf-with-entry :which-key "new pdf for entry")
-      "mp" '(org-ref-open-bibtex-pdf :which-key "open pdf for entry")
+      "mm" '(bibtex-actions-at-point :which-key "bibtex actions")
       "md" '(doi-utils-add-bibtex-entry-from-doi :which-key "get bibtex via doi")
       "mu" '(doi-utils-update-bibtex-entry-from-doi :which-key "update bibtex via doi")
       "ms" '(bibtex-sort-buffer :which-key "sort entries")
