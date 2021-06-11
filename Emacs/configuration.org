@@ -833,7 +833,13 @@ You can add more =src= block templates below by copying one of the lines and cha
 * Word Stuff
 #+begin_src emacs-lisp
   (setq ispell-program-name "aspell"
-        ispell-dictionary   "deutsch") 
+        ispell-dictionary   "deutsch")
+  
+  
+  (eval-after-load "flyspell"
+    '(progn
+       (define-key flyspell-mouse-map [down-mouse-3] #'flyspell-correct-word)
+       (define-key flyspell-mouse-map [mouse-3] #'undefined)))
 #+End_src
 
 * Development
