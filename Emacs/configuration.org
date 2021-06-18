@@ -69,7 +69,7 @@ This section configures basic UI settings that remove unneeded elements to make 
 ** Font Configuration
 #+begin_src emacs-lisp
   (defun gwbrck/set-font-faces ()
-    (set-face-attribute 'default nil :font "Fira Code" :height 150)
+    (set-face-attribute 'default nil :font "Fira Code" :height 110)
     (set-face-attribute 'fixed-pitch nil :font "Fira Code" :height 1.0)
     (set-face-attribute 'variable-pitch nil :font "Cantarell" :weight 'regular :height 1.0)
 
