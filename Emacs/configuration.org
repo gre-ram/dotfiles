@@ -915,18 +915,11 @@ The =which-key= integration adds helpful descriptions of the various keys so you
 
 #+end_src
 
-**** lsp-ivy
-***** TODO replace with github.com/gagbo/consult-lsp
-[[https://github.com/emacs-lsp/lsp-ivy][lsp-ivy]] integrates Ivy with =lsp-mode= to make it easy to search for things by name in your code.  When you run these commands, a prompt will appear in the minibuffer allowing you to type part of the name of a symbol in your code.  Results will be populated in the minibuffer so that you can find what you're looking for and jump to that location in the code upon selecting the result.
-
-Try these commands with =M-x=:
-
-- =lsp-ivy-workspace-symbol= - Search for a symbol name in the current project workspace
-- =lsp-ivy-global-workspace-symbol= - Search for a symbol name in all active project workspaces
-
+**** consult-lsp
+***** TODO configure github.com/gagbo/consult-lsp
 #+begin_src emacs-lisp
 
-  (use-package lsp-ivy)
+  (use-package consult-lsp)
 
 #+end_src
 
