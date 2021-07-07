@@ -80,9 +80,6 @@
 [submodule "nvim-web-devicons"]
 	path = Neovim/.config/nvim/pack/submodules/start/nvim-web-devicons
 	url = https://github.com/kyazdani42/nvim-web-devicons
-[submodule "dir_colors"]
-	path = misc/nord-dircolors
-	url = https://github.com/arcticicestudio/nord-dircolors
 [submodule "edge"]
 	path = Neovim/.config/nvim/pack/submodules/start/edge
 	url = https://github.com/sainnhe/edge

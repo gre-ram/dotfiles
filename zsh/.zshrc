@@ -8,7 +8,6 @@ fi
 
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-test -r ~/.dir_colors && eval $(gdircolors ~/.dir_colors)
 export CLICOLOR=1
 autoload -U colors && colors
 
@@ -54,10 +53,10 @@ alias gsurr='git submodule update --recursive --remote'
 alias vi='nvim'
 alias vim='nvim'
 
-alias lsa='gls -lah --color=always'
-alias l='gls -lah --color=always'
-alias ll='gls -lh --color=always'
-alias la='gls -lAh --color=always'
+alias lsa='gls -la'
+alias l='ls -la'
+alias ll='ls -l'
+alias la='ls -lA'
 alias -g ...='../..'
 alias -g ....='../../..'
 alias -g .....='../../../..'
