@@ -22,7 +22,7 @@
 (straight-use-package 'use-package)
 
 
-(use-package org-mode
+(use-package org
   :hook (org-mode . efs/org-mode-setup))
 
 (org-babel-load-file "~/dotfiles/Emacs/configuration.org")
