@@ -119,7 +119,7 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
       :keymaps '(normal insert visual emacs)
       "b"  '(:ignore t :which-key "buffer")
       "bk" '(kill-this-buffer :which-key "kill buffer")
-      "bs" '(bufler-switch-buffer :which-key "list buffer")
+      "bs" '(switch-to-buffer :which-key "list buffer")
       "bn" '(next-buffer :which-key "next buffer")
       "bN" '(previous-buffer :which-key "prev buffer")
       "t"  '(:ignore t :which-key "toggles")
@@ -265,10 +265,6 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
     (ivy-rich-mode 1))
 #+end_src
 
-** Bufler
-#+begin_src emacs-lisp
-(use-package bufler)
-#+end_src
 
 ** Helpful Help Commands
 
