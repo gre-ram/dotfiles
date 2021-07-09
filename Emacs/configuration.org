@@ -658,6 +658,10 @@ You can add more =src= block templates below by copying one of the lines and cha
             (call-process "open" nil 0 nil fpath))))
   
   
+  (setq org-cite-follow-processor 'bibtex-actions)
+  (setq org-cite-insert-processor 'bibtex-actions)
+  (setq org-cite-global-bibliography gwbrck/bib)
+  
   (use-package bibtex-actions
     :bind (("C-c b" . bibtex-actions-refresh))
     :after embark
@@ -667,34 +671,35 @@ You can add more =src= block templates below by copying one of the lines and cha
     (setq bibtex-actions-symbols
           `((pdf . (,(all-the-icons-icon-for-file "foo.pdf"
                                                   :face 'all-the-icons-dred) .
-                    ,(all-the-icons-icon-for-file "foo.pdf"
-                                                  :face 'bibtex-actions-icon-dim)))
+                                                  ,(all-the-icons-icon-for-file "foo.pdf"
+                                                                                :face 'bibtex-actions-icon-dim)))
             (note . (,(all-the-icons-icon-for-file "foo.txt") .
                      ,(all-the-icons-icon-for-file "foo.txt"
-                                                  :face 'bibtex-actions-icon-dim)))        
+                                                   :face 'bibtex-actions-icon-dim)))        
             (link . 
                   (,(all-the-icons-faicon "external-link-square"
                                           :v-adjust 0.02
                                           :face 'all-the-icons-dpurple) .
-                   ,(all-the-icons-faicon "external-link-square"
-                                          :v-adjust 0.02
-                                          :face 'bibtex-actions-icon-dim)))))
+                                          ,(all-the-icons-faicon "external-link-square"
+                                                                 :v-adjust 0.02
+                                                                 :face 'bibtex-actions-icon-dim)))))
     (defface bibtex-actions-icon-dim
       '((((background dark)) :foreground "#282c34")
         (((background light)) :foreground "#fafafa"))
       "Face for obscuring/dimming icons"
-      :group 'all-the-icons-faces))
+      :group 'all-the-icons-faces)
+    (setq bibtex-actions-embark-dwim nil))
   
   
-    (gwbrck/leader-keys
-      :keymaps 'bibtex-mode-map
-      :states 'normal
-      "m"  '(:ignore t :which-key "bibtex mode")
-      "mm" '(bibtex-actions-at-point :which-key "bibtex actions")
-      "md" '(doi-utils-add-bibtex-entry-from-doi :which-key "get bibtex via doi")
-      "mu" '(doi-utils-update-bibtex-entry-from-doi :which-key "update bibtex via doi")
-      "ms" '(bibtex-sort-buffer :which-key "sort entries")
-      "mc" '(gwbrck/bibtex-clean-entry :which-key "clean entry"))
+  (gwbrck/leader-keys
+    :keymaps 'bibtex-mode-map
+    :states 'normal
+    "m"  '(:ignore t :which-key "bibtex mode")
+    "mm" '(bibtex-actions-at-point :which-key "bibtex actions")
+    "md" '(doi-utils-add-bibtex-entry-from-doi :which-key "get bibtex via doi")
+    "mu" '(doi-utils-update-bibtex-entry-from-doi :which-key "update bibtex via doi")
+    "ms" '(bibtex-sort-buffer :which-key "sort entries")
+    "mc" '(gwbrck/bibtex-clean-entry :which-key "clean entry"))
   
   
     (gwbrck/leader-keys
@@ -828,36 +833,37 @@ You can add more =src= block templates below by copying one of the lines and cha
 
 ** Latex Export
 #+begin_src emacs-lisp
-(add-to-list 'org-export-smart-quotes-alist 
-            '("de-de"
-              (primary-opening   :utf-8 "\"" :html "&ldquo;" :latex "\\enquote{"  :texinfo "``")
-              (primary-closing   :utf-8 "\"" :html "&rdquo;" :latex "}"           :texinfo "''")
-              (secondary-opening :utf-8 "'" :html "&lsquo;" :latex "\\enquote*{" :texinfo "`")
-              (secondary-closing :utf-8 "'" :html "&rsquo;" :latex "}"           :texinfo "'")
-              (apostrophe        :utf-8 "’" :html "&rsquo;")))
-       (setq org-export-default-language "de-de")
-       (setq org-export-with-smart-quotes t)
-       (setq org-latex-pdf-process '("latexmk -shell-escape -bibtex -pdf %f"))
-       (setq org-latex-default-class "article")
-       (setq org-latex-default-packages-alist
-        '(("utf8" "inputenc" t ("pdflatex"))
-          ("T1" "fontenc" t ("pdflatex"))
-          ("" "graphicx" t nil)
-          ("" "grffile" t nil)
-          ("" "longtable" nil nil)
-          ("" "wrapfig" nil nil)
-          ("" "rotating" nil nil)
-          ("normalem" "ulem" t nil)
-          ("" "amsmath" t nil)
-          ("" "textcomp" t nil)
-          ("" "amssymb" t nil)
-          ("" "capt-of" nil nil)
-          ("" "hyperref" nil nil)
-          ("shorthands=off, ngerman" "babel" nil nil)
-          ("" "csquotes" nil nil)
-          ("style=apa, backend=biber, natbib=true" "biblatex" nil nil)
-          "\\addbibresource{~/Documents/myBib/main.bib}"))
-
+  (require 'ox) 
+  (add-to-list 'org-export-smart-quotes-alist 
+              '("de-de"
+                (primary-opening   :utf-8 "\"" :html "&ldquo;" :latex "\\enquote{"  :texinfo "``")
+                (primary-closing   :utf-8 "\"" :html "&rdquo;" :latex "}"           :texinfo "''")
+                (secondary-opening :utf-8 "'" :html "&lsquo;" :latex "\\enquote*{" :texinfo "`")
+                (secondary-closing :utf-8 "'" :html "&rsquo;" :latex "}"           :texinfo "'")
+                (apostrophe        :utf-8 "’" :html "&rsquo;")))
+         (setq org-export-default-language "de-de")
+         (setq org-export-with-smart-quotes t)
+         (setq org-latex-pdf-process '("latexmk -shell-escape -bibtex -pdf %f"))
+         (setq org-latex-default-class "article")
+         (setq org-latex-default-packages-alist
+          '(("utf8" "inputenc" t ("pdflatex"))
+            ("T1" "fontenc" t ("pdflatex"))
+            ("" "graphicx" t nil)
+            ("" "grffile" t nil)
+            ("" "longtable" nil nil)
+            ("" "wrapfig" nil nil)
+            ("" "rotating" nil nil)
+            ("normalem" "ulem" t nil)
+            ("" "amsmath" t nil)
+            ("" "textcomp" t nil)
+            ("" "amssymb" t nil)
+            ("" "capt-of" nil nil)
+            ("" "hyperref" nil nil)
+            ("shorthands=off, ngerman" "babel" nil nil)
+            ("" "csquotes" nil nil)
+            ("style=apa, backend=biber, natbib=true" "biblatex" nil nil)
+            "\\addbibresource{~/Documents/myBib/main.bib}"))
+  
 #+end_src
 
 * Word Stuff
